@@ -232,6 +232,22 @@ BEGIN {
         FONT_LAYOUT_TCOD        =>   8,
         FONT_LAYOUT_CP437       =>  16,
     },
+    FOV => {
+        FOV_BASIC               =>  0,
+        FOV_DIAMOND             =>  1,
+        FOV_SHADOW              =>  2,
+        FOV_PERMISSIVE_0        =>  3,
+        FOV_PERMISSIVE_1        =>  4,
+        FOV_PERMISSIVE_2        =>  5,
+        FOV_PERMISSIVE_3        =>  6,
+        FOV_PERMISSIVE_4        =>  7,
+        FOV_PERMISSIVE_5        =>  8,
+        FOV_PERMISSIVE_6        =>  9,
+        FOV_PERMISSIVE_7        => 10,
+        FOV_PERMISSIVE_8        => 11,
+        FOV_RESTRICTIVE         => 12,
+        NB_FOV_ALGORITHMS       => 13,
+    },
     Event => {
         EVENT_NONE              =>   0,
         EVENT_KEY_PRESS         =>   1,
@@ -263,6 +279,12 @@ $ffi->type( opaque => 'TCOD_event'   );
 $ffi->custom_type( TCOD_console => {
     native_type    => 'opaque',
     native_to_perl => sub { bless \$_[0], 'TCOD::Console' },
+    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
+});
+
+$ffi->custom_type( TCOD_map => {
+    native_type    => 'opaque',
+    native_to_perl => sub { bless \$_[0], 'TCOD::Map' },
     perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
 });
 
@@ -367,6 +389,23 @@ package TCOD::Color {
 
         @map;
     }
+}
+
+package TCOD::Map {
+    $ffi->mangler( sub { 'TCOD_map_' . shift } );
+
+    $ffi->attach( new            => [qw(          int int              )] => 'TCOD_map' => sub { $_[0]->( @_[ 2 .. $#_ ] ) } );
+    $ffi->attach( set_properties => [qw( TCOD_map int int bool bool    )] => 'void' );
+    $ffi->attach( clear          => [qw( TCOD_map         bool bool    )] => 'void' );
+    $ffi->attach( copy           => [qw( TCOD_map TCOD_map             )] => 'void' );
+
+    $ffi->attach( compute_fov    => [qw( TCOD_map int int int bool int )] => 'void' );
+    $ffi->attach( is_in_fov      => [qw( TCOD_map int int              )] => 'bool' );
+    $ffi->attach( is_transparent => [qw( TCOD_map int int              )] => 'bool' );
+    $ffi->attach( is_walkable    => [qw( TCOD_map int int              )] => 'bool' );
+
+    $ffi->attach( get_width      => [qw( TCOD_map                      )] => 'int'  );
+    $ffi->attach( get_height     => [qw( TCOD_map                      )] => 'int'  );
 }
 
 package TCOD::Console {

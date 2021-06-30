@@ -492,10 +492,13 @@ package TCOD::Console {
     $ffi->attach( is_key_pressed     => ['int'] => 'bool'     );
 }
 
-$ffi->mangler( sub { 'TCOD_sys_' . shift } );
+package TCOD::Sys {
+    $ffi->mangler( sub { 'TCOD_sys_' . shift } );
 
-$ffi->attach( wait_for_event  => [qw( int TCOD_key* TCOD_mouse* bool )] => 'TCOD_event' );
-$ffi->attach( check_for_event => [qw( int TCOD_key* TCOD_mouse*      )] => 'TCOD_event' );
+    $ffi->attach( wait_for_event  => [qw( int TCOD_key* TCOD_mouse* bool )] => 'TCOD_event' );
+    $ffi->attach( check_for_event => [qw( int TCOD_key* TCOD_mouse*      )] => 'TCOD_event' );
+}
+
 
 constant->import({
     # color values

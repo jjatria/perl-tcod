@@ -275,6 +275,7 @@ BEGIN {
 
 $ffi->type( int    => 'TCOD_keycode' );
 $ffi->type( opaque => 'TCOD_event'   );
+$ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
 $ffi->custom_type( TCOD_console => {
     native_type    => 'opaque',
@@ -285,6 +286,18 @@ $ffi->custom_type( TCOD_console => {
 $ffi->custom_type( TCOD_map => {
     native_type    => 'opaque',
     native_to_perl => sub { bless \$_[0], 'TCOD::Map' },
+    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef },
+});
+
+$ffi->custom_type( TCOD_path => {
+    native_type    => 'opaque',
+    native_to_perl => sub { bless \$_[0], 'TCOD::Path' },
+    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
+});
+
+$ffi->custom_type( TCOD_dijkstra => {
+    native_type    => 'opaque',
+    native_to_perl => sub { bless \$_[0], 'TCOD::Dijkstra' },
     perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
 });
 
@@ -499,6 +512,90 @@ package TCOD::Sys {
     $ffi->attach( check_for_event => [qw( int TCOD_key* TCOD_mouse*      )] => 'TCOD_event' );
 }
 
+package TCOD::Path {
+    $ffi->mangler( sub { 'TCOD_path_' . shift } );
+
+    my $new = sub {
+        my $sub = shift;
+        my $class = ref $_[0] || $_[0];
+        shift if $class eq __PACKAGE__;
+        $sub->(@_);
+    };
+
+    # Constructors
+    $ffi->attach( new_using_map      => [qw(         TCOD_map              float )] => 'TCOD_path' => $new );
+    $ffi->attach( new_using_function => [qw( int int TCOD_path_func opaque float )] => 'TCOD_path' => $new );
+
+    $ffi->attach( compute  => [qw( TCOD_path int int int int )] => 'bool' );
+    $ffi->attach( reverse  => [qw( TCOD_path                 )] => 'void' );
+    $ffi->attach( is_empty => [qw( TCOD_path                 )] => 'bool' );
+    $ffi->attach( size     => [qw( TCOD_path                 )] => 'int'  );
+
+    $ffi->attach( get_origin => [qw( TCOD_path int* int* )] => 'void' => sub {
+        my ( $x, $y );
+        $_[0]->( $_[1], \$x, \$y );
+        return ( $x, $y );
+    });
+
+    $ffi->attach( get_destination => [qw( TCOD_path int* int* )] => 'void' => sub {
+        my ( $x, $y );
+        $_[0]->( $_[1], \$x, \$y );
+        return ( $x, $y );
+    });
+
+    $ffi->attach( get => [qw( TCOD_path int int* int* )] => 'void' => sub {
+        my ( $x, $y );
+        $_[0]->( @_[ 1, 2 ], \$x, \$y );
+        return ( $x, $y );
+    });
+
+    $ffi->attach( walk => [qw( TCOD_path int* int* bool )] => 'bool' => sub {
+        my ( $x, $y );
+        $_[0]->( $_[1], \$x, \$y, $_[2] ) or return;
+        return ( $x, $y );
+    });
+
+    $ffi->mangler( sub { shift } );
+    $ffi->attach( [ TCOD_path_delete => 'DESTROY' ] => ['TCOD_path'] => 'void' );
+}
+
+package TCOD::Dijkstra {
+    $ffi->mangler( sub { 'TCOD_dijkstra_' . shift } );
+
+    my $new = sub {
+        my $sub = shift;
+        my $class = ref $_[0] || $_[0];
+        shift if $class eq __PACKAGE__;
+        $sub->(@_);
+    };
+
+    # Constructors
+    $ffi->attach( new                => [qw(         TCOD_map              float )] => 'TCOD_dijkstra' => $new );
+    $ffi->attach( new_using_function => [qw( int int TCOD_path_func opaque float )] => 'TCOD_dijkstra' => $new );
+
+    $ffi->attach( compute      => [qw( TCOD_dijkstra int int )] => 'void'  );
+    $ffi->attach( path_set     => [qw( TCOD_dijkstra int int )] => 'bool'  );
+    $ffi->attach( reverse      => [qw( TCOD_dijkstra         )] => 'void'  );
+    $ffi->attach( is_empty     => [qw( TCOD_dijkstra         )] => 'bool'  );
+    $ffi->attach( size         => [qw( TCOD_dijkstra         )] => 'int'   );
+    $ffi->attach( get_distance => [qw( TCOD_dijkstra int int )] => 'float' );
+
+    $ffi->attach( get => [qw( TCOD_dijkstra int int* int* )] => 'void' => sub {
+        my ( $x, $y );
+        $_[0]->( @_[ 1, 2 ], \$x, \$y );
+        return ( $x, $y );
+    });
+
+    # FIXME: Where did this function go?
+    # $ffi->attach( walk => [qw( TCOD_dijkstra int* int* )] => 'bool' => sub {
+    #     my ( $x, $y );
+    #     shift->( shift, \$x, \$y ) or return;
+    #     return ( $x, $y );
+    # });
+
+    $ffi->mangler( sub { shift } );
+    $ffi->attach( [ TCOD_dijkstra_delete => 'DESTROY' ] => ['TCOD_dijkstra'] => 'void' );
+}
 
 constant->import({
     # color values

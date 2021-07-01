@@ -581,26 +581,22 @@ package TCOD::Path {
     $ffi->attach( size     => [qw( TCOD_path                 )] => 'int'  );
 
     $ffi->attach( get_origin => [qw( TCOD_path int* int* )] => 'void' => sub {
-        my ( $x, $y );
-        $_[0]->( $_[1], \$x, \$y );
+        $_[0]->( $_[1], \my $x, \my $y );
         return ( $x, $y );
     });
 
     $ffi->attach( get_destination => [qw( TCOD_path int* int* )] => 'void' => sub {
-        my ( $x, $y );
-        $_[0]->( $_[1], \$x, \$y );
+        $_[0]->( $_[1], \my $x, \my $y );
         return ( $x, $y );
     });
 
     $ffi->attach( get => [qw( TCOD_path int int* int* )] => 'void' => sub {
-        my ( $x, $y );
-        $_[0]->( @_[ 1, 2 ], \$x, \$y );
+        $_[0]->( @_[ 1, 2 ], \my $x, \my $y );
         return ( $x, $y );
     });
 
     $ffi->attach( walk => [qw( TCOD_path int* int* bool )] => 'bool' => sub {
-        my ( $x, $y );
-        $_[0]->( $_[1], \$x, \$y, $_[2] ) or return;
+        $_[0]->( $_[1], \my $x, \my $y, $_[2] ) or return;
         return ( $x, $y );
     });
 

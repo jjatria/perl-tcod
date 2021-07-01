@@ -1,5 +1,5 @@
 {
-   "abstract" : "Perl bindings to libtcod",
+   "abstract" : "FFI bindings for libtcod",
    "author" : [
       "Jos\u00e9 Joaqu\u00edn Atria <jjatria@cpan.org>"
    ],

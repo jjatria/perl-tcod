@@ -1,4 +1,4 @@
-# ABSTRACT: Perl bindings to libtcod
+# ABSTRACT: FFI bindings for libtcod
 package TCOD;
 
 use strict;

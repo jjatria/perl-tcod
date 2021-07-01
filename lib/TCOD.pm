@@ -510,6 +510,11 @@ package TCOD::Console {
     $ffi->attach( put_char               => [qw( TCOD_console int int int int                   )] => 'void' );
     $ffi->attach( put_char_ex            => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void' );
 
+    $ffi->attach( rect        => [qw( TCOD_console int int int int bool int        )] => 'void' );
+    $ffi->attach( hline       => [qw( TCOD_console int int int          int        )] => 'void' );
+    $ffi->attach( vline       => [qw( TCOD_console int int int          int        )] => 'void' );
+    $ffi->attach( print_frame => [qw( TCOD_console int int int int bool int string )] => ['int', 'int'] => 'void' );
+
     # We support up to two controls per function for now
     $ffi->attach( print           => [qw( TCOD_console int int string                      )] => ['int', 'int'] => 'void' );
     $ffi->attach( print_ex        => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );

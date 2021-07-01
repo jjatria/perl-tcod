@@ -332,6 +332,8 @@ package TCOD::Mouse {
         int  => 'y',
         int  => 'dx',
         int  => 'dy',
+        int  => 'cx',
+        int  => 'cy',
         int  => 'dcx',
         int  => 'dcy',
         bool => 'lbutton',

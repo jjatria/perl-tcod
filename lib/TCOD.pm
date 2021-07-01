@@ -310,9 +310,9 @@ $ffi->custom_type( TCOD_dijkstra => {
 package TCOD::Key {
     use FFI::Platypus::Record;
     record_layout_1(
-        int => 'vk',
-        uint8        => 'c',
-        'uint8[32]'  => 'text',
+        int          => 'vk',
+        'string(1)'  => 'c',
+        'string(32)' => 'text',
         bool         => 'pressed',
         bool         => 'lalt',
         bool         => 'lctrl',

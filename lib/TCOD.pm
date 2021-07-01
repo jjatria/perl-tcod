@@ -349,6 +349,36 @@ package TCOD::Mouse {
 }
 
 package TCOD::Color {
+    use Carp ();
+    use Scalar::Util ();
+
+    use overload fallback => 1,
+        '+' => sub {
+            my ( $self, $other, $swap ) = @_;
+            Carp::croak 'TCOD::Color addition only supports colors'
+                unless Scalar::Util::blessed $other && $other->isa('TCOD::Color');
+            $self->add($other);
+        },
+        '-' => sub {
+            my ( $self, $other, $swap ) = @_;
+            Carp::croak 'TCOD::Color subtraction only supports colors'
+                unless Scalar::Util::blessed $other && $other->isa('TCOD::Color');
+            $self->subtract($other);
+        },
+        '*' => sub {
+            my ( $self, $other, $swap ) = @_;
+            return $self->multiply_scalar($other) unless ref $other;
+            Carp::croak 'TCOD::Color multiplication supports colors or scalars'
+                unless Scalar::Util::blessed $other && $other->isa('TCOD::Color');
+            $self->subtract($other);
+        },
+        '==' => sub {
+            my ( $self, $other, $swap ) = @_;
+            Carp::croak 'TCOD::Color equality only supports colors'
+                unless Scalar::Util::blessed $other && $other->isa('TCOD::Color');
+            $self->equals($other);
+        };
+
     $ffi->mangler( sub { 'TCOD_color_' . shift } );
 
     use FFI::Platypus::Record;

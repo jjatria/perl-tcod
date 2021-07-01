@@ -29,9 +29,6 @@
             "ExtUtils::MakeMaker" : "0",
             "File::ShareDir::Install" : "0.06",
             "perl" : "5.006"
-         },
-         "suggests" : {
-            "JSON::PP" : "2.27300"
          }
       },
       "develop" : {
@@ -45,7 +42,7 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.006"
+            "perl" : "v5.10.0"
          }
       },
       "test" : {
@@ -56,7 +53,7 @@
             "ExtUtils::MakeMaker" : "0",
             "File::Spec" : "0",
             "Test::More" : "0",
-            "perl" : "5.006"
+            "perl" : "v5.10.0"
          }
       }
    },
@@ -73,11 +70,31 @@
          "file" : "lib/TCOD.pm",
          "version" : "0.001"
       },
+      "TCOD::Dijkstra" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
+      "TCOD::Image" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
       "TCOD::Key" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.001"
       },
+      "TCOD::Map" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
       "TCOD::Mouse" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
+      "TCOD::Path" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
+      "TCOD::Sys" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.001"
       }
@@ -86,6 +103,11 @@
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/jjatria/perl-tcod/issues"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/jjatria/perl-tcod.git",
+         "web" : "https://github.com/jjatria/perl-tcod"
       }
    },
    "version" : "0.001",

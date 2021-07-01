@@ -4,14 +4,14 @@ package TCOD;
 use strict;
 use warnings;
 
-use FFI::CheckLib;
+use FFI::CheckLib ();
 use FFI::Platypus 1.00;
 use FFI::C;
 
 my $ffi;
 BEGIN {
     $ffi = FFI::Platypus->new( api => 1 );
-    $ffi->lib( find_lib_or_exit lib => 'tcod' );
+    $ffi->lib( FFI::CheckLib::find_lib_or_exit lib => 'tcod' );
     FFI::C->ffi($ffi);
 }
 
@@ -277,6 +277,12 @@ $ffi->type( int    => 'TCOD_keycode' );
 $ffi->type( opaque => 'TCOD_event'   );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
+$ffi->custom_type( TCOD_image => {
+    native_type    => 'opaque',
+    native_to_perl => sub { bless \$_[0], 'TCOD::Image' },
+    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
+});
+
 $ffi->custom_type( TCOD_console => {
     native_type    => 'opaque',
     native_to_perl => sub { bless \$_[0], 'TCOD::Console' },
@@ -362,31 +368,34 @@ package TCOD::Color {
 
     sub rgb { my $self = shift; sprintf '#%02x%02x%02x', $self->r, $self->g, $self->b }
 
-    $ffi->attach( equals          => [qw( TCOD_color TCOD_color           )] => 'bool'       );
-    $ffi->attach( add             => [qw( TCOD_color TCOD_color           )] => 'TCOD_color' );
-    $ffi->attach( subtract        => [qw( TCOD_color TCOD_color           )] => 'TCOD_color' );
-    $ffi->attach( multiply        => [qw( TCOD_color TCOD_color           )] => 'TCOD_color' );
-    $ffi->attach( multiply_scalar => [qw( TCOD_color float                )] => 'TCOD_color' );
+    $ffi->attach( equals          => [qw( TCOD_color TCOD_color            )] => 'bool'       );
+    $ffi->attach( add             => [qw( TCOD_color TCOD_color            )] => 'TCOD_color' );
+    $ffi->attach( subtract        => [qw( TCOD_color TCOD_color            )] => 'TCOD_color' );
+    $ffi->attach( multiply        => [qw( TCOD_color TCOD_color            )] => 'TCOD_color' );
+    $ffi->attach( multiply_scalar => [qw( TCOD_color float                 )] => 'TCOD_color' );
 
-    $ffi->attach( lerp            => [qw( TCOD_color TCOD_color float     )] => 'TCOD_color' );
+    $ffi->attach( lerp            => [qw( TCOD_color TCOD_color float      )] => 'TCOD_color' );
 
-    $ffi->attach( get_hue         => [qw( TCOD_color                      )] => 'double'     );
-    $ffi->attach( set_hue         => [qw( TCOD_color float                )] => 'void'       );
+    $ffi->attach( get_hue         => [qw( TCOD_color                       )] => 'float'      );
+    $ffi->attach( set_hue         => [qw( TCOD_color* float                )] => 'void'       );
 
-    $ffi->attach( get_saturation  => [qw( TCOD_color                      )] => 'double'     );
-    $ffi->attach( set_saturation  => [qw( TCOD_color float                )] => 'void'       );
+    $ffi->attach( get_saturation  => [qw( TCOD_color                       )] => 'float'      );
+    $ffi->attach( set_saturation  => [qw( TCOD_color* float                )] => 'void'       );
 
-    $ffi->attach( get_value       => [qw( TCOD_color                      )] => 'double'     );
-    $ffi->attach( set_value       => [qw( TCOD_color float                )] => 'void'       );
+    $ffi->attach( get_value       => [qw( TCOD_color                       )] => 'float'      );
+    $ffi->attach( set_value       => [qw( TCOD_color* float                )] => 'void'       );
 
-    $ffi->attach( shift_hue       => [qw( TCOD_color float                )] => 'void'       );
-    $ffi->attach( scale_HSV       => [qw( TCOD_color float float          )] => 'void'       );
+    $ffi->attach( shift_hue       => [qw( TCOD_color* float                )] => 'void'       );
+    $ffi->attach( scale_HSV       => [qw( TCOD_color* float float          )] => 'void'       );
 
-    $ffi->attach( get_HSV         => [qw( TCOD_color float* float* float* )] => 'void'       );
-    $ffi->attach( set_HSV         => [qw( TCOD_color float float float    )] => 'void'       );
+    $ffi->attach( set_HSV         => [qw( TCOD_color* float  float  float  )] => 'void'       );
+    $ffi->attach( get_HSV         => [qw( TCOD_color  float* float* float* )] => 'void' => sub {
+        $_[0]->( $_[1], \my $h, \my $s, \my $v );
+        return ( $h, $s, $v );
+    });
 
     sub gen_map {
-        shift if ref $_[0]; # Discard first arg if called like $color->gen_map( %map )
+        shift if @_ % 2; # Discard first arg if called like $color->gen_map( %map )
         my ( $this, @rest ) = List::Util::pairs @_;
 
         my @map;
@@ -460,6 +469,9 @@ package TCOD::Console {
 
     $ffi->attach( set_default_foreground => [qw( TCOD_console TCOD_color                        )] => 'void' );
     $ffi->attach( get_default_foreground => [qw( TCOD_console                                   )] => 'TCOD_color'  );
+
+  # $ffi->attach( get_foreground_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
+  # $ffi->attach( get_background_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
 
     $ffi->attach( set_char               => [qw( TCOD_console int int int                       )] => 'void' );
     $ffi->attach( get_char               => [qw( TCOD_console int int                           )] => 'int'  );
@@ -581,20 +593,50 @@ package TCOD::Dijkstra {
     $ffi->attach( get_distance => [qw( TCOD_dijkstra int int )] => 'float' );
 
     $ffi->attach( get => [qw( TCOD_dijkstra int int* int* )] => 'void' => sub {
-        my ( $x, $y );
-        $_[0]->( @_[ 1, 2 ], \$x, \$y );
+        $_[0]->( @_[ 1, 2 ], \my $x, \my $y );
         return ( $x, $y );
     });
 
-    # FIXME: Where did this function go?
-    # $ffi->attach( walk => [qw( TCOD_dijkstra int* int* )] => 'bool' => sub {
-    #     my ( $x, $y );
-    #     shift->( shift, \$x, \$y ) or return;
-    #     return ( $x, $y );
-    # });
+  # FIXME: Where did this function go?
+  # $ffi->attach( walk => [qw( TCOD_dijkstra int* int* )] => 'bool' => sub {
+  #     shift->( shift, \my $x, \my $y ) or return;
+  #     return ( $x, $y );
+  # });
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_dijkstra_delete => 'DESTROY' ] => ['TCOD_dijkstra'] => 'void' );
+}
+
+package TCOD::Image {
+    $ffi->mangler( sub { 'TCOD_image_' . shift } );
+
+    $ffi->attach( new          => [qw( int int      )] => 'TCOD_image' => sub { $_[0]->( @_[ 2 .. $#_ ] ) } );
+    $ffi->attach( load         => [qw( string       )] => 'TCOD_image' );
+    $ffi->attach( from_console => [qw( TCOD_console )] => 'TCOD_image' );
+
+    $ffi->attach( save                 => [qw( TCOD_image string                   )] => 'void'       );
+    $ffi->attach( refresh_console      => [qw( TCOD_image TCOD_console             )] => 'void'       );
+    $ffi->attach( put_pixel            => [qw( TCOD_image int int TCOD_color       )] => 'void'       );
+    $ffi->attach( scale                => [qw( TCOD_image int int                  )] => 'void'       );
+    $ffi->attach( get_pixel            => [qw( TCOD_image int int                  )] => 'TCOD_color' );
+    $ffi->attach( get_alpha            => [qw( TCOD_image int int                  )] => 'int'        );
+  # $ffi->attach( pixel_is_transparent => [qw( TCOD_image int int                  )] => 'bool'       );
+    $ffi->attach( get_mipmap_pixel     => [qw( TCOD_image float float float float  )] => 'TCOD_color' );
+    $ffi->attach( rotate90             => [qw( TCOD_image int                      )] => 'void'       );
+    $ffi->attach( invert               => [qw( TCOD_image                          )] => 'void'       );
+    $ffi->attach( vflip                => [qw( TCOD_image                          )] => 'void'       );
+    $ffi->attach( hflip                => [qw( TCOD_image                          )] => 'void'       );
+    $ffi->attach( clear                => [qw( TCOD_image TCOD_color               )] => 'void'       );
+    $ffi->attach( set_key_color        => [qw( TCOD_image TCOD_color               )] => 'void'       );
+
+    $ffi->attach( blit      => [qw( TCOD_image TCOD_console int int int float float float )] => 'void' );
+    $ffi->attach( blit_2x   => [qw( TCOD_image TCOD_console int int int int   int   int   )] => 'void' );
+    $ffi->attach( blit_rect => [qw( TCOD_image TCOD_console int int int int   int         )] => 'void' );
+
+    $ffi->attach( get_size => [qw( TCOD_image int* int* )] => 'void' => sub {
+        $_[0]->( @_[ 1, 2 ], \my $w, \my $h );
+        return ( $w, $h );
+    });
 }
 
 # color values
@@ -809,5 +851,8 @@ sub SILVER                 () { TCOD::Color->new( 203, 203, 203 ) }
 # miscellaneous
 sub CELADON                () { TCOD::Color->new( 172, 255, 175 ) }
 sub PINKEACH               () { TCOD::Color->new( 255, 159, 127 ) }
+
+# Delete helper functions
+delete $TCOD::{$_} for qw( enum );
 
 1;

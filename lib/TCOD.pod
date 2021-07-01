@@ -1,8 +1,10 @@
-# NAME
+=encoding UTF-8
+
+=head1 NAME
 
 TCOD - FFI bindings for libtcod
 
-# SYNOPSIS
+=head1 SYNOPSIS
 
     use TCOD;
 
@@ -24,22 +26,22 @@ TCOD - FFI bindings for libtcod
         last if $key->vk == TCOD::K_ESCAPE;
     }
 
-# DESCRIPTION
+=head1 DESCRIPTION
 
 TCOD offers Perl bindings to libtcod, a library for developing roguelike games.
 
-## On Stability
+=head2 On Stability
 
-This distribution is currently **experimental**, and as such, its API might
+This distribution is currently B<experimental>, and as such, its API might
 still change without warning. Any change, breaking or not, will be noted in
 the change log, so if you wish to use it, please pin your dependencies and
 make sure to check the change log before upgrading.
 
-# FUNCTIONS
+=head1 FUNCTIONS
 
-# ENUMS
+=head1 ENUMS
 
-## Renderer
+=head2 Renderer
 
     TCOD::RENDERER_GLSL
     TCOD::RENDERER_OPENGL
@@ -48,7 +50,7 @@ make sure to check the change log before upgrading.
     TCOD::RENDERER_OPENGL2
     TCOD::NB_RENDERERS
 
-## BackgroundFlag
+=head2 BackgroundFlag
 
     TCOD::BKGND_NONE
     TCOD::BKGND_SET
@@ -65,7 +67,7 @@ make sure to check the change log before upgrading.
     TCOD::BKGND_ALPH
     TCOD::BKGND_DEFAULT
 
-## ColorControl
+=head2 ColorControl
 
     TCOD::COLCTRL_1
     TCOD::COLCTRL_2
@@ -77,7 +79,7 @@ make sure to check the change log before upgrading.
     TCOD::COLCTRL_BACK_RGB
     TCOD::COLCTRL_STOP
 
-## Keycode
+=head2 Keycode
 
     TCOD::K_NONE
     TCOD::K_ESCAPE
@@ -147,7 +149,7 @@ make sure to check the change log before upgrading.
     TCOD::K_CHAR
     TCOD::K_TEXT
 
-## Char
+=head2 Char
 
     TCOD::CHAR_HLINE
     TCOD::CHAR_VLINE
@@ -230,7 +232,7 @@ make sure to check the change log before upgrading.
     TCOD::CHAR_POW2
     TCOD::CHAR_BULLET_SQUARE
 
-## FontFlags
+=head2 FontFlags
 
     TCOD::FONT_LAYOUT_ASCII_INCOL
     TCOD::FONT_LAYOUT_ASCII_INROW
@@ -239,7 +241,7 @@ make sure to check the change log before upgrading.
     TCOD::FONT_LAYOUT_TCOD
     TCOD::FONT_LAYOUT_CP437
 
-## FOV
+=head2 FOV
 
     TCOD::FOV_BASIC
     TCOD::FOV_DIAMOND
@@ -256,7 +258,7 @@ make sure to check the change log before upgrading.
     TCOD::FOV_RESTRICTIVE
     TCOD::NB_FOV_ALGORITHMS
 
-## Event
+=head2 Event
 
     TCOD::EVENT_NONE
     TCOD::EVENT_KEY_PRESS
@@ -268,19 +270,33 @@ make sure to check the change log before upgrading.
     TCOD::EVENT_MOUSE
     TCOD::EVENT_ANY
 
-# SEE ALSO
+=head1 SEE ALSO
 
-- [libtcod](https://github.com/libtcod/libtcod)
-- [TCOD::Color](https://metacpan.org/pod/TCOD%3A%3AColor)
-- [TCOD::Console](https://metacpan.org/pod/TCOD%3A%3AConsole)
-- [TCOD::Dijkstra](https://metacpan.org/pod/TCOD%3A%3ADijkstra)
-- [TCOD::Key](https://metacpan.org/pod/TCOD%3A%3AKey)
-- [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap)
-- [TCOD::Mouse](https://metacpan.org/pod/TCOD%3A%3AMouse)
-- [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath)
-- [TCOD::Sys](https://metacpan.org/pod/TCOD%3A%3ASys)
+=over
 
-# COPYRIGHT AND LICENSE
+=item L<libtcod|https://github.com/libtcod/libtcod>
+
+=item L<TCOD::Color>
+
+=item L<TCOD::Console>
+
+=item L<TCOD::Dijkstra>
+
+=item L<TCOD::Image>
+
+=item L<TCOD::Key>
+
+=item L<TCOD::Map>
+
+=item L<TCOD::Mouse>
+
+=item L<TCOD::Path>
+
+=item L<TCOD::Sys>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
 
 Copyright 2021 José Joaquín Atria
 

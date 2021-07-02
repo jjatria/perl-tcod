@@ -273,8 +273,9 @@ BEGIN {
     },
 }
 
-$ffi->type( int    => 'TCOD_keycode' );
-$ffi->type( opaque => 'TCOD_event'   );
+$ffi->type( int    => 'TCOD_renderer' );
+$ffi->type( int    => 'TCOD_keycode'  );
+$ffi->type( opaque => 'TCOD_event'    );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
 # Blessed opaque types
@@ -539,8 +540,37 @@ package TCOD::Console {
 package TCOD::Sys {
     $ffi->mangler( sub { 'TCOD_sys_' . shift } );
 
-    $ffi->attach( wait_for_event  => [qw( int TCOD_key* TCOD_mouse* bool )] => 'TCOD_event' );
-    $ffi->attach( check_for_event => [qw( int TCOD_key* TCOD_mouse*      )] => 'TCOD_event' );
+    $ffi->attach( wait_for_event         => [qw( int TCOD_key* TCOD_mouse* bool )] => 'TCOD_event'    );
+    $ffi->attach( check_for_event        => [qw( int TCOD_key* TCOD_mouse*      )] => 'TCOD_event'    );
+
+    $ffi->attach( save_screenshot        => [qw( string                         )] => 'void'          );
+    $ffi->attach( set_fps                => [qw( int                            )] => 'void'          );
+    $ffi->attach( get_fps                => [                                    ] => 'int'           );
+    $ffi->attach( sleep_milli            => [qw( uint32                         )] => 'void'          );
+    $ffi->attach( elapsed_milli          => [                                    ] => 'uint32'        );
+    $ffi->attach( elapsed_seconds        => [                                    ] => 'float'         );
+    $ffi->attach( get_last_frame_length  => [                                    ] => 'float'         );
+    $ffi->attach( update_char            => [qw( int int int TCOD_image int int )] => 'void'          );
+    $ffi->attach( set_renderer           => [qw( TCOD_renderer                  )] => 'void'          );
+    $ffi->attach( get_renderer           => [                                    ] => 'TCOD_renderer' );
+
+    # Deprecated
+  # $ffi->attach( create_directory       => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( delete_directory       => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( delete_file            => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( is_directory           => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( file_exists            => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( clipboard_set          => [qw( string                         )] => 'bool'          );
+  # $ffi->attach( clipboard_get          => [                                    ] => 'string'        );
+
+    $ffi->attach( get_char_size          => [qw( int* int* )] => 'void' => sub { $_[0]->( \my $w, \my $h ); ( $w, $h ) });
+    $ffi->attach( get_current_resolution => [qw( int* int* )] => 'void' => sub { $_[0]->( \my $w, \my $h ); ( $w, $h ) });
+  # $ffi->attach( get_fullscreen_offset  => [qw( int* int* )] => 'void' => sub { $_[0]->( \my $x, \my $y ); ( $x, $y ) });
+
+    $ffi->attach( register_SDL_renderer  => [qw( (opaque)->void                 )] => 'void'          );
+  # $ffi->attach( set_dirty              => [qw( int int int int                )] => 'void'          );
+
+    $ffi->attach( force_fullscreen_resolution => [qw( int int )] => 'void' );
 }
 
 package TCOD::Path {

@@ -277,35 +277,17 @@ $ffi->type( int    => 'TCOD_keycode' );
 $ffi->type( opaque => 'TCOD_event'   );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
-$ffi->custom_type( TCOD_image => {
-    native_type    => 'opaque',
-    native_to_perl => sub { bless \$_[0], 'TCOD::Image' },
-    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
-});
-
-$ffi->custom_type( TCOD_console => {
-    native_type    => 'opaque',
-    native_to_perl => sub { bless \$_[0], 'TCOD::Console' },
-    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
-});
-
-$ffi->custom_type( TCOD_map => {
-    native_type    => 'opaque',
-    native_to_perl => sub { bless \$_[0], 'TCOD::Map' },
-    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef },
-});
-
-$ffi->custom_type( TCOD_path => {
-    native_type    => 'opaque',
-    native_to_perl => sub { bless \$_[0], 'TCOD::Path' },
-    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
-});
-
-$ffi->custom_type( TCOD_dijkstra => {
-    native_type    => 'opaque',
-    native_to_perl => sub { bless \$_[0], 'TCOD::Dijkstra' },
-    perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
-});
+# Blessed opaque types
+for my $name (qw( image console map path dijkstra )) {
+    $ffi->custom_type( "TCOD_$name" => {
+        native_type    => 'opaque',
+        perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
+        native_to_perl => sub {
+            return unless $_[0];
+            bless \$_[0], 'TCOD::' . ucfirst $name;
+        },
+    });
+}
 
 package TCOD::Key {
     use FFI::Platypus::Record;

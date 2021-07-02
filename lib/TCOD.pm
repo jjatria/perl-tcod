@@ -533,8 +533,9 @@ package TCOD::Console {
 
     $ffi->attach( set_color_control      => [qw( int TCOD_color TCOD_color                )] => 'void' );
 
-    $ffi->attach( check_for_keypress => ['int'] => 'TCOD_key' );
-    $ffi->attach( is_key_pressed     => ['int'] => 'bool'     );
+    $ffi->attach( wait_for_keypress  => ['bool'] => 'TCOD_key' );
+    $ffi->attach( check_for_keypress => ['int' ] => 'TCOD_key' );
+    $ffi->attach( is_key_pressed     => ['int' ] => 'bool'     );
 }
 
 package TCOD::Sys {

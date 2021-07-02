@@ -452,9 +452,9 @@ package TCOD::Console {
 
     # Constructors
     $ffi->attach( new       => [qw( int int )] => 'TCOD_console' => sub { $_[0]->( @_[ 2 .. $#_ ] ) } );
-    $ffi->attach( from_file => [qw( string  )] => 'TCOD_console' );
-    $ffi->attach( load_asc  => [qw( string  )] => 'TCOD_console' );
-    $ffi->attach( load_apf  => [qw( string  )] => 'TCOD_console' );
+    $ffi->attach( from_file => [qw( string  )] => 'TCOD_console' => sub { $_[0]->( $_[ 2 ] ) } );
+    $ffi->attach( load_asc  => [qw( string  )] => 'TCOD_console' => sub { $_[0]->( $_[ 2 ] ) } );
+    $ffi->attach( load_apf  => [qw( string  )] => 'TCOD_console' => sub { $_[0]->( $_[ 2 ] ) } );
 
     # Methods
     $ffi->attach( save_asc      => [qw( TCOD_console string                                           )] => 'bool' );

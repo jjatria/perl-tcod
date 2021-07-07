@@ -39,6 +39,12 @@ make sure to check the change log before upgrading.
 
 # ENUMS
 
+## Alignment
+
+    TCOD::LEFT
+    TCOD::RIGHT
+    TCOD::CENTER
+
 ## Renderer
 
     TCOD::RENDERER_GLSL
@@ -274,6 +280,7 @@ make sure to check the change log before upgrading.
 - [TCOD::Color](https://metacpan.org/pod/TCOD%3A%3AColor)
 - [TCOD::Console](https://metacpan.org/pod/TCOD%3A%3AConsole)
 - [TCOD::Dijkstra](https://metacpan.org/pod/TCOD%3A%3ADijkstra)
+- [TCOD::Image](https://metacpan.org/pod/TCOD%3A%3AImage)
 - [TCOD::Key](https://metacpan.org/pod/TCOD%3A%3AKey)
 - [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap)
 - [TCOD::Mouse](https://metacpan.org/pod/TCOD%3A%3AMouse)

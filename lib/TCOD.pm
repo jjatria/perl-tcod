@@ -30,7 +30,12 @@ sub enum {
 }
 
 BEGIN {
-    enum Renderer => {
+    enum Alignment => {
+        LEFT   => 0,
+        RIGHT  => 1,
+        CENTER => 2,
+    },
+    Renderer => {
         RENDERER_GLSL           =>   0,
         RENDERER_OPENGL         =>   1,
         RENDERER_SDL            =>   2,
@@ -464,74 +469,76 @@ package TCOD::Console {
     $ffi->attach( set_key_color => [qw( TCOD_console TCOD_color                                       )] => 'void' );
     $ffi->attach( clear         => [qw( TCOD_console                                                  )] => 'void' );
 
-    $ffi->attach( get_width              => [qw( TCOD_console                                   )] => 'int'  );
-    $ffi->attach( get_height             => [qw( TCOD_console                                   )] => 'int'  );
+    $ffi->attach( get_width               => [qw( TCOD_console                                   )] => 'int'        );
+    $ffi->attach( get_height              => [qw( TCOD_console                                   )] => 'int'        );
 
-    $ffi->attach( set_background_flag    => [qw( TCOD_console int                               )] => 'void' );
-    $ffi->attach( get_background_flag    => [qw( TCOD_console                                   )] => 'int'  );
+    $ffi->attach( set_background_flag     => [qw( TCOD_console int                               )] => 'void'       );
+    $ffi->attach( get_background_flag     => [qw( TCOD_console                                   )] => 'int'        );
 
-    $ffi->attach( set_alignment          => [qw( TCOD_console int                               )] => 'void' );
-    $ffi->attach( get_alignment          => [qw( TCOD_console                                   )] => 'int'  );
+    $ffi->attach( set_alignment           => [qw( TCOD_console int                               )] => 'void'       );
+    $ffi->attach( get_alignment           => [qw( TCOD_console                                   )] => 'int'        );
 
-    $ffi->attach( set_char_background    => [qw( TCOD_console int int TCOD_color int            )] => 'void' );
-    $ffi->attach( get_char_background    => [qw( TCOD_console int int                           )] => 'TCOD_color'  );
+    $ffi->attach( set_char_background     => [qw( TCOD_console int int TCOD_color int            )] => 'void'       );
+    $ffi->attach( get_char_background     => [qw( TCOD_console int int                           )] => 'TCOD_color' );
 
-    $ffi->attach( set_char_foreground    => [qw( TCOD_console int int TCOD_color                )] => 'void' );
-    $ffi->attach( get_char_foreground    => [qw( TCOD_console int int                           )] => 'TCOD_color'  );
+    $ffi->attach( set_char_foreground     => [qw( TCOD_console int int TCOD_color                )] => 'void'       );
+    $ffi->attach( get_char_foreground     => [qw( TCOD_console int int                           )] => 'TCOD_color' );
 
-    $ffi->attach( set_default_background => [qw( TCOD_console TCOD_color                        )] => 'void' );
-    $ffi->attach( get_default_background => [qw( TCOD_console                                   )] => 'TCOD_color'  );
+    $ffi->attach( set_default_background  => [qw( TCOD_console TCOD_color                        )] => 'void'       );
+    $ffi->attach( get_default_background  => [qw( TCOD_console                                   )] => 'TCOD_color' );
 
-    $ffi->attach( set_default_foreground => [qw( TCOD_console TCOD_color                        )] => 'void' );
-    $ffi->attach( get_default_foreground => [qw( TCOD_console                                   )] => 'TCOD_color'  );
+    $ffi->attach( set_default_foreground  => [qw( TCOD_console TCOD_color                        )] => 'void'       );
+    $ffi->attach( get_default_foreground  => [qw( TCOD_console                                   )] => 'TCOD_color' );
 
-  # $ffi->attach( get_foreground_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
-  # $ffi->attach( get_background_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
+  # $ffi->attach( get_foreground_color_im age => [qw( TCOD_console )] => 'TCOD_image'  );
+  # $ffi->attach( get_background_color_im age => [qw( TCOD_console )] => 'TCOD_image'  );
 
-    $ffi->attach( set_char               => [qw( TCOD_console int int int                       )] => 'void' );
-    $ffi->attach( get_char               => [qw( TCOD_console int int                           )] => 'int'  );
-    $ffi->attach( put_char               => [qw( TCOD_console int int int int                   )] => 'void' );
-    $ffi->attach( put_char_ex            => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void' );
+    $ffi->attach( set_char                => [qw( TCOD_console int int int                       )] => 'void'       );
+    $ffi->attach( get_char                => [qw( TCOD_console int int                           )] => 'int'        );
+    $ffi->attach( put_char                => [qw( TCOD_console int int int int                   )] => 'void'       );
+    $ffi->attach( put_char_ex             => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void'       );
 
-    $ffi->attach( rect        => [qw( TCOD_console int int int int bool int        )] => 'void' );
-    $ffi->attach( hline       => [qw( TCOD_console int int int          int        )] => 'void' );
-    $ffi->attach( vline       => [qw( TCOD_console int int int          int        )] => 'void' );
-    $ffi->attach( print_frame => [qw( TCOD_console int int int int bool int string )] => ['int', 'int'] => 'void' );
+    $ffi->attach( rect                    => [qw( TCOD_console int int int int bool int          )] => 'void'       );
+    $ffi->attach( hline                   => [qw( TCOD_console int int int          int          )] => 'void'       );
+    $ffi->attach( vline                   => [qw( TCOD_console int int int          int          )] => 'void'       );
 
     # We support up to two controls per function for now
-    $ffi->attach( print           => [qw( TCOD_console int int string                      )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_ex        => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_rect      => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_rect_ex   => [qw( TCOD_console int int int int int int string      )] => ['int', 'int'] => 'void' );
-    $ffi->attach( get_height_rect => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
+    $ffi->attach( print               => [qw( TCOD_console int int                   string )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_ex            => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_rect          => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_rect_ex       => [qw( TCOD_console int int int int int  int  string )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_frame         => [qw( TCOD_console int int int int bool int  string )] => [qw( int int )] => 'void' );
+    $ffi->attach( get_height_rect     => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'int'  );
+
     # UTF-8 variants
-    $ffi->attach( print_utf           => [qw( TCOD_console int int wstring                 )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_ex_utf        => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_rect_utf      => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
-    $ffi->attach( print_rect_ex_utf   => [qw( TCOD_console int int int int int int wstring )] => ['int', 'int'] => 'void' );
-    $ffi->attach( get_height_rect_utf => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
+    $ffi->attach( print_utf           => [qw( TCOD_console int int                  wstring )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_ex_utf        => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_rect_utf      => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'void' );
+    $ffi->attach( print_rect_ex_utf   => [qw( TCOD_console int int int int int int  wstring )] => [qw( int int )] => 'void' );
+  # $ffi->attach( print_frame_utf     => [qw( TCOD_console int int int int bool int wstring )] => [qw( int int )] => 'void' );
+    $ffi->attach( get_height_rect_utf => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'int'  );
 
     # Root console functions
-    $ffi->attach( init_root               => [qw( int int string int bool                 )] => 'void' );
-    $ffi->attach( set_custom_font         => [qw( string int int int                      )] => 'void' );
-    $ffi->attach( map_ascii_code_to_font  => [qw( int int int                             )] => 'void' );
-    $ffi->attach( map_ascii_codes_to_font => [qw( int int int int                         )] => 'void' );
-    $ffi->attach( map_string_to_font      => [qw( string int int                          )] => 'void' );
-    $ffi->attach( is_fullscreen           => [                                             ] => 'bool' );
-    $ffi->attach( set_fullscreen          => [qw( bool                                    )] => 'void' );
-    $ffi->attach( set_window_title        => [qw( string                                  )] => 'void' );
-    $ffi->attach( is_window_closed        => [                                             ] => 'bool' );
-    $ffi->attach( has_mouse_focus         => [                                             ] => 'bool' );
-    $ffi->attach( is_active               => [                                             ] => 'bool' );
-    $ffi->attach( credits                 => [                                             ] => 'void' );
-    $ffi->attach( credits_render          => [qw( int int bool                            )] => 'bool' );
-    $ffi->attach( credits_reset           => [                                             ] => 'void' );
-    $ffi->attach( flush                   => [                                             ] => 'void' );
-    $ffi->attach( set_fade                => [qw( uint8 TCOD_color                        )] => 'void' );
-    $ffi->attach( get_fade                => [                                             ] => 'uint8' );
-    $ffi->attach( get_fading_color        => [                                             ] => 'TCOD_color' );
+    $ffi->attach( init_root               => [qw( int int string int bool )] => 'void' );
+    $ffi->attach( set_custom_font         => [qw( string int int int      )] => 'void' );
+    $ffi->attach( map_ascii_code_to_font  => [qw( int int int             )] => 'void' );
+    $ffi->attach( map_ascii_codes_to_font => [qw( int int int int         )] => 'void' );
+    $ffi->attach( map_string_to_font      => [qw( string int int          )] => 'void' );
+    $ffi->attach( is_fullscreen           => [                             ] => 'bool' );
+    $ffi->attach( set_fullscreen          => [qw( bool                    )] => 'void' );
+    $ffi->attach( set_window_title        => [qw( string                  )] => 'void' );
+    $ffi->attach( is_window_closed        => [                             ] => 'bool' );
+    $ffi->attach( has_mouse_focus         => [                             ] => 'bool' );
+    $ffi->attach( is_active               => [                             ] => 'bool' );
+    $ffi->attach( credits                 => [                             ] => 'void' );
+    $ffi->attach( credits_render          => [qw( int int bool            )] => 'bool' );
+    $ffi->attach( credits_reset           => [                             ] => 'void' );
+    $ffi->attach( flush                   => [                             ] => 'void' );
+    $ffi->attach( set_fade                => [qw( uint8 TCOD_color        )] => 'void' );
+    $ffi->attach( get_fade                => [                             ] => 'uint8' );
+    $ffi->attach( get_fading_color        => [                             ] => 'TCOD_color' );
 
-    $ffi->attach( set_color_control      => [qw( int TCOD_color TCOD_color                )] => 'void' );
+    $ffi->attach( set_color_control => [qw( int TCOD_color TCOD_color )] => 'void' );
 
     $ffi->attach( wait_for_keypress  => ['bool'] => 'TCOD_key' );
     $ffi->attach( check_for_keypress => ['int' ] => 'TCOD_key' );

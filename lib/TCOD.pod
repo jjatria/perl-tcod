@@ -41,6 +41,12 @@ make sure to check the change log before upgrading.
 
 =head1 ENUMS
 
+=head2 Alignment
+
+    TCOD::LEFT
+    TCOD::RIGHT
+    TCOD::CENTER
+
 =head2 Renderer
 
     TCOD::RENDERER_GLSL

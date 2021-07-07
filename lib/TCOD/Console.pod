@@ -8,7 +8,21 @@ TCOD::Console - Terminal emulator for rendering game screens
 
     use TCOD;
 
-    ...
+    TCOD::Console::init_root( 10, 10, 'Test', 0, TCOD::RENDERER_SDL );
+
+    my $start = TCOD::Console->new( 10, 10 );
+    $start->print( 1, 1, 'X' );
+
+    my $end = TCOD::Console->new( 10, 10 );
+    $end->print( 8, 8, 'X' );
+
+    for ( 1 .. 255 ) {
+        $start->blit( 0, 0, 10, 10, undef, 0, 0, 1,        1        );
+        $end->blit(   0, 0, 10, 10, undef, 0, 0, $_ / 255, $_ / 255 );
+        TCOD::Console::flush;
+
+        TCOD::Sys::sleep_milli(5);
+    }
 
 =head1 DESCRIPTION
 
@@ -20,25 +34,36 @@ This class represents a terminal emulator for rendering text-based games.
 
     $console = TCOD::Console->new( $width, $height );
 
+You can create as many off-screen consoles as you want by using this function.
+You can draw on them as you would do with the root console, but you cannot
+flush them to the screen. Else, you can blit them on other consoles, including
+the root console. See L</blit>.
+
+This function returns a TCOD::Console object that can be used as a target in
+most console drawing functions.
+
 =head2 from_file
 
     $console = TCOD::Console->from_file( $path );
 
-=head2 load_asc
-
-    $console = TCOD::Console->load_asc( $path );
-
-=head2 load_apf
-
-    $console = TCOD::Console->load_apf( $path );
+You can create an offscreen console from a C<.asc> or C<.apf> file created
+with Ascii Paint with this constructor
 
 =head2 save_asc
 
     $bool = $console->save_asc( $path );
 
+You can save data from a console to Ascii Paint format with this function.
+The function returns false if it couldn't write the file. This is the only
+ASC function that works also with the root console!
+
 =head2 save_apf
 
     $bool = $console->save_apf( $path );
+
+You can save data from a console to Ascii Paint format with this function.
+The function returns false if it couldn't write the file. This is the only
+ASC function that works also with the root console!
 
 =head2 blit
 
@@ -74,11 +99,11 @@ This class represents a terminal emulator for rendering text-based games.
 
     $console->set_background_flag( $flag );
 
-=head2 get_background_flag    => [qw( TCOD_console                                   )] => 'int'  );
+=head2 get_background_flag
 
     $flag = $console->get_background_flag;
 
-=head2 set_alignment          => [qw( TCOD_console int                               )] => 'void' );
+=head2 set_alignment
 
     $console->set_alignment( $alignment );
 
@@ -120,26 +145,89 @@ This class represents a terminal emulator for rendering text-based games.
 
 =head2 set_char
 
-    $console->set_char( $x, $y, $char );
+    $console->set_char( $x, $y, $char_code );
 
-=head2 get_char               => [qw( TCOD_console int int                           )] => 'int'  );
-=head2 put_char               => [qw( TCOD_console int int int int                   )] => 'void' );
-=head2 put_char_ex            => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void' );
+Set the character at the specified coordinate to the specified character
+without changing its colors.
 
-=head2 Printing methods
+The character is passed as an integer code, like one returned by C<ord>
+or one of the values in the L<TCOD/Char> enum.
 
-# We support up to two controls per function for now
-=head3 print           => [qw( TCOD_console int int string                      )] => ['int', 'int'] => 'void' );
-=head3 print_ex        => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
-=head3 print_rect      => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
-=head3 print_rect_ex   => [qw( TCOD_console int int int int int int string      )] => ['int', 'int'] => 'void' );
-=head3 get_height_rect => [qw( TCOD_console int int int int string              )] => ['int', 'int'] => 'void' );
-# UTF-8 variants
-=head3 print_utf           => [qw( TCOD_console int int wstring                 )] => ['int', 'int'] => 'void' );
-=head3 print_ex_utf        => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
-=head3 print_rect_utf      => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
-=head3 print_rect_ex_utf   => [qw( TCOD_console int int int int int int wstring )] => ['int', 'int'] => 'void' );
-=head3 get_height_rect_utf => [qw( TCOD_console int int int int wstring         )] => ['int', 'int'] => 'void' );
+=head2 get_char
+
+    $char_code = $console->get_char( $x, $y );
+
+Return the character at the specified position in the console.
+
+The character is returned as an integer code, like one returned by C<ord>
+or one of the values in the L<TCOD/Char> enum.
+
+=head2 put_char
+
+    $console->put_char( $x, $y, $char_code, $background_flag );
+
+Draw a character on a console using the default colors.
+
+The character is passed as an integer code, like one returned by C<ord>
+or one of the values in the L<TCOD/Char> enum.
+
+The value in C<$background_flag> determines the behaviour of the background,
+and should be one of the values in the L<TCOD/BackgroundFlag> enum.
+
+=head2 put_char_ex
+
+    $console->put_char_ex(
+        $x,
+        $y,
+        $char_code,
+        $foreground_color,
+        $background_color,
+    );
+
+Draw a character on a console using the default colors.
+
+The character is passed as an integer code, like one returned by C<ord>
+or one of the values in the L<TCOD/Char> enum.
+
+=head2 print
+
+    $console->print(             $x, $y,                        $str );
+    $console->print_ex(          $x, $y,         $flag, $align, $str );
+    $console->print_rect(        $x, $y, $w, $h,                $str );
+    $console->print_rect_ex(     $x, $y, $w, $h, $flag, $align, $str );
+
+    $console->print_utf(         $x, $y,                        $str );
+    $console->print_ex_utf(      $x, $y,         $flag, $align, $str );
+    $console->print_rect_utf(    $x, $y, $w, $h,                $str );
+    $console->print_rect_ex_utf( $x, $y, $w, $h, $flag, $align, $str );
+
+Print a string to the console. The different flavours of this function
+allow you to set the position of the text to print ( using the C<$x> and
+C<$y> coordinates), the dimensions of a box to print it in when it should
+wrap (with C<$w> and C<$h>), the background flag to determine the
+behaviour of the background (with C<$flag>, which must be a value in the
+L<TCOD/BackgroundFlag> enum), the alignment of the text (with C<$align>,
+which must be a value in the L<TCOD/Alignment> enum).
+
+In all cases, the final value is a string to print. To print UTF-8 strings,
+use L<Encode/decode> and use the functions ending in C<_utf>.
+
+The string can contain the C<%c> sequence to work as a control code
+placeholders, which will be replaced with any control codes passed in as
+additional arguments to these functions, in a manner similar to the C<printf>
+family of functions.
+
+Note that, for now, these Perl bindings allow only two such additional codes.
+
+See L</set_color_control> for how to define the value of these codes.
+
+=head3 get_height_rect
+
+    $height = $console->get_height_rect(     $x, $y, $w, $h, $string );
+    $height = $console->get_height_rect_utf( $x, $y, $w, $h, $string );
+
+Returns the expected height of an autowrapped string without actually printing
+the string with one of the L<print_rect> family of functions.
 
 =head1 FUNCTIONS
 
@@ -305,6 +393,13 @@ the beginning before it's finished by calling this function.
 =head2 flush
 
     TCOD::Console::flush;
+
+Once the root console is initialized, you can use one of the printing
+functions to change the background colors, the foreground colors or the
+ASCII characters on the console.
+
+Once you've finished rendering the root console, you have to actually
+apply the updates to the screen with this function.
 
 =head2 set_fade
 

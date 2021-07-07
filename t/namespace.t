@@ -6,6 +6,7 @@ use TCOD;
 is [ sort keys %TCOD:: ], [qw(
     AMBER
     AZURE
+    Alignment
     BEGIN
     BKGND_ADD
     BKGND_ADDA
@@ -26,6 +27,7 @@ is [ sort keys %TCOD:: ], [qw(
     BRASS
     BackgroundFlag
     CELADON
+    CENTER
     CHARTREUSE
     CHAR_ARROW2_E
     CHAR_ARROW2_N
@@ -321,6 +323,7 @@ is [ sort keys %TCOD:: ], [qw(
     K_UP
     Key::
     Keycode
+    LEFT
     LIGHTER_AMBER
     LIGHTER_AZURE
     LIGHTER_BLUE
@@ -407,6 +410,7 @@ is [ sort keys %TCOD:: ], [qw(
     RENDERER_OPENGL2
     RENDERER_SDL
     RENDERER_SDL2
+    RIGHT
     Renderer
     SEA
     SEPIA

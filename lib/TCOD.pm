@@ -696,218 +696,224 @@ package TCOD::Image {
     });
 }
 
-# color values
-sub BLACK                  () { TCOD::Color->new(   0,   0,   0 ) }
-sub DARKEST_GREY           () { TCOD::Color->new(  31,  31,  31 ) }
-sub DARKER_GREY            () { TCOD::Color->new(  63,  63,  63 ) }
-sub DARK_GREY              () { TCOD::Color->new(  95,  95,  95 ) }
-sub GREY                   () { TCOD::Color->new( 127, 127, 127 ) }
-sub LIGHT_GREY             () { TCOD::Color->new( 159, 159, 159 ) }
-sub LIGHTER_GREY           () { TCOD::Color->new( 191, 191, 191 ) }
-sub LIGHTEST_GREY          () { TCOD::Color->new( 223, 223, 223 ) }
-sub WHITE                  () { TCOD::Color->new( 255, 255, 255 ) }
+for (
+    # color values
+    [ BLACK                  => [   0,   0,   0 ] ],
+    [ DARKEST_GREY           => [  31,  31,  31 ] ],
+    [ DARKER_GREY            => [  63,  63,  63 ] ],
+    [ DARK_GREY              => [  95,  95,  95 ] ],
+    [ GREY                   => [ 127, 127, 127 ] ],
+    [ LIGHT_GREY             => [ 159, 159, 159 ] ],
+    [ LIGHTER_GREY           => [ 191, 191, 191 ] ],
+    [ LIGHTEST_GREY          => [ 223, 223, 223 ] ],
+    [ WHITE                  => [ 255, 255, 255 ] ],
 
-sub DARKEST_SEPIA          () { TCOD::Color->new(  31,  24,  15 ) }
-sub DARKER_SEPIA           () { TCOD::Color->new(  63,  50,  31 ) }
-sub DARK_SEPIA             () { TCOD::Color->new(  94,  75,  47 ) }
-sub SEPIA                  () { TCOD::Color->new( 127, 101,  63 ) }
-sub LIGHT_SEPIA            () { TCOD::Color->new( 158, 134, 100 ) }
-sub LIGHTER_SEPIA          () { TCOD::Color->new( 191, 171, 143 ) }
-sub LIGHTEST_SEPIA         () { TCOD::Color->new( 222, 211, 195 ) }
+    [ DARKEST_SEPIA          => [  31,  24,  15 ] ],
+    [ DARKER_SEPIA           => [  63,  50,  31 ] ],
+    [ DARK_SEPIA             => [  94,  75,  47 ] ],
+    [ SEPIA                  => [ 127, 101,  63 ] ],
+    [ LIGHT_SEPIA            => [ 158, 134, 100 ] ],
+    [ LIGHTER_SEPIA          => [ 191, 171, 143 ] ],
+    [ LIGHTEST_SEPIA         => [ 222, 211, 195 ] ],
 
-# desaturated
-sub DESATURATED_RED        () { TCOD::Color->new( 127,  63,  63 ) }
-sub DESATURATED_FLAME      () { TCOD::Color->new( 127,  79,  63 ) }
-sub DESATURATED_ORANGE     () { TCOD::Color->new( 127,  95,  63 ) }
-sub DESATURATED_AMBER      () { TCOD::Color->new( 127, 111,  63 ) }
-sub DESATURATED_YELLOW     () { TCOD::Color->new( 127, 127,  63 ) }
-sub DESATURATED_LIME       () { TCOD::Color->new( 111, 127,  63 ) }
-sub DESATURATED_CHARTREUSE () { TCOD::Color->new(  95, 127,  63 ) }
-sub DESATURATED_GREEN      () { TCOD::Color->new(  63, 127,  63 ) }
-sub DESATURATED_SEA        () { TCOD::Color->new(  63, 127,  95 ) }
-sub DESATURATED_TURQUOISE  () { TCOD::Color->new(  63, 127, 111 ) }
-sub DESATURATED_CYAN       () { TCOD::Color->new(  63, 127, 127 ) }
-sub DESATURATED_SKY        () { TCOD::Color->new(  63, 111, 127 ) }
-sub DESATURATED_AZURE      () { TCOD::Color->new(  63,  95, 127 ) }
-sub DESATURATED_BLUE       () { TCOD::Color->new(  63,  63, 127 ) }
-sub DESATURATED_HAN        () { TCOD::Color->new(  79,  63, 127 ) }
-sub DESATURATED_VIOLET     () { TCOD::Color->new(  95,  63, 127 ) }
-sub DESATURATED_PURPLE     () { TCOD::Color->new( 111,  63, 127 ) }
-sub DESATURATED_FUCHSIA    () { TCOD::Color->new( 127,  63, 127 ) }
-sub DESATURATED_MAGENTA    () { TCOD::Color->new( 127,  63, 111 ) }
-sub DESATURATED_PINK       () { TCOD::Color->new( 127,  63,  95 ) }
-sub DESATURATED_CRIMSON    () { TCOD::Color->new( 127,  63,  79 ) }
+    # desaturated
+    [ DESATURATED_RED        => [ 127,  63,  63 ] ],
+    [ DESATURATED_FLAME      => [ 127,  79,  63 ] ],
+    [ DESATURATED_ORANGE     => [ 127,  95,  63 ] ],
+    [ DESATURATED_AMBER      => [ 127, 111,  63 ] ],
+    [ DESATURATED_YELLOW     => [ 127, 127,  63 ] ],
+    [ DESATURATED_LIME       => [ 111, 127,  63 ] ],
+    [ DESATURATED_CHARTREUSE => [  95, 127,  63 ] ],
+    [ DESATURATED_GREEN      => [  63, 127,  63 ] ],
+    [ DESATURATED_SEA        => [  63, 127,  95 ] ],
+    [ DESATURATED_TURQUOISE  => [  63, 127, 111 ] ],
+    [ DESATURATED_CYAN       => [  63, 127, 127 ] ],
+    [ DESATURATED_SKY        => [  63, 111, 127 ] ],
+    [ DESATURATED_AZURE      => [  63,  95, 127 ] ],
+    [ DESATURATED_BLUE       => [  63,  63, 127 ] ],
+    [ DESATURATED_HAN        => [  79,  63, 127 ] ],
+    [ DESATURATED_VIOLET     => [  95,  63, 127 ] ],
+    [ DESATURATED_PURPLE     => [ 111,  63, 127 ] ],
+    [ DESATURATED_FUCHSIA    => [ 127,  63, 127 ] ],
+    [ DESATURATED_MAGENTA    => [ 127,  63, 111 ] ],
+    [ DESATURATED_PINK       => [ 127,  63,  95 ] ],
+    [ DESATURATED_CRIMSON    => [ 127,  63,  79 ] ],
 
-# lightest
-sub LIGHTEST_RED           () { TCOD::Color->new( 255, 191, 191 ) }
-sub LIGHTEST_FLAME         () { TCOD::Color->new( 255, 207, 191 ) }
-sub LIGHTEST_ORANGE        () { TCOD::Color->new( 255, 223, 191 ) }
-sub LIGHTEST_AMBER         () { TCOD::Color->new( 255, 239, 191 ) }
-sub LIGHTEST_YELLOW        () { TCOD::Color->new( 255, 255, 191 ) }
-sub LIGHTEST_LIME          () { TCOD::Color->new( 239, 255, 191 ) }
-sub LIGHTEST_CHARTREUSE    () { TCOD::Color->new( 223, 255, 191 ) }
-sub LIGHTEST_GREEN         () { TCOD::Color->new( 191, 255, 191 ) }
-sub LIGHTEST_SEA           () { TCOD::Color->new( 191, 255, 223 ) }
-sub LIGHTEST_TURQUOISE     () { TCOD::Color->new( 191, 255, 239 ) }
-sub LIGHTEST_CYAN          () { TCOD::Color->new( 191, 255, 255 ) }
-sub LIGHTEST_SKY           () { TCOD::Color->new( 191, 239, 255 ) }
-sub LIGHTEST_AZURE         () { TCOD::Color->new( 191, 223, 255 ) }
-sub LIGHTEST_BLUE          () { TCOD::Color->new( 191, 191, 255 ) }
-sub LIGHTEST_HAN           () { TCOD::Color->new( 207, 191, 255 ) }
-sub LIGHTEST_VIOLET        () { TCOD::Color->new( 223, 191, 255 ) }
-sub LIGHTEST_PURPLE        () { TCOD::Color->new( 239, 191, 255 ) }
-sub LIGHTEST_FUCHSIA       () { TCOD::Color->new( 255, 191, 255 ) }
-sub LIGHTEST_MAGENTA       () { TCOD::Color->new( 255, 191, 239 ) }
-sub LIGHTEST_PINK          () { TCOD::Color->new( 255, 191, 223 ) }
-sub LIGHTEST_CRIMSON       () { TCOD::Color->new( 255, 191, 207 ) }
+    # lightest
+    [ LIGHTEST_RED           => [ 255, 191, 191 ] ],
+    [ LIGHTEST_FLAME         => [ 255, 207, 191 ] ],
+    [ LIGHTEST_ORANGE        => [ 255, 223, 191 ] ],
+    [ LIGHTEST_AMBER         => [ 255, 239, 191 ] ],
+    [ LIGHTEST_YELLOW        => [ 255, 255, 191 ] ],
+    [ LIGHTEST_LIME          => [ 239, 255, 191 ] ],
+    [ LIGHTEST_CHARTREUSE    => [ 223, 255, 191 ] ],
+    [ LIGHTEST_GREEN         => [ 191, 255, 191 ] ],
+    [ LIGHTEST_SEA           => [ 191, 255, 223 ] ],
+    [ LIGHTEST_TURQUOISE     => [ 191, 255, 239 ] ],
+    [ LIGHTEST_CYAN          => [ 191, 255, 255 ] ],
+    [ LIGHTEST_SKY           => [ 191, 239, 255 ] ],
+    [ LIGHTEST_AZURE         => [ 191, 223, 255 ] ],
+    [ LIGHTEST_BLUE          => [ 191, 191, 255 ] ],
+    [ LIGHTEST_HAN           => [ 207, 191, 255 ] ],
+    [ LIGHTEST_VIOLET        => [ 223, 191, 255 ] ],
+    [ LIGHTEST_PURPLE        => [ 239, 191, 255 ] ],
+    [ LIGHTEST_FUCHSIA       => [ 255, 191, 255 ] ],
+    [ LIGHTEST_MAGENTA       => [ 255, 191, 239 ] ],
+    [ LIGHTEST_PINK          => [ 255, 191, 223 ] ],
+    [ LIGHTEST_CRIMSON       => [ 255, 191, 207 ] ],
 
-# lighter
-sub LIGHTER_RED            () { TCOD::Color->new( 255, 127, 127 ) }
-sub LIGHTER_FLAME          () { TCOD::Color->new( 255, 159, 127 ) }
-sub LIGHTER_ORANGE         () { TCOD::Color->new( 255, 191, 127 ) }
-sub LIGHTER_AMBER          () { TCOD::Color->new( 255, 223, 127 ) }
-sub LIGHTER_YELLOW         () { TCOD::Color->new( 255, 255, 127 ) }
-sub LIGHTER_LIME           () { TCOD::Color->new( 223, 255, 127 ) }
-sub LIGHTER_CHARTREUSE     () { TCOD::Color->new( 191, 255, 127 ) }
-sub LIGHTER_GREEN          () { TCOD::Color->new( 127, 255, 127 ) }
-sub LIGHTER_SEA            () { TCOD::Color->new( 127, 255, 191 ) }
-sub LIGHTER_TURQUOISE      () { TCOD::Color->new( 127, 255, 223 ) }
-sub LIGHTER_CYAN           () { TCOD::Color->new( 127, 255, 255 ) }
-sub LIGHTER_SKY            () { TCOD::Color->new( 127, 223, 255 ) }
-sub LIGHTER_AZURE          () { TCOD::Color->new( 127, 191, 255 ) }
-sub LIGHTER_BLUE           () { TCOD::Color->new( 127, 127, 255 ) }
-sub LIGHTER_HAN            () { TCOD::Color->new( 159, 127, 255 ) }
-sub LIGHTER_VIOLET         () { TCOD::Color->new( 191, 127, 255 ) }
-sub LIGHTER_PURPLE         () { TCOD::Color->new( 223, 127, 255 ) }
-sub LIGHTER_FUCHSIA        () { TCOD::Color->new( 255, 127, 255 ) }
-sub LIGHTER_MAGENTA        () { TCOD::Color->new( 255, 127, 223 ) }
-sub LIGHTER_PINK           () { TCOD::Color->new( 255, 127, 191 ) }
-sub LIGHTER_CRIMSON        () { TCOD::Color->new( 255, 127, 159 ) }
+    # lighter
+    [ LIGHTER_RED            => [ 255, 127, 127 ] ],
+    [ LIGHTER_FLAME          => [ 255, 159, 127 ] ],
+    [ LIGHTER_ORANGE         => [ 255, 191, 127 ] ],
+    [ LIGHTER_AMBER          => [ 255, 223, 127 ] ],
+    [ LIGHTER_YELLOW         => [ 255, 255, 127 ] ],
+    [ LIGHTER_LIME           => [ 223, 255, 127 ] ],
+    [ LIGHTER_CHARTREUSE     => [ 191, 255, 127 ] ],
+    [ LIGHTER_GREEN          => [ 127, 255, 127 ] ],
+    [ LIGHTER_SEA            => [ 127, 255, 191 ] ],
+    [ LIGHTER_TURQUOISE      => [ 127, 255, 223 ] ],
+    [ LIGHTER_CYAN           => [ 127, 255, 255 ] ],
+    [ LIGHTER_SKY            => [ 127, 223, 255 ] ],
+    [ LIGHTER_AZURE          => [ 127, 191, 255 ] ],
+    [ LIGHTER_BLUE           => [ 127, 127, 255 ] ],
+    [ LIGHTER_HAN            => [ 159, 127, 255 ] ],
+    [ LIGHTER_VIOLET         => [ 191, 127, 255 ] ],
+    [ LIGHTER_PURPLE         => [ 223, 127, 255 ] ],
+    [ LIGHTER_FUCHSIA        => [ 255, 127, 255 ] ],
+    [ LIGHTER_MAGENTA        => [ 255, 127, 223 ] ],
+    [ LIGHTER_PINK           => [ 255, 127, 191 ] ],
+    [ LIGHTER_CRIMSON        => [ 255, 127, 159 ] ],
 
-# light
-sub LIGHT_RED              () { TCOD::Color->new( 255,  63,  63 ) }
-sub LIGHT_FLAME            () { TCOD::Color->new( 255, 111,  63 ) }
-sub LIGHT_ORANGE           () { TCOD::Color->new( 255, 159,  63 ) }
-sub LIGHT_AMBER            () { TCOD::Color->new( 255, 207,  63 ) }
-sub LIGHT_YELLOW           () { TCOD::Color->new( 255, 255,  63 ) }
-sub LIGHT_LIME             () { TCOD::Color->new( 207, 255,  63 ) }
-sub LIGHT_CHARTREUSE       () { TCOD::Color->new( 159, 255,  63 ) }
-sub LIGHT_GREEN            () { TCOD::Color->new(  63, 255,  63 ) }
-sub LIGHT_SEA              () { TCOD::Color->new(  63, 255, 159 ) }
-sub LIGHT_TURQUOISE        () { TCOD::Color->new(  63, 255, 207 ) }
-sub LIGHT_CYAN             () { TCOD::Color->new(  63, 255, 255 ) }
-sub LIGHT_SKY              () { TCOD::Color->new(  63, 207, 255 ) }
-sub LIGHT_AZURE            () { TCOD::Color->new(  63, 159, 255 ) }
-sub LIGHT_BLUE             () { TCOD::Color->new(  63,  63, 255 ) }
-sub LIGHT_HAN              () { TCOD::Color->new( 111,  63, 255 ) }
-sub LIGHT_VIOLET           () { TCOD::Color->new( 159,  63, 255 ) }
-sub LIGHT_PURPLE           () { TCOD::Color->new( 207,  63, 255 ) }
-sub LIGHT_FUCHSIA          () { TCOD::Color->new( 255,  63, 255 ) }
-sub LIGHT_MAGENTA          () { TCOD::Color->new( 255,  63, 207 ) }
-sub LIGHT_PINK             () { TCOD::Color->new( 255,  63, 159 ) }
-sub LIGHT_CRIMSON          () { TCOD::Color->new( 255,  63, 111 ) }
+    # light
+    [ LIGHT_RED              => [ 255,  63,  63 ] ],
+    [ LIGHT_FLAME            => [ 255, 111,  63 ] ],
+    [ LIGHT_ORANGE           => [ 255, 159,  63 ] ],
+    [ LIGHT_AMBER            => [ 255, 207,  63 ] ],
+    [ LIGHT_YELLOW           => [ 255, 255,  63 ] ],
+    [ LIGHT_LIME             => [ 207, 255,  63 ] ],
+    [ LIGHT_CHARTREUSE       => [ 159, 255,  63 ] ],
+    [ LIGHT_GREEN            => [  63, 255,  63 ] ],
+    [ LIGHT_SEA              => [  63, 255, 159 ] ],
+    [ LIGHT_TURQUOISE        => [  63, 255, 207 ] ],
+    [ LIGHT_CYAN             => [  63, 255, 255 ] ],
+    [ LIGHT_SKY              => [  63, 207, 255 ] ],
+    [ LIGHT_AZURE            => [  63, 159, 255 ] ],
+    [ LIGHT_BLUE             => [  63,  63, 255 ] ],
+    [ LIGHT_HAN              => [ 111,  63, 255 ] ],
+    [ LIGHT_VIOLET           => [ 159,  63, 255 ] ],
+    [ LIGHT_PURPLE           => [ 207,  63, 255 ] ],
+    [ LIGHT_FUCHSIA          => [ 255,  63, 255 ] ],
+    [ LIGHT_MAGENTA          => [ 255,  63, 207 ] ],
+    [ LIGHT_PINK             => [ 255,  63, 159 ] ],
+    [ LIGHT_CRIMSON          => [ 255,  63, 111 ] ],
 
-# normal
-sub RED                    () { TCOD::Color->new( 255,   0,   0 ) }
-sub FLAME                  () { TCOD::Color->new( 255,  63,   0 ) }
-sub ORANGE                 () { TCOD::Color->new( 255, 127,   0 ) }
-sub AMBER                  () { TCOD::Color->new( 255, 191,   0 ) }
-sub YELLOW                 () { TCOD::Color->new( 255, 255,   0 ) }
-sub LIME                   () { TCOD::Color->new( 191, 255,   0 ) }
-sub CHARTREUSE             () { TCOD::Color->new( 127, 255,   0 ) }
-sub GREEN                  () { TCOD::Color->new(   0, 255,   0 ) }
-sub SEA                    () { TCOD::Color->new(   0, 255, 127 ) }
-sub TURQUOISE              () { TCOD::Color->new(   0, 255, 191 ) }
-sub CYAN                   () { TCOD::Color->new(   0, 255, 255 ) }
-sub SKY                    () { TCOD::Color->new(   0, 191, 255 ) }
-sub AZURE                  () { TCOD::Color->new(   0, 127, 255 ) }
-sub BLUE                   () { TCOD::Color->new(   0,   0, 255 ) }
-sub HAN                    () { TCOD::Color->new(  63,   0, 255 ) }
-sub VIOLET                 () { TCOD::Color->new( 127,   0, 255 ) }
-sub PURPLE                 () { TCOD::Color->new( 191,   0, 255 ) }
-sub FUCHSIA                () { TCOD::Color->new( 255,   0, 255 ) }
-sub MAGENTA                () { TCOD::Color->new( 255,   0, 191 ) }
-sub PINK                   () { TCOD::Color->new( 255,   0, 127 ) }
-sub CRIMSON                () { TCOD::Color->new( 255,   0,  63 ) }
+    # normal
+    [ RED                    => [ 255,   0,   0 ] ],
+    [ FLAME                  => [ 255,  63,   0 ] ],
+    [ ORANGE                 => [ 255, 127,   0 ] ],
+    [ AMBER                  => [ 255, 191,   0 ] ],
+    [ YELLOW                 => [ 255, 255,   0 ] ],
+    [ LIME                   => [ 191, 255,   0 ] ],
+    [ CHARTREUSE             => [ 127, 255,   0 ] ],
+    [ GREEN                  => [   0, 255,   0 ] ],
+    [ SEA                    => [   0, 255, 127 ] ],
+    [ TURQUOISE              => [   0, 255, 191 ] ],
+    [ CYAN                   => [   0, 255, 255 ] ],
+    [ SKY                    => [   0, 191, 255 ] ],
+    [ AZURE                  => [   0, 127, 255 ] ],
+    [ BLUE                   => [   0,   0, 255 ] ],
+    [ HAN                    => [  63,   0, 255 ] ],
+    [ VIOLET                 => [ 127,   0, 255 ] ],
+    [ PURPLE                 => [ 191,   0, 255 ] ],
+    [ FUCHSIA                => [ 255,   0, 255 ] ],
+    [ MAGENTA                => [ 255,   0, 191 ] ],
+    [ PINK                   => [ 255,   0, 127 ] ],
+    [ CRIMSON                => [ 255,   0,  63 ] ],
 
-# dark
-sub DARK_RED               () { TCOD::Color->new( 191,   0,   0 ) }
-sub DARK_FLAME             () { TCOD::Color->new( 191,  47,   0 ) }
-sub DARK_ORANGE            () { TCOD::Color->new( 191,  95,   0 ) }
-sub DARK_AMBER             () { TCOD::Color->new( 191, 143,   0 ) }
-sub DARK_YELLOW            () { TCOD::Color->new( 191, 191,   0 ) }
-sub DARK_LIME              () { TCOD::Color->new( 143, 191,   0 ) }
-sub DARK_CHARTREUSE        () { TCOD::Color->new(  95, 191,   0 ) }
-sub DARK_GREEN             () { TCOD::Color->new(   0, 191,   0 ) }
-sub DARK_SEA               () { TCOD::Color->new(   0, 191,  95 ) }
-sub DARK_TURQUOISE         () { TCOD::Color->new(   0, 191, 143 ) }
-sub DARK_CYAN              () { TCOD::Color->new(   0, 191, 191 ) }
-sub DARK_SKY               () { TCOD::Color->new(   0, 143, 191 ) }
-sub DARK_AZURE             () { TCOD::Color->new(   0,  95, 191 ) }
-sub DARK_BLUE              () { TCOD::Color->new(   0,   0, 191 ) }
-sub DARK_HAN               () { TCOD::Color->new(  47,   0, 191 ) }
-sub DARK_VIOLET            () { TCOD::Color->new(  95,   0, 191 ) }
-sub DARK_PURPLE            () { TCOD::Color->new( 143,   0, 191 ) }
-sub DARK_FUCHSIA           () { TCOD::Color->new( 191,   0, 191 ) }
-sub DARK_MAGENTA           () { TCOD::Color->new( 191,   0, 143 ) }
-sub DARK_PINK              () { TCOD::Color->new( 191,   0,  95 ) }
-sub DARK_CRIMSON           () { TCOD::Color->new( 191,   0,  47 ) }
+    # dark
+    [ DARK_RED               => [ 191,   0,   0 ] ],
+    [ DARK_FLAME             => [ 191,  47,   0 ] ],
+    [ DARK_ORANGE            => [ 191,  95,   0 ] ],
+    [ DARK_AMBER             => [ 191, 143,   0 ] ],
+    [ DARK_YELLOW            => [ 191, 191,   0 ] ],
+    [ DARK_LIME              => [ 143, 191,   0 ] ],
+    [ DARK_CHARTREUSE        => [  95, 191,   0 ] ],
+    [ DARK_GREEN             => [   0, 191,   0 ] ],
+    [ DARK_SEA               => [   0, 191,  95 ] ],
+    [ DARK_TURQUOISE         => [   0, 191, 143 ] ],
+    [ DARK_CYAN              => [   0, 191, 191 ] ],
+    [ DARK_SKY               => [   0, 143, 191 ] ],
+    [ DARK_AZURE             => [   0,  95, 191 ] ],
+    [ DARK_BLUE              => [   0,   0, 191 ] ],
+    [ DARK_HAN               => [  47,   0, 191 ] ],
+    [ DARK_VIOLET            => [  95,   0, 191 ] ],
+    [ DARK_PURPLE            => [ 143,   0, 191 ] ],
+    [ DARK_FUCHSIA           => [ 191,   0, 191 ] ],
+    [ DARK_MAGENTA           => [ 191,   0, 143 ] ],
+    [ DARK_PINK              => [ 191,   0,  95 ] ],
+    [ DARK_CRIMSON           => [ 191,   0,  47 ] ],
 
-# darker
-sub DARKER_RED             () { TCOD::Color->new( 127,   0,   0 ) }
-sub DARKER_FLAME           () { TCOD::Color->new( 127,  31,   0 ) }
-sub DARKER_ORANGE          () { TCOD::Color->new( 127,  63,   0 ) }
-sub DARKER_AMBER           () { TCOD::Color->new( 127,  95,   0 ) }
-sub DARKER_YELLOW          () { TCOD::Color->new( 127, 127,   0 ) }
-sub DARKER_LIME            () { TCOD::Color->new(  95, 127,   0 ) }
-sub DARKER_CHARTREUSE      () { TCOD::Color->new(  63, 127,   0 ) }
-sub DARKER_GREEN           () { TCOD::Color->new(   0, 127,   0 ) }
-sub DARKER_SEA             () { TCOD::Color->new(   0, 127,  63 ) }
-sub DARKER_TURQUOISE       () { TCOD::Color->new(   0, 127,  95 ) }
-sub DARKER_CYAN            () { TCOD::Color->new(   0, 127, 127 ) }
-sub DARKER_SKY             () { TCOD::Color->new(   0,  95, 127 ) }
-sub DARKER_AZURE           () { TCOD::Color->new(   0,  63, 127 ) }
-sub DARKER_BLUE            () { TCOD::Color->new(   0,   0, 127 ) }
-sub DARKER_HAN             () { TCOD::Color->new(  31,   0, 127 ) }
-sub DARKER_VIOLET          () { TCOD::Color->new(  63,   0, 127 ) }
-sub DARKER_PURPLE          () { TCOD::Color->new(  95,   0, 127 ) }
-sub DARKER_FUCHSIA         () { TCOD::Color->new( 127,   0, 127 ) }
-sub DARKER_MAGENTA         () { TCOD::Color->new( 127,   0,  95 ) }
-sub DARKER_PINK            () { TCOD::Color->new( 127,   0,  63 ) }
-sub DARKER_CRIMSON         () { TCOD::Color->new( 127,   0,  31 ) }
+    # darker
+    [ DARKER_RED             => [ 127,   0,   0 ] ],
+    [ DARKER_FLAME           => [ 127,  31,   0 ] ],
+    [ DARKER_ORANGE          => [ 127,  63,   0 ] ],
+    [ DARKER_AMBER           => [ 127,  95,   0 ] ],
+    [ DARKER_YELLOW          => [ 127, 127,   0 ] ],
+    [ DARKER_LIME            => [  95, 127,   0 ] ],
+    [ DARKER_CHARTREUSE      => [  63, 127,   0 ] ],
+    [ DARKER_GREEN           => [   0, 127,   0 ] ],
+    [ DARKER_SEA             => [   0, 127,  63 ] ],
+    [ DARKER_TURQUOISE       => [   0, 127,  95 ] ],
+    [ DARKER_CYAN            => [   0, 127, 127 ] ],
+    [ DARKER_SKY             => [   0,  95, 127 ] ],
+    [ DARKER_AZURE           => [   0,  63, 127 ] ],
+    [ DARKER_BLUE            => [   0,   0, 127 ] ],
+    [ DARKER_HAN             => [  31,   0, 127 ] ],
+    [ DARKER_VIOLET          => [  63,   0, 127 ] ],
+    [ DARKER_PURPLE          => [  95,   0, 127 ] ],
+    [ DARKER_FUCHSIA         => [ 127,   0, 127 ] ],
+    [ DARKER_MAGENTA         => [ 127,   0,  95 ] ],
+    [ DARKER_PINK            => [ 127,   0,  63 ] ],
+    [ DARKER_CRIMSON         => [ 127,   0,  31 ] ],
 
-# darkest
-sub DARKEST_RED            () { TCOD::Color->new(  63,   0,   0 ) }
-sub DARKEST_FLAME          () { TCOD::Color->new(  63,  15,   0 ) }
-sub DARKEST_ORANGE         () { TCOD::Color->new(  63,  31,   0 ) }
-sub DARKEST_AMBER          () { TCOD::Color->new(  63,  47,   0 ) }
-sub DARKEST_YELLOW         () { TCOD::Color->new(  63,  63,   0 ) }
-sub DARKEST_LIME           () { TCOD::Color->new(  47,  63,   0 ) }
-sub DARKEST_CHARTREUSE     () { TCOD::Color->new(  31,  63,   0 ) }
-sub DARKEST_GREEN          () { TCOD::Color->new(   0,  63,   0 ) }
-sub DARKEST_SEA            () { TCOD::Color->new(   0,  63,  31 ) }
-sub DARKEST_TURQUOISE      () { TCOD::Color->new(   0,  63,  47 ) }
-sub DARKEST_CYAN           () { TCOD::Color->new(   0,  63,  63 ) }
-sub DARKEST_SKY            () { TCOD::Color->new(   0,  47,  63 ) }
-sub DARKEST_AZURE          () { TCOD::Color->new(   0,  31,  63 ) }
-sub DARKEST_BLUE           () { TCOD::Color->new(   0,   0,  63 ) }
-sub DARKEST_HAN            () { TCOD::Color->new(  15,   0,  63 ) }
-sub DARKEST_VIOLET         () { TCOD::Color->new(  31,   0,  63 ) }
-sub DARKEST_PURPLE         () { TCOD::Color->new(  47,   0,  63 ) }
-sub DARKEST_FUCHSIA        () { TCOD::Color->new(  63,   0,  63 ) }
-sub DARKEST_MAGENTA        () { TCOD::Color->new(  63,   0,  47 ) }
-sub DARKEST_PINK           () { TCOD::Color->new(  63,   0,  31 ) }
-sub DARKEST_CRIMSON        () { TCOD::Color->new(  63,   0,  15 ) }
+    # darkest
+    [ DARKEST_RED            => [  63,   0,   0 ] ],
+    [ DARKEST_FLAME          => [  63,  15,   0 ] ],
+    [ DARKEST_ORANGE         => [  63,  31,   0 ] ],
+    [ DARKEST_AMBER          => [  63,  47,   0 ] ],
+    [ DARKEST_YELLOW         => [  63,  63,   0 ] ],
+    [ DARKEST_LIME           => [  47,  63,   0 ] ],
+    [ DARKEST_CHARTREUSE     => [  31,  63,   0 ] ],
+    [ DARKEST_GREEN          => [   0,  63,   0 ] ],
+    [ DARKEST_SEA            => [   0,  63,  31 ] ],
+    [ DARKEST_TURQUOISE      => [   0,  63,  47 ] ],
+    [ DARKEST_CYAN           => [   0,  63,  63 ] ],
+    [ DARKEST_SKY            => [   0,  47,  63 ] ],
+    [ DARKEST_AZURE          => [   0,  31,  63 ] ],
+    [ DARKEST_BLUE           => [   0,   0,  63 ] ],
+    [ DARKEST_HAN            => [  15,   0,  63 ] ],
+    [ DARKEST_VIOLET         => [  31,   0,  63 ] ],
+    [ DARKEST_PURPLE         => [  47,   0,  63 ] ],
+    [ DARKEST_FUCHSIA        => [  63,   0,  63 ] ],
+    [ DARKEST_MAGENTA        => [  63,   0,  47 ] ],
+    [ DARKEST_PINK           => [  63,   0,  31 ] ],
+    [ DARKEST_CRIMSON        => [  63,   0,  15 ] ],
 
-# metallic
-sub BRASS                  () { TCOD::Color->new( 191, 151,  96 ) }
-sub COPPER                 () { TCOD::Color->new( 197, 136, 124 ) }
-sub GOLD                   () { TCOD::Color->new( 229, 191,   0 ) }
-sub SILVER                 () { TCOD::Color->new( 203, 203, 203 ) }
+    # metallic
+    [ BRASS                  => [ 191, 151,  96 ] ],
+    [ COPPER                 => [ 197, 136, 124 ] ],
+    [ GOLD                   => [ 229, 191,   0 ] ],
+    [ SILVER                 => [ 203, 203, 203 ] ],
 
-# miscellaneous
-sub CELADON                () { TCOD::Color->new( 172, 255, 175 ) }
-sub PINKEACH               () { TCOD::Color->new( 255, 159, 127 ) }
+    # miscellaneous
+    [ CELADON                => [ 172, 255, 175 ] ],
+    [ PINKEACH               => [ 255, 159, 127 ] ],
+) {
+    no strict 'refs';
+    my ( $name, @args ) = ( $_->[0], @{ $_->[1] } );
+    *{ __PACKAGE__ . '::' . $name } = sub () { TCOD::Color->new( @args ) };
+}
 
 # Delete helper functions
 delete $TCOD::{$_} for qw( enum );

@@ -336,6 +336,58 @@ value for a color component (255).
 - TCOD::FOV\_RESTRICTIVE
 - TCOD::NB\_FOV\_ALGORITHMS
 
+## RandomAlgo
+
+- TCOD::RNG\_MT
+- TCOD::RNG\_CMWC
+
+## Distribution
+
+These values are used by [TCOD::Random](https://metacpan.org/pod/TCOD%3A%3ARandom) to generate random numbers.
+
+- TCOD::DISTRIBUTION\_LINEAR
+
+    This is the default distribution. It will return a number from a range
+    min-max. The numbers will be evenly distributed, ie, each number from the
+    range has the exact same chance of being selected.
+
+- TCOD::DISTRIBUTION\_GAUSSIAN
+
+    This distribution does not have minimum and maximum values. Instead, a mean
+    and a standard deviation are used. The mean is the central value. It will
+    appear with the greatest frequency. The farther away from the mean, the less
+    the probability of appearing the possible results have. Although extreme
+    values are possible, 99.7% of the results will be within the radius of 3
+    standard deviations from the mean. So, if the mean is 0 and the standard
+    deviation is 5, the numbers will mostly fall in the (-15,15) range.
+
+- TCOD::DISTRIBUTION\_GAUSSIAN\_RANGE
+
+    This one takes minimum and maximum values. Under the hood, it computes the
+    mean (which falls right between the minimum and maximum) and the standard
+    deviation and applies a standard Gaussian distribution to the values. The
+    difference is that the result is always guaranteed to be in the min-max
+    range.
+
+- TCOD::DISTRIBUTION\_GAUSSIAN\_INVERSE
+
+    Essentially, this is the same as `TCOD::DISTRIBUTION_GAUSSIAN`. The
+    difference is that the values near +3 and -3 standard deviations from the
+    mean have the highest possibility of appearing, while the mean has the lowest.
+
+- TCOD::DISTRIBUTION\_GAUSSIAN\_RANGE\_INVERSE
+
+    Essentially, this is the same as `TCOD::DISTRIBUTION_GAUSSIAN_RANGE`, but
+    the min and max values have the greatest probability of appearing, while the
+    values between them, the lowest.
+
+## NoiseType
+
+- TCOD::NOISE\_PERLIN
+- TCOD::NOISE\_SIMPLEX
+- TCOD::NOISE\_WAVELET
+- TCOD::NOISE\_DEFAULT
+
 ## Event
 
 - TCOD::EVENT\_NONE
@@ -358,7 +410,9 @@ value for a color component (255).
 - [TCOD::Key](https://metacpan.org/pod/TCOD%3A%3AKey)
 - [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap)
 - [TCOD::Mouse](https://metacpan.org/pod/TCOD%3A%3AMouse)
+- [TCOD::Noise](https://metacpan.org/pod/TCOD%3A%3ANoise)
 - [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath)
+- [TCOD::Random](https://metacpan.org/pod/TCOD%3A%3ARandom)
 - [TCOD::Sys](https://metacpan.org/pod/TCOD%3A%3ASys)
 
 # COPYRIGHT AND LICENSE

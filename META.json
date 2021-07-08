@@ -28,7 +28,7 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
             "File::ShareDir::Install" : "0.06",
-            "perl" : "5.006"
+            "perl" : "5.010"
          }
       },
       "develop" : {
@@ -90,7 +90,15 @@
          "file" : "lib/TCOD.pm",
          "version" : "0.001"
       },
+      "TCOD::Noise" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
       "TCOD::Path" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.001"
+      },
+      "TCOD::Random" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.001"
       },

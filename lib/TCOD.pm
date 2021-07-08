@@ -30,10 +30,17 @@ sub enum {
 }
 
 BEGIN {
-    enum Alignment => {
-        LEFT   => 0,
-        RIGHT  => 1,
-        CENTER => 2,
+    enum Distribution => {
+        DISTRIBUTION_LINEAR                 => 0,
+        DISTRIBUTION_GAUSSIAN               => 1,
+        DISTRIBUTION_GAUSSIAN_RANGE         => 2,
+        DISTRIBUTION_GAUSSIAN_INVERSE       => 3,
+        DISTRIBUTION_GAUSSIAN_RANGE_INVERSE => 4,
+    },
+    Alignment => {
+        LEFT                    =>   0,
+        RIGHT                   =>   1,
+        CENTER                  =>   2,
     },
     Renderer => {
         RENDERER_GLSL           =>   0,
@@ -238,20 +245,24 @@ BEGIN {
         FONT_LAYOUT_CP437       =>  16,
     },
     FOV => {
-        FOV_BASIC               =>  0,
-        FOV_DIAMOND             =>  1,
-        FOV_SHADOW              =>  2,
-        FOV_PERMISSIVE_0        =>  3,
-        FOV_PERMISSIVE_1        =>  4,
-        FOV_PERMISSIVE_2        =>  5,
-        FOV_PERMISSIVE_3        =>  6,
-        FOV_PERMISSIVE_4        =>  7,
-        FOV_PERMISSIVE_5        =>  8,
-        FOV_PERMISSIVE_6        =>  9,
-        FOV_PERMISSIVE_7        => 10,
-        FOV_PERMISSIVE_8        => 11,
-        FOV_RESTRICTIVE         => 12,
-        NB_FOV_ALGORITHMS       => 13,
+        FOV_BASIC               =>   0,
+        FOV_DIAMOND             =>   1,
+        FOV_SHADOW              =>   2,
+        FOV_PERMISSIVE_0        =>   3,
+        FOV_PERMISSIVE_1        =>   4,
+        FOV_PERMISSIVE_2        =>   5,
+        FOV_PERMISSIVE_3        =>   6,
+        FOV_PERMISSIVE_4        =>   7,
+        FOV_PERMISSIVE_5        =>   8,
+        FOV_PERMISSIVE_6        =>   9,
+        FOV_PERMISSIVE_7        =>  10,
+        FOV_PERMISSIVE_8        =>  11,
+        FOV_RESTRICTIVE         =>  12,
+        NB_FOV_ALGORITHMS       =>  13,
+    },
+    RandomAlgo => {
+        RNG_MT                  =>   0,
+        RNG_CMWC                =>   1,
     },
     Event => {
         EVENT_NONE              =>   0,
@@ -284,7 +295,7 @@ $ffi->type( opaque => 'TCOD_event'    );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
 # Blessed opaque types
-for my $name (qw( image console map path dijkstra )) {
+for my $name (qw( image console map path dijkstra random )) {
     $ffi->custom_type( "TCOD_$name" => {
         native_type    => 'opaque',
         perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
@@ -700,6 +711,31 @@ package TCOD::Image {
         $_[0]->( @_[ 1, 2 ], \my $w, \my $h );
         return ( $w, $h );
     });
+}
+
+package TCOD::Random {
+    my $instance;
+
+    $ffi->mangler( sub { 'TCOD_random_' . shift } );
+
+    $ffi->attach( new           => [qw( int     )] => 'TCOD_random' => sub { $_[0]->( @_[ 2 .. $#$_ ]  ) } );
+    $ffi->attach( new_from_seed => [qw( int int )] => 'TCOD_random' => sub { $_[0]->( @_[ 2 .. $#$_ ]  ) } );
+    $ffi->attach( get_instance  => [             ] => 'TCOD_random' => sub {
+        $instance //= $_[0]->(); # Prevent the global RNG from being destroyed
+    });
+
+    $ffi->attach( save             => [qw( TCOD_random                      )] => 'TCOD_random' );
+    $ffi->attach( restore          => [qw( TCOD_random TCOD_random          )] => 'void'        );
+    $ffi->attach( set_distribution => [qw( TCOD_random int                  )] => 'void'        );
+    $ffi->attach( get_int          => [qw( TCOD_random int    int           )] => 'int'         );
+    $ffi->attach( get_int_mean     => [qw( TCOD_random int    int    int    )] => 'int'         );
+    $ffi->attach( get_float        => [qw( TCOD_random float  float         )] => 'float'       );
+    $ffi->attach( get_float_mean   => [qw( TCOD_random float  float  float  )] => 'float'       );
+    $ffi->attach( get_double       => [qw( TCOD_random double double        )] => 'double'      );
+    $ffi->attach( get_double_mean  => [qw( TCOD_random double double double )] => 'double'      );
+
+    $ffi->mangler( sub { shift } );
+    $ffi->attach( [ TCOD_random_delete => 'DESTROY' ] => ['TCOD_random'] => 'void' );
 }
 
 for (

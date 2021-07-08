@@ -89,6 +89,28 @@ True if the wheel was rolled up.
 
 True if the wheel was rolled down.
 
+=head1 FUNCTIONS
+
+=head2 show_cursor
+
+    TCOD::Mouse::show_cursor( $bool );
+
+By default, the mouse cursor in visible in windowed mode, hidden in
+fullscreen mode. You can change it with this function.
+
+=head2 is_cursor_visible
+
+    $bool = TCOD::Mouse::is_cursor_visible;
+
+Get the current status of the mouse cursor (visible or hidden).
+
+=head2 move
+
+    TCOD::Mouse::move( $x, $y );
+
+Set the cursor position (in pixel coordinates, where (0,0) is the top-left
+corner).
+
 =head1 SEE ALSO
 
 =over

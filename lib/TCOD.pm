@@ -334,6 +334,12 @@ package TCOD::Mouse {
         bool => 'wheel_down',
     );
     $ffi->type( 'record(TCOD::Mouse)'  => 'TCOD_mouse'  );
+
+    $ffi->mangler( sub { 'TCOD_mouse_' . shift } );
+
+    $ffi->attach( is_cursor_visible => [             ] => 'bool' );
+    $ffi->attach( move              => [qw( int int )] => 'void' );
+    $ffi->attach( show_cursor       => [qw( bool    )] => 'void' );
 }
 
 package TCOD::Color {

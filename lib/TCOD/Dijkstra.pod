@@ -84,7 +84,7 @@ of the map, this method returns -1.
     ( $x, $y ) = $path->get( $step );
 
 Returns a list with the coordinates of the specified step. Together with
-L</size>, this can be used to iterate through a path.
+L<size|/size>, this can be used to iterate through a path.
 
 =head1 SEE ALSO
 

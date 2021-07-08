@@ -60,8 +60,8 @@ parameter will determine how far to extend the line of sight, while the value
 in C<$light_walls> will determine whether walls adjacent to visible cells should
 themselves be visible.
 
-The value in C<$algorithm> should be one of the values in the L<TCOD/FOV> enum.
-If no value is set, it will default to C<TCOD::FOV_BASIC>.
+The value in C<$algorithm> should be one of the values in the L<FOV|TCOD/FOV>
+enum. If no value is set, it will default to C<TCOD::FOV_BASIC>.
 
 =head2 is_in_fov
 

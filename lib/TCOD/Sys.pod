@@ -103,14 +103,14 @@ extension. Blazing fast if you have the proper hardware and drivers.
 =back
 
 This function switches the current renderer dynamically. The value in
-C<$renderer> must be an element of the L<TCOD/Renderer> enum.
+C<$renderer> must be an element of the L<Renderer|TCOD/Renderer> enum.
 
 =head2 get_renderer
 
     $renderer = TCOD::Sys::get_renderer;
 
-Get the internal renderer. This will be an element of the L<TCOD/Renderer>
-enum.
+Get the internal renderer. This will be an element of the
+L<Renderer|TCOD/Renderer> enum.
 
 =head2 get_char_size
 
@@ -122,7 +122,9 @@ You can get the size in pixels of the characters in the font.
 
     ( $w, $h ) = TCOD::Sys::get_current_resolution;
 
-You can get the current screen resolution with L</get_current_resolution>.
+You can get the current screen resolution with
+L<get_current_resolution|/get_current_resolution>.
+
 You can use it for example to get the desktop resolution before initializing
 the root console.
 
@@ -157,7 +159,7 @@ triggered. Values in key and mouse structures are updated accordingly.
 If flush is false, the function waits only if there are no pending events,
 else it returns the first event in the buffer.
 
-This function is deprecated. Use SDL2::WaitEvent instead.
+This function is deprecated. Use C<SDL_WaitEvent> from SDL instead.
 
 =head2 check_for_event
 
@@ -169,7 +171,7 @@ C<$mask> shows what events we're waiting for. The return value indicates what
 event was actually found. Values in key and mouse structures are updated
 accordingly.
 
-This function is deprecated. Use SDL2::PollEvent instead.
+This function is deprecated. Use C<SDL_PollEvent> from SDL instead.
 
 =head2 clipboard_set
 

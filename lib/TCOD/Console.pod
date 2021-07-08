@@ -37,7 +37,7 @@ This class represents a terminal emulator for rendering text-based games.
 You can create as many off-screen consoles as you want by using this function.
 You can draw on them as you would do with the root console, but you cannot
 flush them to the screen. Else, you can blit them on other consoles, including
-the root console. See L</blit>.
+the root console. See L<blit|/blit>.
 
 This function returns a TCOD::Console object that can be used as a target in
 most console drawing functions.
@@ -151,7 +151,7 @@ Set the character at the specified coordinate to the specified character
 without changing its colors.
 
 The character is passed as an integer code, like one returned by C<ord>
-or one of the values in the L<TCOD/Char> enum.
+or one of the values in the L<Char|TCOD/Char> enum.
 
 =head2 get_char
 
@@ -160,7 +160,7 @@ or one of the values in the L<TCOD/Char> enum.
 Return the character at the specified position in the console.
 
 The character is returned as an integer code, like one returned by C<ord>
-or one of the values in the L<TCOD/Char> enum.
+or one of the values in the L<Char|TCOD/Char> enum.
 
 =head2 put_char
 
@@ -169,10 +169,11 @@ or one of the values in the L<TCOD/Char> enum.
 Draw a character on a console using the default colors.
 
 The character is passed as an integer code, like one returned by C<ord>
-or one of the values in the L<TCOD/Char> enum.
+or one of the values in the L<Char|TCOD/Char> enum.
 
 The value in C<$background_flag> determines the behaviour of the background,
-and should be one of the values in the L<TCOD/BackgroundFlag> enum.
+and should be one of the values in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
 
 =head2 put_char_ex
 
@@ -187,7 +188,7 @@ and should be one of the values in the L<TCOD/BackgroundFlag> enum.
 Draw a character on a console using the default colors.
 
 The character is passed as an integer code, like one returned by C<ord>
-or one of the values in the L<TCOD/Char> enum.
+or one of the values in the L<Char|TCOD/Char> enum.
 
 =head2 print
 
@@ -206,8 +207,8 @@ allow you to set the position of the text to print ( using the C<$x> and
 C<$y> coordinates), the dimensions of a box to print it in when it should
 wrap (with C<$w> and C<$h>), the background flag to determine the
 behaviour of the background (with C<$flag>, which must be a value in the
-L<TCOD/BackgroundFlag> enum), the alignment of the text (with C<$align>,
-which must be a value in the L<TCOD/Alignment> enum).
+L<BackgroundFlag|TCOD/BackgroundFlag> enum), the alignment of the text (with
+C<$align>, which must be a value in the L<Alignment|TCOD/Alignment> enum).
 
 In all cases, the final value is a string to print. To print UTF-8 strings,
 use L<Encode/decode> and use the functions ending in C<_utf>.
@@ -219,7 +220,8 @@ family of functions.
 
 Note that, for now, these Perl bindings allow only two such additional codes.
 
-See L</set_color_control> for how to define the value of these codes.
+See L<set_color_control|/set_color_control> for how to define the value of
+these codes.
 
 =head3 get_height_rect
 
@@ -245,18 +247,20 @@ Initialise the global game window.
 
 The width and height parameters specify the dimensions of the screen in
 characters. The size of the window in pixels will depend on the font used.
-The default font uses characters that are 8x8 pixels. See L</set_custom_font>
-for how to change this font after creation.
+The default font uses characters that are 8x8 pixels. See
+L<set_custom_font|/set_custom_font> for how to change this font after
+creation.
 
 The title will be displayed on top of the window, except when in fullscreen
-mode. See L</set_window_title> for how to change this after creation.
+mode. See L<set_window_title|/set_window_title> for how to change this after
+creation.
 
 The window will be created in fullscreen if the value of C<$fullscreen> is
-true. See L</set_fullscreen> and L</is_fullscreen> for ways to modify this
-after creation.
+true. See L<set_fullscreen|/set_fullscreen> and
+L<is_fullscreen|/is_fullscreen> for ways to modify this after creation.
 
-The renderer will be one of the elements of the L<TCOD/Renderer> enum.
-If you select a renderer that is not supported by the player's machine,
+The renderer will be one of the elements of the L<Renderer|TCOD/Renderer>
+enum. If you select a renderer that is not supported by the player's machine,
 the underlying library will scan the lower renderers until it finds a working
 one.
 
@@ -268,10 +272,10 @@ Whatever renderer you use, it can always be overridden by the player through
 the C<libtcod.cfg> file.
 
 You can dynamically change the renderer after calling this function with
-L<TCOD::Sys/set_renderer>. You can also read the current renderer with
-L<TCOD::Sys::get_renderer>. This might be different from the one you set
-when calling this function in case it's not supported on the player's
-computer.
+L<TCOD::Sys::set_renderer|TCOD::Sys/set_renderer>. You can also read the
+current renderer with L<TCOD::Sys::get_renderer|TCOD::Sys/get_renderer>. This
+might be different from the one you set when calling this function in case
+it's not supported on the player's computer.
 
 =head2 set_custom_font
 
@@ -285,14 +289,15 @@ computer.
 This function allows you to use a bitmap font (PNG or BMP) with custom
 character size or layout.
 
-It should be called before initializing the root console with L<init_root>.
+It should be called before initializing the root console with
+L<init_root|/init_root>.
 
 Once this function is called, you can define your own custom mappings using
 mapping functions
 
 The value in C<$flags> will be a combination of a layout and a type from the
-L<TCOD/FontFlags> enum. The last two parameters determine the number of
-characters in the font along both axes. If set to 0, these will be deduced
+L<FontFlags|TCOD/FontFlags> enum. The last two parameters determine the number
+of characters in the font along both axes. If set to 0, these will be deduced
 from the layout flag.
 
 =head2 map_ascii_code_to_font
@@ -367,7 +372,7 @@ Returns false if the game window is not the active window or is iconified.
 
 Render a credits screen with the message "Powered by libtcod C<$VERSION>",
 with the current libtcod version you are running. This can be shown during
-startup by calling after L</init_root>.
+startup by calling after L<init_root|/init_root>.
 
 The credits screen can be skipped by pressing any key.
 
@@ -379,7 +384,7 @@ Render the credits message on top of an existing screen at the specified
 coordinates. If C<$alpha> is set to a true value, the credits will be
 rendered transparently on the existing screen. For this to work, this
 function must be called between your screen rendering code and the console
-L</flush>.
+L<flush|/flush>.
 
 Returns true when the credits screen is finished.
 
@@ -472,18 +477,22 @@ represents the end of the string in C/C++.
 Return immediately with a L<TCOD::Key> populated with data from a recently
 pressed key.
 
-This function is deprecated. Use SDL2::PollEvent instead.
+The current recommendation, however, is to use SDL functions directly to check
+the keyboard state. Consider that option if available.
 
 =head2 is_key_pressed
 
     # Deprecated
     $bool = TCOD::Console::is_key_pressed( $keycode );
 
-The preferred way to check for user input is to use
-L<TCOD::Sys/check_for_event>, but you can also get the status of any special
-key at any time with
+Given a keycode from the L<Keycode|TCOD/Keycode> enum, this function returns
+true if the key is currently pressed.
 
-This function is deprecated. Use SDL to check the keyboard state instead.
+A better way to check for user input is to use
+L<TCOD::Sys::check_for_event|TCOD::Sys/check_for_event>.
+
+The current best recommendation, however, is to use SDL functions directly to
+check the keyboard state. Consider that option if available.
 
 =head1 SEE ALSO
 

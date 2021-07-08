@@ -5,6 +5,7 @@ TCOD - FFI bindings for libtcod
 # SYNOPSIS
 
     use TCOD;
+    use File::Share 'dist_file';
 
     TCOD::Console::set_custom_font(
         dist_file( TCOD => 'arial10x10.png' ),

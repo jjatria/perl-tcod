@@ -127,7 +127,8 @@ images with transparent pixels.
 Blit an image on a console. The first two parameters (which must be integers)
 specify the coordinates of the cell in the target console where the centre
 of the image will be rendered. The flags determine how the cell's background
-is modified and must be a value in the L<TCOD/BackgroundFlag> enum.
+is modified and must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
 
 The image can be scaled and rotated with the last three parameters. Of these,
 the first and second determine the horizontal and vertical scaling
@@ -160,9 +161,10 @@ entire image, -1 can be used for the width and height.
 
 Blit a rectangular part of the image on a console without scaling or
 rotating it. Each pixel in the image fills a cell in the console. For a
-method that supports rotation and scaling, see L</blit>.
+method that supports rotation and scaling, see L<blit|/blit>.
 
-The value in C<$flags> is one of those in the L<TCOD/BackgroundFlag> enum.
+The value in C<$flags> is one of those in the
+L<BackgroundFlag|TCOD/BackgroundFlag> enum.
 
 =head2 get_size
 

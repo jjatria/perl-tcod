@@ -52,7 +52,7 @@ Takes the coordinates of a starting position and a target destination, and
 computes an A* map from one to the other.
 
 The start and ends points will be stored internally, and can be retrieved with
-L</get_origin> and L</get_destination> (see below).
+L<get_origin|/get_origin> and L<get_destination|/get_destination> (see below).
 
 =head2 reverse
 
@@ -66,7 +66,7 @@ Reverses the origin and destination points for this path.
 
 Returns true when the internal iterator has run out of steps in the path.
 
-See L</walk> for a way to move the internal iterator forward.
+See L<walk|/walk> for a way to move the internal iterator forward.
 
 =head2 size
 
@@ -81,21 +81,21 @@ computing a path.
     ( $x, $y ) = $path->get_origin;
 
 Returns a list with the coordinates of the point set as the path's origin.
-See L</compute> for how this is done.
+See L<compute|/compute> for how this is done.
 
 =head2 get_destination
 
     ( $x, $y ) = $path->get_destination;
 
 Returns a list with the coordinates of the point set as the path's
-destination. See L</compute> for how this is done.
+destination. See L<compute|/compute> for how this is done.
 
 =head2 get
 
     ( $x, $y ) = $path->get( $step );
 
 Returns a list with the coordinates of the specified step. Together with
-L</size>, this can be used to iterate through a path without using the
+L<size|/size>, this can be used to iterate through a path without using the
 internal iterator.
 
 =head2 walk
@@ -104,7 +104,7 @@ internal iterator.
 
 Returns a list with the coordinates of the current step of the internal
 iterator, and moves the iterator forward. The values returned by this method
-will be meaningful as long as L</is_empty> returns false.
+will be meaningful as long as L<is_empty|/is_empty> returns false.
 
 =head1 SEE ALSO
 

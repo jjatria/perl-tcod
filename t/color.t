@@ -39,7 +39,7 @@ subtest 'HSV setters and getters' => sub {
         within(0.301960796117783),
     ] => 'Used individual setters for HSV';
 
-    is $color->equals( TCOD::BLACK ), F, 'Color constants are imutable';
+    isnt $color, TCOD::BLACK, 'Color constants are imutable';
 };
 
 subtest 'Shift hue' => sub {
@@ -64,21 +64,21 @@ subtest 'Interpolation' => sub {
     my $mid   = TCOD::Color->new( 0x7f, 0x80, 0x7f );
     my $end   = TCOD::Color->new( 0xff, 0x80, 0x00 );
 
-    is $start->lerp( $end, 0 )->equals( $start ), T, 'Interpolated at 0';
-    is $start->lerp( $end, 0.5 )->equals( $mid ), T, 'Interpolated at 0.5';
-    is $start->lerp( $end, 1 )->equals( $end   ), T, 'Interpolated at 1';
+    is $start->lerp( $end, 0   ), $start, 'Interpolated at 0';
+    is $start->lerp( $end, 0.5 ), $mid,   'Interpolated at 0.5';
+    is $start->lerp( $end, 1   ), $end,   'Interpolated at 1';
 
     is [ TCOD::Color::gen_map( $start => 0, $mid => 7, $end => 9 ) ] => [
-        validator( sub { $_ == $start                               } ),
-        validator( sub { $_ == TCOD::Color->new( 0x12, 0x80, 0xec ) } ),
-        validator( sub { $_ == TCOD::Color->new( 0x24, 0x80, 0xda ) } ),
-        validator( sub { $_ == TCOD::Color->new( 0x36, 0x80, 0xc8 ) } ),
-        validator( sub { $_ == TCOD::Color->new( 0x48, 0x80, 0xb5 ) } ),
-        validator( sub { $_ == TCOD::Color->new( 0x5a, 0x80, 0xa3 ) } ),
-        validator( sub { $_ == TCOD::Color->new( 0x6c, 0x80, 0x91 ) } ),
-        validator( sub { $_ == $mid                                 } ),
-        validator( sub { $_ == TCOD::Color->new( 0xbf, 0x80, 0x3f ) } ),
-        validator( sub { $_ == $end                                 } ),
+        $start,
+        TCOD::Color->new( 0x12, 0x80, 0xec ),
+        TCOD::Color->new( 0x24, 0x80, 0xda ),
+        TCOD::Color->new( 0x36, 0x80, 0xc8 ),
+        TCOD::Color->new( 0x48, 0x80, 0xb5 ),
+        TCOD::Color->new( 0x5a, 0x80, 0xa3 ),
+        TCOD::Color->new( 0x6c, 0x80, 0x91 ),
+        $mid,
+        TCOD::Color->new( 0xbf, 0x80, 0x3f ),
+        $end,
     ] => 'Generated color map';
 };
 

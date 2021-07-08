@@ -1,4 +1,6 @@
 requires 'FFI::Platypus';
 requires 'FFI::C';
 
-recommends 'File::Share';
+on test => sub {
+    requires 'Test2::Suite';
+};

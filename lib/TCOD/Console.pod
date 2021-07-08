@@ -79,69 +79,125 @@ ASC function that works also with the root console!
         $background_alpha,
     );
 
+This function allows you to blit a rectangular area of the source console at
+a specific position on a destination console. It can also simulate alpha
+transparency with foreground and background alpha parameters.
+
 =head2 set_key_color
 
     $console->set_key_color( $color );
+
+This function defines a transparent background color for this console. All
+cells with this background color are ignored when calling L<blit|/blit>.
+You can use it to blit only some parts of the console.
 
 =head2 clear
 
     $console->clear;
 
+Reset all the cells in a console. After calling this method, all cells will
+have their foreground and background colors set to the console's current
+defaults (see L<set_default_foreground|/set_default_foreground> and friends),
+and their ASCII code set to 32 (a blank space).
+
 =head2 get_width
 
     $width = $console->get_width;
+
+Get the width of the console.
 
 =head2 get_height
 
     $height = $console->get_height;
 
+Get the height of the console.
+
 =head2 set_background_flag
 
     $console->set_background_flag( $flag );
+
+Set the background mode for the console. The value of C<$flag> should be a
+member of the L<BackgroundFlag|TCOD/BackgroundFlag> enum, determines how the
+background color is modified.
 
 =head2 get_background_flag
 
     $flag = $console->get_background_flag;
 
+Get the console's default background flag. It will be a value from the
+L<BackgroundFlag|TCOD/BackgroundFlag> enum.
+
 =head2 set_alignment
 
     $console->set_alignment( $alignment );
+
+Set the alignment for the console. The value of C<$alignment> should be a
+member of the L<Alignment|TCOD/Alignment> enum.
 
 =head2 get_alignment
 
     $alignment = $console->get_alignment;
 
+Get the console's default alignment flag. It will be a value from the
+L<Alignment|TCOD/Alignment> enum.
+
 =head2 set_char_background
 
     $console->set_char_background( $x, $y, $color, $flag );
+
+Set the background color of a cell, leaving other properties (foreground color
+and ASCII code) unchanged. The value of C<$flag>, which should be a member of
+the L<BackgroundFlag|TCOD/BackgroundFlag> enum, determines how the background
+color is modified.
 
 =head2 get_char_background
 
     $color = $cosole->get_char_background( $x, $y );
 
+Get the background color of a cell.
+
 =head2 set_char_foreground
 
     $console->set_char_foreground( $x, $y, $color, $flag );
+
+Set the foreground color of a cell, leaving other properties (background color
+and ASCII code) unchanged. The value of C<$flag>, which should be a member of
+the L<BackgroundFlag|TCOD/BackgroundFlag> enum, determines how the background
+color is modified.
 
 =head2 get_char_foreground
 
     $color = $cosole->get_char_foreground( $x, $y );
 
+Get the foreground color of a cell.
+
 =head2 set_default_background
 
     $console->set_default_background( $color );
+
+Change the default background color for a console. This is used by several of
+the drawing functions described in this document.
 
 =head2 get_default_background
 
     $color = $console->get_default_background;
 
+Get the default background color for a console. This is used by several of
+the drawing functions described in this document.
+
 =head2 set_default_foreground
 
     $console->set_default_foreground( $color );
 
+Change the default foreground color for a console. This is used by several of
+the drawing functions described in this document.
+
 =head2 get_default_foreground
 
     $color = $console->get_default_foreground;
+
+Get the default foreground color for a console. This is used by several of
+the drawing functions described in this document.
 
 =head2 set_char
 
@@ -223,13 +279,49 @@ Note that, for now, these Perl bindings allow only two such additional codes.
 See L<set_color_control|/set_color_control> for how to define the value of
 these codes.
 
-=head3 get_height_rect
+=head2 print_frame
+
+    $console->print_frame( $x, $y, $w, $h, $clear, $flag, $str );
+
+This function calls the L<rect|/rect> function using the supplied parameters,
+then draws a rectangle with the console's default foreground color.
+
+The value of C<$str> is printed on the top of the rectangle, using inverted
+colors.
+
+=head2 get_height_rect
 
     $height = $console->get_height_rect(     $x, $y, $w, $h, $string );
     $height = $console->get_height_rect_utf( $x, $y, $w, $h, $string );
 
 Returns the expected height of an autowrapped string without actually printing
 the string with one of the L<print_rect> family of functions.
+
+=head2 rect
+
+    $console->rect( $x, $y, $w, $h, $clear, $flag );
+
+Fills a rectngle in the console with the specified position and dimensions.
+
+The background color for every cell inside the rectangle will be adjusted with
+the default background color of the console (the value in C<$flag> will
+determine what effect this wil have on the cell's color).
+
+If C<$clear> is set to a true value, their ASCII code will be set to 32 (space).
+
+=head2 hline
+
+    $console->hline( $x, $y, $length, $flag );
+
+Draws a horizontal line in the console, using ASCII code 196
+(C<TCOD::CHAR_HLINE>), and the console's default background/foreground colors.
+
+=head2 vline
+
+    $console->vline( $x, $y, $length, $flag );
+
+Draws an vertical line in the console, using ASCII code 179
+(C<TCOD::CHAR_VLINE>), and the console's default background/foreground colors.
 
 =head1 FUNCTIONS
 
@@ -419,9 +511,13 @@ call this function for each rendered frame.
 
     $fade = TCOD::Console::get_fade;
 
+Get the current fade amount. See L<set_fade|/set_fade> for how this is set.
+
 =head2 get_fading_color
 
     $color = TCOD::Console::get_fading_color;
+
+Get the current fade color. See L<set_fade|/set_fade> for how this is set.
 
 =head2 set_color_control
 

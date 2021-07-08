@@ -44,238 +44,533 @@ make sure to check the change log before upgrading.
 
 =head2 Alignment
 
-    TCOD::LEFT
-    TCOD::RIGHT
-    TCOD::CENTER
+=over
+
+=item * TCOD::LEFT
+
+=item * TCOD::RIGHT
+
+=item * TCOD::CENTER
+
+=back
 
 =head2 Renderer
 
-    TCOD::RENDERER_GLSL
-    TCOD::RENDERER_OPENGL
-    TCOD::RENDERER_SDL
-    TCOD::RENDERER_SDL2
-    TCOD::RENDERER_OPENGL2
-    TCOD::NB_RENDERERS
+=over
+
+=item * TCOD::RENDERER_GLSL
+
+=item * TCOD::RENDERER_OPENGL
+
+=item * TCOD::RENDERER_SDL
+
+=item * TCOD::RENDERER_SDL2
+
+=item * TCOD::RENDERER_OPENGL2
+
+=item * TCOD::NB_RENDERERS
+
+=back
 
 =head2 BackgroundFlag
 
-    TCOD::BKGND_NONE
-    TCOD::BKGND_SET
-    TCOD::BKGND_MULTIPLY
-    TCOD::BKGND_LIGHTEN
-    TCOD::BKGND_DARKEN
-    TCOD::BKGND_SCREEN
-    TCOD::BKGND_COLOR_DODGE
-    TCOD::BKGND_COLOR_BURN
-    TCOD::BKGND_ADD
-    TCOD::BKGND_ADDA
-    TCOD::BKGND_BURN
-    TCOD::BKGND_OVERLAY
-    TCOD::BKGND_ALPH
-    TCOD::BKGND_DEFAULT
+This flag is used by most functions that modify a cell background color. It
+defines how the console's current background color is used to modify the
+cell's existing background color.
+
+See the documentation for L<TCOD::Color|TCOD::Color/COLOR ARITHMETIC> for
+details on how color arithmetic works when referenced below.
+
+When equations are listed below, these are applied to each individual
+component in turn, with C<new> being the component for the new color, C<old>
+being the one for the current one, and C<white> standing in for the maximum
+value for a color component (255).
+
+=over
+
+=item * TCOD::BKGND_NONE
+
+The cell's background is not modified.
+
+=item * TCOD::BKGND_SET
+
+The cell's background is replaced with the new color.
+
+=item * TCOD::BKGND_MULTIPLY
+
+The cell's background is multiplied with the new color.
+
+=item * TCOD::BKGND_LIGHTEN
+
+Each of the components of the cell's background is replaced with the
+respective component of the new color if it is lighter.
+
+=item * TCOD::BKGND_DARKEN
+
+Each of the components of the cell's background is replaced with the
+respective component of the new color if it is darker.
+
+=item * TCOD::BKGND_SCREEN
+
+The cell's background color is modified according to the following operation:
+
+    white - ( white - old ) * ( white - new )
+
+=item * TCOD::BKGND_COLOR_DODGE
+
+The cell's background color is modified according to the following operation:
+
+    new / ( white - old )
+
+=item * TCOD::BKGND_COLOR_BURN
+
+The cell's background color is modified according to the following operation:
+
+    white - ( white - old ) / new
+
+=item * TCOD::BKGND_ADD
+
+The new color is added to the cell's background.
+
+=item * TCOD::BKGND_ADDALPHA
+
+Use this as a macro with a float parameter between 0 and 1. The cell's
+background color is modified according to the following operation:
+
+    old + alpha * new
+
+=item * TCOD::BKGND_BURN
+
+The cell's background color is modified according to the following operation:
+
+    old + new - white
+
+=item * TCOD::BKGND_OVERLAY
+
+The cell's background color is modified according to the following operation:
+
+    2 * new * old                                 # if the component is >= 128
+    white - 2 * ( white - new ) * ( white - old ) # if the component is <  128
+
+=item * TCOD::BKGND_ALPHA
+
+Use this as a macro with a float parameter between 0 and 1. The cell's
+background color is modified according to the following operation:
+
+    ( 1 - alpha ) * old + alpha * ( new - old )
+
+=item * TCOD::BKGND_DEFAULT
+
+Use the console's default background flag. See
+L<TCOD::Console::set_background_flag|TCOD::Console/set_background_flag>.
+
+=back
 
 =head2 ColorControl
 
-    TCOD::COLCTRL_1
-    TCOD::COLCTRL_2
-    TCOD::COLCTRL_3
-    TCOD::COLCTRL_4
-    TCOD::COLCTRL_5
-    TCOD::COLCTRL_NUMBER
-    TCOD::COLCTRL_FORE_RGB
-    TCOD::COLCTRL_BACK_RGB
-    TCOD::COLCTRL_STOP
+=over
+
+=item * TCOD::COLCTRL_1
+
+=item * TCOD::COLCTRL_2
+
+=item * TCOD::COLCTRL_3
+
+=item * TCOD::COLCTRL_4
+
+=item * TCOD::COLCTRL_5
+
+=item * TCOD::COLCTRL_NUMBER
+
+=item * TCOD::COLCTRL_FORE_RGB
+
+=item * TCOD::COLCTRL_BACK_RGB
+
+=item * TCOD::COLCTRL_STOP
+
+=back
 
 =head2 Keycode
 
-    TCOD::K_NONE
-    TCOD::K_ESCAPE
-    TCOD::K_BACKSPACE
-    TCOD::K_TAB
-    TCOD::K_ENTER
-    TCOD::K_SHIFT
-    TCOD::K_CONTROL
-    TCOD::K_ALT
-    TCOD::K_PAUSE
-    TCOD::K_CAPSLOCK
-    TCOD::K_PAGEUP
-    TCOD::K_PAGEDOWN
-    TCOD::K_END
-    TCOD::K_HOME
-    TCOD::K_UP
-    TCOD::K_LEFT
-    TCOD::K_RIGHT
-    TCOD::K_DOWN
-    TCOD::K_PRINTSCREEN
-    TCOD::K_INSERT
-    TCOD::K_DELETE
-    TCOD::K_LWIN
-    TCOD::K_RWIN
-    TCOD::K_APPS
-    TCOD::K_0
-    TCOD::K_1
-    TCOD::K_2
-    TCOD::K_3
-    TCOD::K_4
-    TCOD::K_5
-    TCOD::K_6
-    TCOD::K_7
-    TCOD::K_8
-    TCOD::K_9
-    TCOD::K_KP0
-    TCOD::K_KP1
-    TCOD::K_KP2
-    TCOD::K_KP3
-    TCOD::K_KP4
-    TCOD::K_KP5
-    TCOD::K_KP6
-    TCOD::K_KP7
-    TCOD::K_KP8
-    TCOD::K_KP9
-    TCOD::K_KPADD
-    TCOD::K_KPSUB
-    TCOD::K_KPDIV
-    TCOD::K_KPMUL
-    TCOD::K_KPDEC
-    TCOD::K_KPENTER
-    TCOD::K_F1
-    TCOD::K_F2
-    TCOD::K_F3
-    TCOD::K_F4
-    TCOD::K_F5
-    TCOD::K_F6
-    TCOD::K_F7
-    TCOD::K_F8
-    TCOD::K_F9
-    TCOD::K_F10
-    TCOD::K_F11
-    TCOD::K_F12
-    TCOD::K_NUMLOCK
-    TCOD::K_SCROLLLOCK
-    TCOD::K_SPACE
-    TCOD::K_CHAR
-    TCOD::K_TEXT
+=over
+
+=item * TCOD::K_NONE
+
+=item * TCOD::K_ESCAPE
+
+=item * TCOD::K_BACKSPACE
+
+=item * TCOD::K_TAB
+
+=item * TCOD::K_ENTER
+
+=item * TCOD::K_SHIFT
+
+=item * TCOD::K_CONTROL
+
+=item * TCOD::K_ALT
+
+=item * TCOD::K_PAUSE
+
+=item * TCOD::K_CAPSLOCK
+
+=item * TCOD::K_PAGEUP
+
+=item * TCOD::K_PAGEDOWN
+
+=item * TCOD::K_END
+
+=item * TCOD::K_HOME
+
+=item * TCOD::K_UP
+
+=item * TCOD::K_LEFT
+
+=item * TCOD::K_RIGHT
+
+=item * TCOD::K_DOWN
+
+=item * TCOD::K_PRINTSCREEN
+
+=item * TCOD::K_INSERT
+
+=item * TCOD::K_DELETE
+
+=item * TCOD::K_LWIN
+
+=item * TCOD::K_RWIN
+
+=item * TCOD::K_APPS
+
+=item * TCOD::K_0
+
+=item * TCOD::K_1
+
+=item * TCOD::K_2
+
+=item * TCOD::K_3
+
+=item * TCOD::K_4
+
+=item * TCOD::K_5
+
+=item * TCOD::K_6
+
+=item * TCOD::K_7
+
+=item * TCOD::K_8
+
+=item * TCOD::K_9
+
+=item * TCOD::K_KP0
+
+=item * TCOD::K_KP1
+
+=item * TCOD::K_KP2
+
+=item * TCOD::K_KP3
+
+=item * TCOD::K_KP4
+
+=item * TCOD::K_KP5
+
+=item * TCOD::K_KP6
+
+=item * TCOD::K_KP7
+
+=item * TCOD::K_KP8
+
+=item * TCOD::K_KP9
+
+=item * TCOD::K_KPADD
+
+=item * TCOD::K_KPSUB
+
+=item * TCOD::K_KPDIV
+
+=item * TCOD::K_KPMUL
+
+=item * TCOD::K_KPDEC
+
+=item * TCOD::K_KPENTER
+
+=item * TCOD::K_F1
+
+=item * TCOD::K_F2
+
+=item * TCOD::K_F3
+
+=item * TCOD::K_F4
+
+=item * TCOD::K_F5
+
+=item * TCOD::K_F6
+
+=item * TCOD::K_F7
+
+=item * TCOD::K_F8
+
+=item * TCOD::K_F9
+
+=item * TCOD::K_F10
+
+=item * TCOD::K_F11
+
+=item * TCOD::K_F12
+
+=item * TCOD::K_NUMLOCK
+
+=item * TCOD::K_SCROLLLOCK
+
+=item * TCOD::K_SPACE
+
+=item * TCOD::K_CHAR
+
+=item * TCOD::K_TEXT
+
+=back
 
 =head2 Char
 
-    TCOD::CHAR_HLINE
-    TCOD::CHAR_VLINE
-    TCOD::CHAR_NE
-    TCOD::CHAR_NW
-    TCOD::CHAR_SE
-    TCOD::CHAR_SW
-    TCOD::CHAR_TEEW
-    TCOD::CHAR_TEEE
-    TCOD::CHAR_TEEN
-    TCOD::CHAR_TEES
-    TCOD::CHAR_CROSS
-    TCOD::CHAR_DHLINE
-    TCOD::CHAR_DVLINE
-    TCOD::CHAR_DNE
-    TCOD::CHAR_DNW
-    TCOD::CHAR_DSE
-    TCOD::CHAR_DSW
-    TCOD::CHAR_DTEEW
-    TCOD::CHAR_DTEEE
-    TCOD::CHAR_DTEEN
-    TCOD::CHAR_DTEES
-    TCOD::CHAR_DCROSS
-    TCOD::CHAR_BLOCK1
-    TCOD::CHAR_BLOCK2
-    TCOD::CHAR_BLOCK3
-    TCOD::CHAR_ARROW_N
-    TCOD::CHAR_ARROW_S
-    TCOD::CHAR_ARROW_E
-    TCOD::CHAR_ARROW_W
-    TCOD::CHAR_ARROW2_N
-    TCOD::CHAR_ARROW2_S
-    TCOD::CHAR_ARROW2_E
-    TCOD::CHAR_ARROW2_W
-    TCOD::CHAR_DARROW_H
-    TCOD::CHAR_DARROW_V
-    TCOD::CHAR_CHECKBOX_UNSET
-    TCOD::CHAR_CHECKBOX_SET
-    TCOD::CHAR_RADIO_UNSET
-    TCOD::CHAR_RADIO_SET
-    TCOD::CHAR_SUBP_NW
-    TCOD::CHAR_SUBP_NE
-    TCOD::CHAR_SUBP_N
-    TCOD::CHAR_SUBP_SE
-    TCOD::CHAR_SUBP_DIAG
-    TCOD::CHAR_SUBP_E
-    TCOD::CHAR_SUBP_SW
-    TCOD::CHAR_SMILIE
-    TCOD::CHAR_SMILIE_INV
-    TCOD::CHAR_HEART
-    TCOD::CHAR_DIAMOND
-    TCOD::CHAR_CLUB
-    TCOD::CHAR_SPADE
-    TCOD::CHAR_BULLET
-    TCOD::CHAR_BULLET_INV
-    TCOD::CHAR_MALE
-    TCOD::CHAR_FEMALE
-    TCOD::CHAR_NOTE
-    TCOD::CHAR_NOTE_DOUBLE
-    TCOD::CHAR_LIGHT
-    TCOD::CHAR_EXCLAM_DOUBLE
-    TCOD::CHAR_PILCROW
-    TCOD::CHAR_SECTION
-    TCOD::CHAR_POUND
-    TCOD::CHAR_MULTIPLICATION
-    TCOD::CHAR_FUNCTION
-    TCOD::CHAR_RESERVED
-    TCOD::CHAR_HALF
-    TCOD::CHAR_ONE_QUARTER
-    TCOD::CHAR_COPYRIGHT
-    TCOD::CHAR_CENT
-    TCOD::CHAR_YEN
-    TCOD::CHAR_CURRENCY
-    TCOD::CHAR_THREE_QUARTERS
-    TCOD::CHAR_DIVISION
-    TCOD::CHAR_GRADE
-    TCOD::CHAR_UMLAUT
-    TCOD::CHAR_POW1
-    TCOD::CHAR_POW3
-    TCOD::CHAR_POW2
-    TCOD::CHAR_BULLET_SQUARE
+=over
+
+=item * TCOD::CHAR_HLINE
+
+=item * TCOD::CHAR_VLINE
+
+=item * TCOD::CHAR_NE
+
+=item * TCOD::CHAR_NW
+
+=item * TCOD::CHAR_SE
+
+=item * TCOD::CHAR_SW
+
+=item * TCOD::CHAR_TEEW
+
+=item * TCOD::CHAR_TEEE
+
+=item * TCOD::CHAR_TEEN
+
+=item * TCOD::CHAR_TEES
+
+=item * TCOD::CHAR_CROSS
+
+=item * TCOD::CHAR_DHLINE
+
+=item * TCOD::CHAR_DVLINE
+
+=item * TCOD::CHAR_DNE
+
+=item * TCOD::CHAR_DNW
+
+=item * TCOD::CHAR_DSE
+
+=item * TCOD::CHAR_DSW
+
+=item * TCOD::CHAR_DTEEW
+
+=item * TCOD::CHAR_DTEEE
+
+=item * TCOD::CHAR_DTEEN
+
+=item * TCOD::CHAR_DTEES
+
+=item * TCOD::CHAR_DCROSS
+
+=item * TCOD::CHAR_BLOCK1
+
+=item * TCOD::CHAR_BLOCK2
+
+=item * TCOD::CHAR_BLOCK3
+
+=item * TCOD::CHAR_ARROW_N
+
+=item * TCOD::CHAR_ARROW_S
+
+=item * TCOD::CHAR_ARROW_E
+
+=item * TCOD::CHAR_ARROW_W
+
+=item * TCOD::CHAR_ARROW2_N
+
+=item * TCOD::CHAR_ARROW2_S
+
+=item * TCOD::CHAR_ARROW2_E
+
+=item * TCOD::CHAR_ARROW2_W
+
+=item * TCOD::CHAR_DARROW_H
+
+=item * TCOD::CHAR_DARROW_V
+
+=item * TCOD::CHAR_CHECKBOX_UNSET
+
+=item * TCOD::CHAR_CHECKBOX_SET
+
+=item * TCOD::CHAR_RADIO_UNSET
+
+=item * TCOD::CHAR_RADIO_SET
+
+=item * TCOD::CHAR_SUBP_NW
+
+=item * TCOD::CHAR_SUBP_NE
+
+=item * TCOD::CHAR_SUBP_N
+
+=item * TCOD::CHAR_SUBP_SE
+
+=item * TCOD::CHAR_SUBP_DIAG
+
+=item * TCOD::CHAR_SUBP_E
+
+=item * TCOD::CHAR_SUBP_SW
+
+=item * TCOD::CHAR_SMILIE
+
+=item * TCOD::CHAR_SMILIE_INV
+
+=item * TCOD::CHAR_HEART
+
+=item * TCOD::CHAR_DIAMOND
+
+=item * TCOD::CHAR_CLUB
+
+=item * TCOD::CHAR_SPADE
+
+=item * TCOD::CHAR_BULLET
+
+=item * TCOD::CHAR_BULLET_INV
+
+=item * TCOD::CHAR_MALE
+
+=item * TCOD::CHAR_FEMALE
+
+=item * TCOD::CHAR_NOTE
+
+=item * TCOD::CHAR_NOTE_DOUBLE
+
+=item * TCOD::CHAR_LIGHT
+
+=item * TCOD::CHAR_EXCLAM_DOUBLE
+
+=item * TCOD::CHAR_PILCROW
+
+=item * TCOD::CHAR_SECTION
+
+=item * TCOD::CHAR_POUND
+
+=item * TCOD::CHAR_MULTIPLICATION
+
+=item * TCOD::CHAR_FUNCTION
+
+=item * TCOD::CHAR_RESERVED
+
+=item * TCOD::CHAR_HALF
+
+=item * TCOD::CHAR_ONE_QUARTER
+
+=item * TCOD::CHAR_COPYRIGHT
+
+=item * TCOD::CHAR_CENT
+
+=item * TCOD::CHAR_YEN
+
+=item * TCOD::CHAR_CURRENCY
+
+=item * TCOD::CHAR_THREE_QUARTERS
+
+=item * TCOD::CHAR_DIVISION
+
+=item * TCOD::CHAR_GRADE
+
+=item * TCOD::CHAR_UMLAUT
+
+=item * TCOD::CHAR_POW1
+
+=item * TCOD::CHAR_POW3
+
+=item * TCOD::CHAR_POW2
+
+=item * TCOD::CHAR_BULLET_SQUARE
+
+=back
 
 =head2 FontFlags
 
-    TCOD::FONT_LAYOUT_ASCII_INCOL
-    TCOD::FONT_LAYOUT_ASCII_INROW
-    TCOD::FONT_TYPE_GREYSCALE
-    TCOD::FONT_TYPE_GRAYSCALE
-    TCOD::FONT_LAYOUT_TCOD
-    TCOD::FONT_LAYOUT_CP437
+=over
+
+=item * TCOD::FONT_LAYOUT_ASCII_INCOL
+
+=item * TCOD::FONT_LAYOUT_ASCII_INROW
+
+=item * TCOD::FONT_TYPE_GREYSCALE
+
+=item * TCOD::FONT_TYPE_GRAYSCALE
+
+=item * TCOD::FONT_LAYOUT_TCOD
+
+=item * TCOD::FONT_LAYOUT_CP437
+
+=back
 
 =head2 FOV
 
-    TCOD::FOV_BASIC
-    TCOD::FOV_DIAMOND
-    TCOD::FOV_SHADOW
-    TCOD::FOV_PERMISSIVE_0
-    TCOD::FOV_PERMISSIVE_1
-    TCOD::FOV_PERMISSIVE_2
-    TCOD::FOV_PERMISSIVE_3
-    TCOD::FOV_PERMISSIVE_4
-    TCOD::FOV_PERMISSIVE_5
-    TCOD::FOV_PERMISSIVE_6
-    TCOD::FOV_PERMISSIVE_7
-    TCOD::FOV_PERMISSIVE_8
-    TCOD::FOV_RESTRICTIVE
-    TCOD::NB_FOV_ALGORITHMS
+=over
+
+=item * TCOD::FOV_BASIC
+
+=item * TCOD::FOV_DIAMOND
+
+=item * TCOD::FOV_SHADOW
+
+=item * TCOD::FOV_PERMISSIVE_0
+
+=item * TCOD::FOV_PERMISSIVE_1
+
+=item * TCOD::FOV_PERMISSIVE_2
+
+=item * TCOD::FOV_PERMISSIVE_3
+
+=item * TCOD::FOV_PERMISSIVE_4
+
+=item * TCOD::FOV_PERMISSIVE_5
+
+=item * TCOD::FOV_PERMISSIVE_6
+
+=item * TCOD::FOV_PERMISSIVE_7
+
+=item * TCOD::FOV_PERMISSIVE_8
+
+=item * TCOD::FOV_RESTRICTIVE
+
+=item * TCOD::NB_FOV_ALGORITHMS
+
+=back
 
 =head2 Event
 
-    TCOD::EVENT_NONE
-    TCOD::EVENT_KEY_PRESS
-    TCOD::EVENT_KEY_RELEASE
-    TCOD::EVENT_MOUSE_MOVE
-    TCOD::EVENT_MOUSE_PRESS
-    TCOD::EVENT_MOUSE_RELEASE
-    TCOD::EVENT_KEY
-    TCOD::EVENT_MOUSE
-    TCOD::EVENT_ANY
+=over
+
+=item * TCOD::EVENT_NONE
+
+=item * TCOD::EVENT_KEY_PRESS
+
+=item * TCOD::EVENT_KEY_RELEASE
+
+=item * TCOD::EVENT_MOUSE_MOVE
+
+=item * TCOD::EVENT_MOUSE_PRESS
+
+=item * TCOD::EVENT_MOUSE_RELEASE
+
+=item * TCOD::EVENT_KEY
+
+=item * TCOD::EVENT_MOUSE
+
+=item * TCOD::EVENT_ANY
+
+=back
 
 =head1 SEE ALSO
 

@@ -494,8 +494,8 @@ package TCOD::Console {
     $ffi->attach( set_default_foreground  => [qw( TCOD_console TCOD_color                        )] => 'void'       );
     $ffi->attach( get_default_foreground  => [qw( TCOD_console                                   )] => 'TCOD_color' );
 
-  # $ffi->attach( get_foreground_color_im age => [qw( TCOD_console )] => 'TCOD_image'  );
-  # $ffi->attach( get_background_color_im age => [qw( TCOD_console )] => 'TCOD_image'  );
+  # $ffi->attach( get_foreground_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
+  # $ffi->attach( get_background_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
 
     $ffi->attach( set_char                => [qw( TCOD_console int int int                       )] => 'void'       );
     $ffi->attach( get_char                => [qw( TCOD_console int int                           )] => 'int'        );
@@ -914,6 +914,11 @@ for (
     my ( $name, @args ) = ( $_->[0], @{ $_->[1] } );
     *{ __PACKAGE__ . '::' . $name } = sub () { TCOD::Color->new( @args ) };
 }
+
+# Macros
+
+sub BKGND_ALPHA    { BKGND_ALPH | int( $_[0] * 255 ) << 8 }
+sub BKGND_ADDALPHA { BKGND_ADDA | int( $_[0] * 255 ) << 8 }
 
 # Delete helper functions
 delete $TCOD::{$_} for qw( enum );

@@ -10,7 +10,9 @@ is [ sort keys %TCOD:: ], [qw(
     BEGIN
     BKGND_ADD
     BKGND_ADDA
+    BKGND_ADDALPHA
     BKGND_ALPH
+    BKGND_ALPHA
     BKGND_BURN
     BKGND_COLOR_BURN
     BKGND_COLOR_DODGE

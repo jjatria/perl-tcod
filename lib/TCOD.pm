@@ -29,6 +29,13 @@ sub enum {
     }
 }
 
+use constant {
+    NOISE_MAX_OCTAVES        => 128,
+    NOISE_MAX_DIMENSIONS     => 4,
+    NOISE_DEFAULT_HURST      => 0.5,
+    NOISE_DEFAULT_LACUNARITY => 2,
+};
+
 BEGIN {
     enum Distribution => {
         DISTRIBUTION_LINEAR                 => 0,
@@ -264,6 +271,12 @@ BEGIN {
         RNG_MT                  =>   0,
         RNG_CMWC                =>   1,
     },
+    NoiseType => {
+        NOISE_PERLIN            =>   1,
+        NOISE_SIMPLEX           =>   2,
+        NOISE_WAVELET           =>   4,
+        NOISE_DEFAULT           =>   0,
+    },
     Event => {
         EVENT_NONE              =>   0,
         EVENT_KEY_PRESS         =>   1,
@@ -295,7 +308,7 @@ $ffi->type( opaque => 'TCOD_event'    );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
 # Blessed opaque types
-for my $name (qw( image console map path dijkstra random )) {
+for my $name (qw( image console map path dijkstra random noise )) {
     $ffi->custom_type( "TCOD_$name" => {
         native_type    => 'opaque',
         perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
@@ -736,6 +749,23 @@ package TCOD::Random {
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_random_delete => 'DESTROY' ] => ['TCOD_random'] => 'void' );
+}
+
+package TCOD::Noise {
+    $ffi->mangler( sub { 'TCOD_noise_' . shift } );
+
+    $ffi->attach( new          => [qw( int float float TCOD_random )] => 'TCOD_noise' => sub { $_[0]->( @_[ 2 .. $#_ ] ) } );
+
+    $ffi->attach( set_type          => [qw( TCOD_noise int               )] => 'void' );
+    $ffi->attach( get               => [qw( TCOD_noise float[]           )] => 'float' );
+    $ffi->attach( get_ex            => [qw( TCOD_noise float[]       int )] => 'float' );
+    $ffi->attach( get_fbm           => [qw( TCOD_noise float[] float     )] => 'float' );
+    $ffi->attach( get_fbm_ex        => [qw( TCOD_noise float[] float int )] => 'float' );
+    $ffi->attach( get_turbulence    => [qw( TCOD_noise float[] float     )] => 'float' );
+    $ffi->attach( get_turbulence_ex => [qw( TCOD_noise float[] float int )] => 'float' );
+
+    $ffi->mangler( sub { shift } );
+    $ffi->attach( [ TCOD_noise_delete => 'DESTROY' ] => ['TCOD_noise'] => 'void' );
 }
 
 for (

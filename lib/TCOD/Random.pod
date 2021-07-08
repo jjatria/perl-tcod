@@ -8,21 +8,16 @@ TCOD::Random - A fast and high quality pseudorandom number generator
 
     use TCOD;
 
-    TCOD::Console::init_root( 10, 10, 'Test', 0, TCOD::RENDERER_SDL );
+    my $rng    = TCOD::Random->new( TCOD::RNG_CMWC );
+    my $backup = $rng->save;
 
-    my $start = TCOD::Console->new( 10, 10 );
-    $start->print( 1, 1, 'X' );
+    # Generate 11 random numbers between 0 and 10 inclusive
+    my @numbers = map $rng->get_int( 0, 10 ), 0 .. 10;
 
-    my $end = TCOD::Console->new( 10, 10 );
-    $end->print( 8, 8, 'X' );
+    $rng->restore( $backup );
 
-    for ( 1 .. 255 ) {
-        $start->blit( 0, 0, 10, 10, undef, 0, 0, 1,        1        );
-        $end->blit(   0, 0, 10, 10, undef, 0, 0, $_ / 255, $_ / 255 );
-        TCOD::Console::flush;
-
-        TCOD::Sys::sleep_milli(5);
-    }
+    # Generate _the same_ sequence of numbers after restoring state
+    my @more_numbers = map $rng->get_int( 0, 10 ), 0 .. 10;
 
 =head1 DESCRIPTION
 
@@ -119,6 +114,8 @@ probability of appearing:
 =over
 
 =item L<TCOD>
+
+=item L<TCOD::Noise>
 
 =back
 

@@ -358,8 +358,13 @@ package TCOD::Color {
             return $self->multiply_scalar($other) unless ref $other;
             Carp::croak 'TCOD::Color multiplication supports colors or scalars'
                 unless Scalar::Util::blessed $other && $other->isa('TCOD::Color');
-            $self->subtract($other);
+            $self->multiply($other);
         },
+        '""' => sub {
+            my $self = shift;
+            sprintf '#%02x%02x%02x', $self->r, $self->g, $self->b;
+        },
+        '!=' => sub { !shift->equals(shift) },
         '==' => sub {
             my ( $self, $other, $swap ) = @_;
             Carp::croak 'TCOD::Color equality only supports colors'
@@ -386,7 +391,6 @@ package TCOD::Color {
         *{$name} = Sub::Util::set_subname $name => $new;
     }
 
-    sub rgb { my $self = shift; sprintf '#%02x%02x%02x', $self->r, $self->g, $self->b }
 
     $ffi->attach( equals          => [qw( TCOD_color TCOD_color            )] => 'bool'       );
     $ffi->attach( add             => [qw( TCOD_color TCOD_color            )] => 'TCOD_color' );

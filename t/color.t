@@ -69,17 +69,33 @@ subtest 'Interpolation' => sub {
     is $start->lerp( $end, 1 )->equals( $end   ), T, 'Interpolated at 1';
 
     is [ TCOD::Color::gen_map( $start => 0, $mid => 7, $end => 9 ) ] => [
-        validator( sub { $_->equals($start) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x12, 0x80, 0xec ) ) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x24, 0x80, 0xda ) ) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x36, 0x80, 0xc8 ) ) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x48, 0x80, 0xb5 ) ) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x5a, 0x80, 0xa3 ) ) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0x6c, 0x80, 0x91 ) ) } ),
-        validator( sub { $_->equals($mid) } ),
-        validator( sub { $_->equals( TCOD::Color->new( 0xbf, 0x80, 0x3f ) ) } ),
-        validator( sub { $_->equals($end) } ),
+        validator( sub { $_ == $start                               } ),
+        validator( sub { $_ == TCOD::Color->new( 0x12, 0x80, 0xec ) } ),
+        validator( sub { $_ == TCOD::Color->new( 0x24, 0x80, 0xda ) } ),
+        validator( sub { $_ == TCOD::Color->new( 0x36, 0x80, 0xc8 ) } ),
+        validator( sub { $_ == TCOD::Color->new( 0x48, 0x80, 0xb5 ) } ),
+        validator( sub { $_ == TCOD::Color->new( 0x5a, 0x80, 0xa3 ) } ),
+        validator( sub { $_ == TCOD::Color->new( 0x6c, 0x80, 0x91 ) } ),
+        validator( sub { $_ == $mid                                 } ),
+        validator( sub { $_ == TCOD::Color->new( 0xbf, 0x80, 0x3f ) } ),
+        validator( sub { $_ == $end                                 } ),
     ] => 'Generated color map';
+};
+
+subtest 'Operators' => sub {
+    ok TCOD::BLACK == TCOD::BLACK, '==';
+    ok TCOD::BLACK != TCOD::WHITE, '!=';
+
+    is +TCOD::Color->new( 1, 2, 3 ) + TCOD::Color->new( 3, 2, 1 ),
+        TCOD::Color->new( 4, 4, 4 ), '+';
+
+    is +TCOD::Color->new( 4, 4, 4 ) - TCOD::Color->new( 3, 2, 1 ),
+        TCOD::Color->new( 1, 2, 3 ), '-';
+
+    is TCOD::WHITE * TCOD::BLACK, TCOD::BLACK, '* (color)';
+    is TCOD::WHITE * 0, TCOD::BLACK, '* (scalar)';
+
+    is '' . TCOD::GREY, '#7f7f7f', '""';
 };
 
 done_testing;

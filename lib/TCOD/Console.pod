@@ -544,9 +544,13 @@ There are 5 predefined color control codes:
 =over
 
 =item * TCOD::COLCTRL_1
+
 =item * TCOD::COLCTRL_2
+
 =item * TCOD::COLCTRL_3
+
 =item * TCOD::COLCTRL_4
+
 =item * TCOD::COLCTRL_5
 
 =back

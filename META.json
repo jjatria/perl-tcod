@@ -60,51 +60,51 @@
    "provides" : {
       "TCOD" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Color" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Console" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Dijkstra" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Image" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Key" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Map" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Mouse" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Noise" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Path" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Random" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "TCOD::Sys" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       }
    },
    "release_status" : "stable",
@@ -118,7 +118,7 @@
          "web" : "https://github.com/jjatria/perl-tcod"
       }
    },
-   "version" : "0.001",
+   "version" : "0.002",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.034000"
@@ -342,7 +342,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "0.001",
+                  "tag" : "0.002",
                   "tag_format" : "%v",
                   "tag_message" : ""
                },

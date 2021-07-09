@@ -8,6 +8,8 @@ use FFI::CheckLib ();
 use FFI::Platypus 1.00;
 use FFI::C;
 
+our $VERSION = '0.002';
+
 my $ffi;
 BEGIN {
     $ffi = FFI::Platypus->new( api => 1 );

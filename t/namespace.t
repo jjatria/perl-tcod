@@ -440,6 +440,7 @@ is [ sort keys %TCOD:: ], [qw(
     SKY
     Sys::
     TURQUOISE
+    VERSION
     VIOLET
     WHITE
     YELLOW

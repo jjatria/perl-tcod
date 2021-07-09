@@ -2,6 +2,9 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    Fixes:
+        - Dependencies on FFI libraries are properly reported
+
 0.001     2021-07-08 23:58:46+01:00 Europe/London
 
         First version.

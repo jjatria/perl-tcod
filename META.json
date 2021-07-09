@@ -42,6 +42,8 @@
       },
       "runtime" : {
          "requires" : {
+            "FFI::C" : "0",
+            "FFI::Platypus" : "0",
             "perl" : "v5.10.0"
          }
       },
@@ -52,6 +54,7 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
             "File::Spec" : "0",
+            "Test2::Suite" : "0",
             "Test::More" : "0",
             "perl" : "v5.10.0"
          }
@@ -272,6 +275,27 @@
             "version" : "2.047"
          },
          {
+            "class" : "Dist::Zilla::Plugin::RewriteVersion",
+            "config" : {
+               "Dist::Zilla::Plugin::RewriteVersion" : {
+                  "add_tarball_name" : 0,
+                  "finders" : [
+                     ":ExecFiles",
+                     ":InstallModules"
+                  ],
+                  "global" : 0,
+                  "skip_version_provider" : 0
+               }
+            },
+            "name" : "@Starter::Git/RewriteVersion",
+            "version" : "0.018"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::NextRelease",
+            "name" : "@Starter::Git/NextRelease",
+            "version" : "6.020"
+         },
+         {
             "class" : "Dist::Zilla::Plugin::CopyFilesFromRelease",
             "config" : {
                "Dist::Zilla::Plugin::CopyFilesFromRelease" : {
@@ -358,6 +382,50 @@
             "version" : "2.047"
          },
          {
+            "class" : "Dist::Zilla::Plugin::BumpVersionAfterRelease",
+            "config" : {
+               "Dist::Zilla::Plugin::BumpVersionAfterRelease" : {
+                  "finders" : [
+                     ":ExecFiles",
+                     ":InstallModules"
+                  ],
+                  "global" : 0,
+                  "munge_makefile_pl" : 1
+               }
+            },
+            "name" : "@Starter::Git/BumpVersionAfterRelease",
+            "version" : "0.018"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Commit",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Commit" : {
+                  "add_files_in" : [],
+                  "commit_msg" : "Bump version",
+                  "signoff" : 0
+               },
+               "Dist::Zilla::Role::Git::DirtyFiles" : {
+                  "allow_dirty" : [
+                     "Changes",
+                     "dist.ini"
+                  ],
+                  "allow_dirty_match" : [
+                     "(?^:^)"
+                  ],
+                  "changelog" : "Changes"
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.32.0",
+                  "repo_root" : "."
+               },
+               "Dist::Zilla::Role::Git::StringFormatter" : {
+                  "time_zone" : "local"
+               }
+            },
+            "name" : "@Starter::Git/Version_Bump_Commit",
+            "version" : "2.047"
+         },
+         {
             "class" : "Dist::Zilla::Plugin::TestRelease",
             "name" : "@Starter::Git/TestRelease",
             "version" : "6.020"
@@ -398,7 +466,7 @@
                "Dist::Zilla::Role::MetaProvider::Provider" : {
                   "$Dist::Zilla::Role::MetaProvider::Provider::VERSION" : "2.002004",
                   "inherit_missing" : 1,
-                  "inherit_version" : 0,
+                  "inherit_version" : 1,
                   "meta_noindex" : 1
                },
                "Dist::Zilla::Role::ModuleMetadata" : {
@@ -423,6 +491,11 @@
             "class" : "Dist::Zilla::Plugin::MinimumPerl",
             "name" : "MinimumPerl",
             "version" : "1.006"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs::FromCPANfile",
+            "name" : "Prereqs::FromCPANfile",
+            "version" : "0.08"
          },
          {
             "class" : "Dist::Zilla::Plugin::Repository",

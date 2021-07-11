@@ -654,6 +654,12 @@ values between them, the lowest.
 
 =item L<libtcod|https://github.com/libtcod/libtcod>
 
+=item L<rogueliketutorials.com|https://rogueliketutorials.com>
+
+=item L</r/roguelikedev|https://www.reddit.com/r/roguelikedev>
+
+=item L<RogueBasin|http://roguebasin.com>
+
 =item L<TCOD::Color>
 
 =item L<TCOD::Console>

@@ -38,9 +38,17 @@ still change without warning. Any change, breaking or not, will be noted in
 the change log, so if you wish to use it, please pin your dependencies and
 make sure to check the change log before upgrading.
 
-=head1 FUNCTIONS
-
 =head1 ENUMS
+
+The enums listed below are available as constants like the ones defined using
+L<constant>, which means the same caveats apply here.
+
+To provide introspection into the values of the enums, they are also made
+available as package variables with the names of each enum. This makes it
+possible to get the name of a value in a given enum with code like the
+following:
+
+    say $TCOD::Alignment{ TCOD::LEFT }; # Prints 'LEFT'
 
 =head2 Alignment
 

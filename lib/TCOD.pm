@@ -8,7 +8,7 @@ use FFI::CheckLib ();
 use FFI::Platypus 1.00;
 use FFI::C;
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 my $ffi;
 BEGIN {

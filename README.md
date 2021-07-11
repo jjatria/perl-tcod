@@ -36,9 +36,17 @@ still change without warning. Any change, breaking or not, will be noted in
 the change log, so if you wish to use it, please pin your dependencies and
 make sure to check the change log before upgrading.
 
-# FUNCTIONS
-
 # ENUMS
+
+The enums listed below are available as constants like the ones defined using
+[constant](https://metacpan.org/pod/constant), which means the same caveats apply here.
+
+To provide introspection into the values of the enums, they are also made
+available as package variables with the names of each enum. This makes it
+possible to get the name of a value in a given enum with code like the
+following:
+
+    say $TCOD::Alignment{ TCOD::LEFT }; # Prints 'LEFT'
 
 ## Alignment
 
@@ -310,7 +318,7 @@ value for a color component (255).
 - TCOD::CHAR\_POW2
 - TCOD::CHAR\_BULLET\_SQUARE
 
-## FontFlags
+## FontFlag
 
 - TCOD::FONT\_LAYOUT\_ASCII\_INCOL
 - TCOD::FONT\_LAYOUT\_ASCII\_INROW
@@ -403,6 +411,9 @@ These values are used by [TCOD::Random](https://metacpan.org/pod/TCOD%3A%3ARando
 # SEE ALSO
 
 - [libtcod](https://github.com/libtcod/libtcod)
+- [rogueliketutorials.com](https://rogueliketutorials.com)
+- [/r/roguelikedev](https://www.reddit.com/r/roguelikedev)
+- [RogueBasin](http://roguebasin.com)
 - [TCOD::Color](https://metacpan.org/pod/TCOD%3A%3AColor)
 - [TCOD::Console](https://metacpan.org/pod/TCOD%3A%3AConsole)
 - [TCOD::Dijkstra](https://metacpan.org/pod/TCOD%3A%3ADijkstra)

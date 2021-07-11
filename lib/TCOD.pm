@@ -245,7 +245,7 @@ BEGIN {
         CHAR_POW2               => 253,
         CHAR_BULLET_SQUARE      => 254,
     },
-    FontFlags => {
+    FontFlag => {
         FONT_LAYOUT_ASCII_INCOL =>   1,
         FONT_LAYOUT_ASCII_INROW =>   2,
         FONT_TYPE_GREYSCALE     =>   4,

@@ -256,7 +256,7 @@ is [ sort keys %TCOD:: ], [qw(
     FOV_RESTRICTIVE
     FOV_SHADOW
     FUCHSIA
-    FontFlags
+    FontFlag
     GOLD
     GREEN
     GREY

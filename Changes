@@ -4,6 +4,8 @@ Revision history for TCOD
 
     Fixes:
         - Dependencies on FFI libraries are properly reported
+    Changes:
+        - The FontFlags enum was renamed to FontFlag for consistency
 
 0.001     2021-07-08 23:58:46+01:00 Europe/London
 

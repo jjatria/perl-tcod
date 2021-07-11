@@ -388,7 +388,7 @@ Once this function is called, you can define your own custom mappings using
 mapping functions
 
 The value in C<$flags> will be a combination of a layout and a type from the
-L<FontFlags|TCOD/FontFlags> enum. The last two parameters determine the number
+L<FontFlag|TCOD/FontFlag> enum. The last two parameters determine the number
 of characters in the font along both axes. If set to 0, these will be deduced
 from the layout flag.
 

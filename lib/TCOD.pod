@@ -504,7 +504,7 @@ L<TCOD::Console::set_background_flag|TCOD::Console/set_background_flag>.
 
 =back
 
-=head2 FontFlags
+=head2 FontFlag
 
 =over
 

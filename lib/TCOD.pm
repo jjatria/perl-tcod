@@ -6,7 +6,14 @@ use warnings;
 
 use FFI::CheckLib ();
 use FFI::Platypus 1.00;
+use FFI::Platypus::Buffer ();
 use FFI::C;
+use TCOD::SDL2;
+
+sub import {
+    use Import::Into;
+    TCOD::Event->import::into( scalar caller );
+}
 
 our $VERSION = '0.003';
 

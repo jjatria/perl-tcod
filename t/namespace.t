@@ -235,6 +235,7 @@ is [ sort keys %TCOD:: ], [qw(
     EVENT_MOUSE_RELEASE
     EVENT_NONE
     Event
+    Event::
     FLAME
     FONT_LAYOUT_ASCII_INCOL
     FONT_LAYOUT_ASCII_INROW
@@ -435,6 +436,7 @@ is [ sort keys %TCOD:: ], [qw(
     Random::
     RandomAlgo
     Renderer
+    SDL2::
     SEA
     SEPIA
     SILVER

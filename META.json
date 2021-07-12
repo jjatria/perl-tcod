@@ -28,7 +28,7 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
             "File::ShareDir::Install" : "0.06",
-            "perl" : "5.010"
+            "perl" : "5.013002"
          }
       },
       "develop" : {
@@ -44,7 +44,10 @@
          "requires" : {
             "FFI::C" : "0",
             "FFI::Platypus" : "0",
-            "perl" : "v5.10.0"
+            "Import::Into" : "0",
+            "Role::Tiny" : "0",
+            "Sub::Util" : "1.40",
+            "perl" : "5.013002"
          }
       },
       "test" : {
@@ -56,7 +59,7 @@
             "File::Spec" : "0",
             "Test2::Suite" : "0",
             "Test::More" : "0",
-            "perl" : "v5.10.0"
+            "perl" : "5.013002"
          }
       }
    },
@@ -79,6 +82,14 @@
       },
       "TCOD::Dijkstra" : {
          "file" : "lib/TCOD.pm",
+         "version" : "0.003"
+      },
+      "TCOD::Event" : {
+         "file" : "lib/TCOD/Event.pm",
+         "version" : "0.003"
+      },
+      "TCOD::Event::Dispatch" : {
+         "file" : "lib/TCOD/Event.pm",
          "version" : "0.003"
       },
       "TCOD::Image" : {

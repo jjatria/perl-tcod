@@ -26,6 +26,8 @@ BEGIN {
 
 $ffi->load_custom_type( '::WideString' => 'wstring', access => 'read' );
 
+$ffi->attach( [ TCOD_get_error => 'get_error' ] => [] => 'string' );
+
 sub enum {
     my %enums = @_;
     while ( my ( $name, $values ) = each %enums ) {
@@ -43,6 +45,75 @@ use constant {
     NOISE_MAX_DIMENSIONS     => 4,
     NOISE_DEFAULT_HURST      => 0.5,
     NOISE_DEFAULT_LACUNARITY => 2,
+
+    CHARMAP_CP437 => [
+        0x0000, 0x263A, 0x263B, 0x2665, 0x2666, 0x2663, 0x2660, 0x2022,
+        0x25D8, 0x25CB, 0x25D9, 0x2642, 0x2640, 0x266A, 0x266B, 0x263C,
+        0x25BA, 0x25C4, 0x2195, 0x203C, 0x00B6, 0x00A7, 0x25AC, 0x21A8,
+        0x2191, 0x2193, 0x2192, 0x2190, 0x221F, 0x2194, 0x25B2, 0x25BC,
+        0x0020, 0x0021, 0x0022, 0x0023, 0x0024, 0x0025, 0x0026, 0x0027,
+        0x0028, 0x0029, 0x002A, 0x002B, 0x002C, 0x002D, 0x002E, 0x002F,
+        0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037,
+        0x0038, 0x0039, 0x003A, 0x003B, 0x003C, 0x003D, 0x003E, 0x003F,
+        0x0040, 0x0041, 0x0042, 0x0043, 0x0044, 0x0045, 0x0046, 0x0047,
+        0x0048, 0x0049, 0x004A, 0x004B, 0x004C, 0x004D, 0x004E, 0x004F,
+        0x0050, 0x0051, 0x0052, 0x0053, 0x0054, 0x0055, 0x0056, 0x0057,
+        0x0058, 0x0059, 0x005A, 0x005B, 0x005C, 0x005D, 0x005E, 0x005F,
+        0x0060, 0x0061, 0x0062, 0x0063, 0x0064, 0x0065, 0x0066, 0x0067,
+        0x0068, 0x0069, 0x006A, 0x006B, 0x006C, 0x006D, 0x006E, 0x006F,
+        0x0070, 0x0071, 0x0072, 0x0073, 0x0074, 0x0075, 0x0076, 0x0077,
+        0x0078, 0x0079, 0x007A, 0x007B, 0x007C, 0x007D, 0x007E, 0x007F,
+        0x00C7, 0x00FC, 0x00E9, 0x00E2, 0x00E4, 0x00E0, 0x00E5, 0x00E7,
+        0x00EA, 0x00EB, 0x00E8, 0x00EF, 0x00EE, 0x00EC, 0x00C4, 0x00C5,
+        0x00C9, 0x00E6, 0x00C6, 0x00F4, 0x00F6, 0x00F2, 0x00FB, 0x00F9,
+        0x00FF, 0x00D6, 0x00DC, 0x00A2, 0x00A3, 0x00A5, 0x20A7, 0x0192,
+        0x00E1, 0x00ED, 0x00F3, 0x00FA, 0x00F1, 0x00D1, 0x00AA, 0x00BA,
+        0x00BF, 0x2310, 0x00AC, 0x00BD, 0x00BC, 0x00A1, 0x00AB, 0x00BB,
+        0x2591, 0x2592, 0x2593, 0x2502, 0x2524, 0x2561, 0x2562, 0x2556,
+        0x2555, 0x2563, 0x2551, 0x2557, 0x255D, 0x255C, 0x255B, 0x2510,
+        0x2514, 0x2534, 0x252C, 0x251C, 0x2500, 0x253C, 0x255E, 0x255F,
+        0x255A, 0x2554, 0x2569, 0x2566, 0x2560, 0x2550, 0x256C, 0x2567,
+        0x2568, 0x2564, 0x2565, 0x2559, 0x2558, 0x2552, 0x2553, 0x256B,
+        0x256A, 0x2518, 0x250C, 0x2588, 0x2584, 0x258C, 0x2590, 0x2580,
+        0x03B1, 0x00DF, 0x0393, 0x03C0, 0x03A3, 0x03C3, 0x00B5, 0x03C4,
+        0x03A6, 0x0398, 0x03A9, 0x03B4, 0x221E, 0x03C6, 0x03B5, 0x2229,
+        0x2261, 0x00B1, 0x2265, 0x2264, 0x2320, 0x2321, 0x00F7, 0x2248,
+        0x00B0, 0x2219, 0x00B7, 0x221A, 0x207F, 0x00B2, 0x25A0, 0x00A0,
+    ],
+    CHARMAP_TCOD => [
+        0x0020, 0x0021, 0x0022, 0x0023, 0x0024, 0x0025, 0x0026, 0x0027,
+        0x0028, 0x0029, 0x002A, 0x002B, 0x002C, 0x002D, 0x002E, 0x002F,
+        0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037,
+        0x0038, 0x0039, 0x003A, 0x003B, 0x003C, 0x003D, 0x003E, 0x003F,
+        0x0040, 0x005B, 0x005C, 0x005D, 0x005E, 0x005F, 0x0060, 0x007B,
+        0x007C, 0x007D, 0x007E, 0x2591, 0x2592, 0x2593, 0x2502, 0x2500,
+        0x253C, 0x2524, 0x2534, 0x251C, 0x252C, 0x2514, 0x250C, 0x2510,
+        0x2518, 0x2598, 0x259D, 0x2580, 0x2596, 0x259A, 0x2590, 0x2597,
+        0x2191, 0x2193, 0x2190, 0x2192, 0x25B2, 0x25BC, 0x25C4, 0x25BA,
+        0x2195, 0x2194, 0x2610, 0x2611, 0x25CB, 0x25C9, 0x2551, 0x2550,
+        0x256C, 0x2563, 0x2569, 0x2560, 0x2566, 0x255A, 0x2554, 0x2557,
+        0x255D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0041, 0x0042, 0x0043, 0x0044, 0x0045, 0x0046, 0x0047, 0x0048,
+        0x0049, 0x004A, 0x004B, 0x004C, 0x004D, 0x004E, 0x004F, 0x0050,
+        0x0051, 0x0052, 0x0053, 0x0054, 0x0055, 0x0056, 0x0057, 0x0058,
+        0x0059, 0x005A, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0061, 0x0062, 0x0063, 0x0064, 0x0065, 0x0066, 0x0067, 0x0068,
+        0x0069, 0x006A, 0x006B, 0x006C, 0x006D, 0x006E, 0x006F, 0x0070,
+        0x0071, 0x0072, 0x0073, 0x0074, 0x0075, 0x0076, 0x0077, 0x0078,
+        0x0079, 0x007A, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+        0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    ],
 };
 
 BEGIN {
@@ -57,6 +128,14 @@ BEGIN {
         LEFT                    =>   0,
         RIGHT                   =>   1,
         CENTER                  =>   2,
+    },
+    Error => {
+        E_OK                    =>   0,
+        E_ERROR                 =>  -1,
+        E_INVALID_ARGUMENT      =>  -2,
+        E_OUT_OF_MEMORY         =>  -3,
+        E_REQUIRES_ATTENTION    =>  -4,
+        E_WARN                  =>   1,
     },
     Renderer => {
         RENDERER_GLSL           =>   0,
@@ -313,11 +392,12 @@ BEGIN {
 
 $ffi->type( int    => 'TCOD_renderer' );
 $ffi->type( int    => 'TCOD_keycode'  );
+$ffi->type( int    => 'TCOD_error'  );
 $ffi->type( opaque => 'TCOD_event'    );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
 # Blessed opaque types
-for my $name (qw( image console map path dijkstra random noise )) {
+for my $name (qw( image console map path dijkstra random noise context )) {
     $ffi->custom_type( "TCOD_$name" => {
         native_type    => 'opaque',
         perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
@@ -796,6 +876,181 @@ package TCOD::Noise {
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_noise_delete => 'DESTROY' ] => ['TCOD_noise'] => 'void' );
+}
+
+package TCOD::Tileset {
+    $ffi->mangler( sub { shift } );
+
+    FFI::C->struct( TCOD_tileset => [
+        tile_width           => 'int',
+        tile_height          => 'int',
+        tile_length          => 'int',
+        tiles_capacity       => 'int',
+        tiles_count          => 'int',
+        pixels               => 'opaque', # TCOD_ColorRGBA*
+        character_map_length => 'int',
+        character_map        => 'opaque',
+        observer_list        => 'opaque', # TCOD_TilesetObserver
+        virtual_columns      => 'int',
+        ref_count            => 'int',
+    ]);
+
+    sub tile_shape {
+        my $self = shift;
+        ( $self->tile_height, $self->tile_height );
+    }
+
+    $ffi->attach( [ TCOD_load_bdf => 'load_bdf' ] => [qw( string )] => 'TCOD_tileset' => sub {
+        my ( $xsub, $self, $path ) = @_;
+
+        Carp::croak "Cannot load tilesheet from $path: no such file"
+            unless -f $path;
+
+        $xsub->( $self, $path );
+    });
+
+    $ffi->attach( [ TCOD_tileset_load => 'load_tilesheet' ] => [qw( string int int int int[] )] => 'TCOD_tileset' => sub {
+        my ( $xsub, undef, $path, $cols, $rows, $charmap ) = @_;
+
+        Carp::croak "Cannot load tilesheet from $path: no such file"
+            unless -f $path;
+
+        $xsub->( $path, $cols, $rows, scalar @{ $charmap }, $charmap );
+    });
+
+    $ffi->attach( [ TCOD_tileset_get_tile_ => 'get_tile' ] => [qw( TCOD_tileset int )] => 'int' => sub {
+        $_[0]->( $_[1], $_[2], my $color = TCOD::ColorRGBA->new );
+        $color;
+    });
+
+    $ffi->attach( [ TCOD_tileset_set_tile_ => 'set_tile' ] => [qw( TCOD_tileset int TCOD_colorRGBA* )] => 'int' );
+
+    $ffi->attach( [ TCOD_tileset_assign_tile => 'remap' ] => [qw( TCOD_tileset int int int )] => 'int' => sub {
+        my ( $xsub, $self, $x, $y, $codepoint ) = @_;
+        my $i = $x + $y * $self->tileset->virtual_columns;
+
+        Carp::croak "Tile $i is non-existent and can't be assigned"
+            if $i < 0 || $i >= $self->tileset->tiles_count;
+
+        $xsub->( $self, $i, $codepoint );
+    });
+
+     $ffi->attach( [ TCOD_tileset_render_to_surface => 'render' ] => [qw( TCOD_console TCOD_console opaque )] => 'int' => sub {
+        my ( $xsub, $self, $console ) = @_;
+
+        my $width  = $console->width  * $self->tile_width;
+        my $height = $console->height * $self->tile_height;
+        my ($pixels) = FFI::Platypus::Buffer::scalar_to_buffer( pack 'S*', (0) x ( $height * $width ) );
+
+        my $surface = TCOD::SDL2::CreateRGBSurfaceWithFormatFrom(
+            $pixels,
+            $height, $width, 32, 4,
+            TCOD::SDL2::PIXELFORMAT_RGBA32,
+        ) or die TCOD::SDL2::GetError();
+
+        my $pointer = $ffi->cast( opaque => 'opaque*' => $surface );
+
+        $xsub->( $self, $console, undef, $pointer );
+    });
+
+    # $ffi->attach( [ TCOD_tileset_delete => 'DESTROY' ] => ['TCOD_tileset'] => 'void' );
+}
+
+package
+    TCOD::ContextParams {
+    FFI::C->struct( TCOD_context_params => [
+        tcod_version      => 'int',
+        window_x          => 'int',
+        window_y          => 'int',
+        pixel_width       => 'int',
+        pixel_height      => 'int',
+        columns           => 'int',
+        rows              => 'int',
+        renderer_type     => 'int',
+        _tileset          => 'opaque',
+        vsync             => 'int',
+        sdl_window_flags  => 'int',
+        window_title      => 'opaque',
+        argc              => 'int',
+        argv              => 'opaque',
+        cli_output        => 'opaque',
+        cli_userdata      => 'opaque',
+        window_xy_defined => 'bool',
+    ]);
+
+    sub tileset { $ffi->cast( opaque => TCOD_tileset => shift->_tileset ) }
+}
+
+package
+    TCOD::ViewportOptions {
+    FFI::C->struct( TCOD_viewport_options => [
+        tcod_version      => 'int',
+        keep_aspect       => 'bool',
+        integer_scaling   => 'bool',
+        _clear_color      => 'opaque', # TCOD_ColorRGBA
+        align_x           => 'float',
+        align_y           => 'float',
+    ]);
+}
+
+package TCOD::Context {
+    $ffi->mangler( sub { 'TCOD_context_' . shift } );
+
+    $ffi->attach( new  => [qw( TCOD_context_params opaque* )] => 'TCOD_error' => sub {
+        my ( $xsub, undef, %args ) = @_;
+
+        for (
+            [ x        => 'window_x'                        ],
+            [ y        => 'window_y'                        ],
+            [ width    => 'pixel_width'                     ],
+            [ height   => 'pixel_height'                    ],
+            [ renderer => 'renderer_type'                   ],
+            [ title    => 'window_title'  => 'string'       ],
+            [ tileset  => '_tileset'      => 'TCOD_tileset' ],
+        ) {
+            my ( $in, $out, $cast ) = @$_;
+            next unless exists $args{$in};
+
+            $args{$out} = delete $args{$in};
+            $args{$out} = $ffi->cast( $cast => opaque => $args{$out} ) if $cast;
+        }
+
+        my $err = $xsub->( TCOD::ContextParams->new(\%args), \my $ctx );
+        Carp::croak TCOD::get_error() if $err < 0;
+
+        bless \$ctx, 'TCOD::Context';
+    });
+
+    sub new_terminal {
+        my ( $class, $cols, $rows, %args ) = @_;
+
+        $class->new(
+            rows     => $rows,
+            columns  => $cols,
+            vsync    => $args{sync} // 1,
+            %args{qw( renderer tileset sdl_window_flags title )},
+        );
+    }
+
+    $ffi->attach( present => [qw( TCOD_context TCOD_console TCOD_viewport_options )] => 'TCOD_error' => sub {
+        my ( $xsub, $self, $console, %args ) = @_;
+
+        @args{qw( align_x align_y )} = @{ delete $args{align} // [ 0.5, 0.5 ] };
+
+        my $c = delete $args{clear_color} // TCOD::BLACK();
+        $args{_clear_color} = $ffi->cast(
+            TCOD_colorRGBA => opaque => TCOD::ColorRGBA->new( $c->r, $c->g, $c->b, 0xFF ),
+        );
+
+        my $err = $xsub->( $self, $console, TCOD::ViewportOptions->new(\%args) );
+        Carp::croak TCOD::get_error() if $err < 0;
+
+        return;
+    });
+
+
+    $ffi->mangler( sub { shift } );
+    $ffi->attach( [ TCOD_context_delete => 'DESTROY' ] => ['TCOD_context'] => 'void' );
 }
 
 for (

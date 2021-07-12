@@ -30,6 +30,8 @@ is [ sort keys %TCOD:: ], [qw(
     BackgroundFlag
     CELADON
     CENTER
+    CHARMAP_CP437
+    CHARMAP_TCOD
     CHARTREUSE
     CHAR_ARROW2_E
     CHAR_ARROW2_N
@@ -128,6 +130,8 @@ is [ sort keys %TCOD:: ], [qw(
     ColorControl
     ColorRGBA::
     Console::
+    Context::
+    ContextParams::
     DARKER_AMBER
     DARKER_AZURE
     DARKER_BLUE
@@ -234,6 +238,13 @@ is [ sort keys %TCOD:: ], [qw(
     EVENT_MOUSE_PRESS
     EVENT_MOUSE_RELEASE
     EVENT_NONE
+    E_ERROR
+    E_INVALID_ARGUMENT
+    E_OK
+    E_OUT_OF_MEMORY
+    E_REQUIRES_ATTENTION
+    E_WARN
+    Error
     Event
     Event::
     FLAME
@@ -443,11 +454,14 @@ is [ sort keys %TCOD:: ], [qw(
     SKY
     Sys::
     TURQUOISE
+    Tileset::
     VERSION
     VIOLET
+    ViewportOptions::
     WHITE
     YELLOW
     __ANON__
+    get_error
     import
 )] => 'No unexpected methods in TCOD namespace';
 

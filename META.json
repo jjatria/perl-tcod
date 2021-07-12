@@ -80,6 +80,10 @@
          "file" : "lib/TCOD.pm",
          "version" : "0.003"
       },
+      "TCOD::Context" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.003"
+      },
       "TCOD::Dijkstra" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.003"
@@ -121,6 +125,10 @@
          "version" : "0.003"
       },
       "TCOD::Sys" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.003"
+      },
+      "TCOD::Tileset" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.003"
       }

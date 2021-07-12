@@ -8,6 +8,8 @@ Revision history for TCOD
         - Added TCOD::Event to wrap around SDL2 events. This uses
           an internal set of SDL2 bindings, while we wait for a
           stable release on CPAN
+        - Added TCOD::Context and TCOD::Tileset modeled after the
+          recommended API in the upstream python-tcod
     Fixes:
         - Fixed the walk method for Path::Dijkstra objects. This
           method, and the related is_empty, are now documented and tested.

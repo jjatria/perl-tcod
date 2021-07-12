@@ -1,0 +1,63 @@
+=encoding UTF-8
+
+=head1 NAME
+
+TCOD::Tileset - ...
+
+=head1 SYNOPSIS
+
+    use TCOD;
+
+    my $tileset = TCOD::Tileset->load_tilesheet(
+        dist_file( TCOD => 'arial10x10.png' ),
+        32, 8, TCOD::CHARMAP_TCOD,
+    );
+
+=head1 DESCRIPTION
+
+This class represents a terminal emulator for rendering text-based games.
+
+=head1 METHODS
+
+=head2 load_tilesheet
+
+    $tileset = TCOD::Tileset->load_tilesheet( $path, $cols, $rows, $charmap );
+
+=head2 load_bdf
+
+    $tileset = TCOD::Tileset->load_bdf( $path );
+
+=head2 tile_shape
+
+    ( $height, $width ) = $tileset->tile_shape;
+
+=head2 get_tile
+
+    $tile = $tilset->get_tile( $codepoint );
+
+=head2 remap
+
+    $tileset->remap( $x, $y, $codepoint );
+
+=head2 render
+
+    $tileset->render( $console );
+
+=head1 SEE ALSO
+
+=over
+
+=item L<TCOD>
+
+=item L<TCOD::Console>
+
+=item L<TCOD::Tileset>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2021 José Joaquín Atria
+
+This library is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.

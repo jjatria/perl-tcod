@@ -2,6 +2,9 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    New:
+        - Added TCOD::ColorRGBA used internally in some of the
+          new API functions
     Fixes:
         - Fixed the walk method for Path::Dijkstra objects. This
           method, and the related is_empty, are now documented and tested.

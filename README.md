@@ -466,6 +466,7 @@ The structure of shared files is reproduced below.
 - [/r/roguelikedev](https://www.reddit.com/r/roguelikedev)
 - [RogueBasin](http://roguebasin.com)
 - [TCOD::Color](https://metacpan.org/pod/TCOD%3A%3AColor)
+- [TCOD::ColorRGBA](https://metacpan.org/pod/TCOD%3A%3AColorRGBA)
 - [TCOD::Console](https://metacpan.org/pod/TCOD%3A%3AConsole)
 - [TCOD::Dijkstra](https://metacpan.org/pod/TCOD%3A%3ADijkstra)
 - [TCOD::Image](https://metacpan.org/pod/TCOD%3A%3AImage)

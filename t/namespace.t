@@ -126,6 +126,7 @@ is [ sort keys %TCOD:: ], [qw(
     Char
     Color::
     ColorControl
+    ColorRGBA::
     Console::
     DARKER_AMBER
     DARKER_AZURE

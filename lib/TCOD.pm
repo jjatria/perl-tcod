@@ -416,13 +416,14 @@ package TCOD::Color {
         no warnings 'redefine';
 
         my $old  = __PACKAGE__->can('new') or die;
-        my $new  = sub { shift->$old({ r => shift, g => shift, b => shift })  };
         my $name = __PACKAGE__ . '::new';
 
         require Sub::Util;
-        *{$name} = Sub::Util::set_subname $name => $new;
+        *{$name} = Sub::Util::set_subname $name => sub {
+            my $class = shift;
+            $class->$old({ r => shift, g => shift, b => shift });
+        };
     }
-
 
     $ffi->attach( equals          => [qw( TCOD_color TCOD_color            )] => 'bool'       );
     $ffi->attach( add             => [qw( TCOD_color TCOD_color            )] => 'TCOD_color' );
@@ -466,6 +467,27 @@ package TCOD::Color {
         }
 
         @map;
+    }
+}
+
+package TCOD::ColorRGBA {
+    use FFI::Platypus::Record;
+    record_layout_1( uint8 => 'r', uint8 => 'g', uint8 => 'b', uint8 => 'a' );
+    $ffi->type( 'record(TCOD::ColorRGBA)'  => 'TCOD_colorRGBA'  );
+
+    {
+        # Give color a positional constructor
+        no strict 'refs';
+        no warnings 'redefine';
+
+        my $old  = __PACKAGE__->can('new') or die;
+        my $name = __PACKAGE__ . '::new';
+
+        require Sub::Util;
+        *{$name} = Sub::Util::set_subname $name => sub {
+            my $class = shift;
+            $class->$old({ r => shift, g => shift, b => shift, a => shift });
+        };
     }
 }
 

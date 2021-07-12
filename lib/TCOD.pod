@@ -713,6 +713,8 @@ The structure of shared files is reproduced below.
 
 =item L<TCOD::Color>
 
+=item L<TCOD::ColorRGBA>
+
 =item L<TCOD::Console>
 
 =item L<TCOD::Dijkstra>

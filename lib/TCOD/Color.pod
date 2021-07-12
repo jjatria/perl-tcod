@@ -28,7 +28,7 @@ This represents a TCOD color.
     $color = TCOD::Color->new( $r, $g, $b );
 
 Construct a new TCOD::Color object. Takes the red, green and blue
-components as positional parameters, as iintegers between 0 and 255.
+components as positional parameters, as integers between 0 and 255.
 
 =head2 r
 
@@ -220,6 +220,8 @@ the original ones untouched.
 =over
 
 =item L<TCOD>
+
+=item L<TCOD::Color>
 
 =item L<TCOD::Console>
 

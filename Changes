@@ -2,6 +2,10 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    Changes:
+        - Imported bundled fonts from python-tcod to replace the
+          old ones with licensing issues.
+
 0.002     2021-07-11 16:58:16+01:00 Europe/London
 
     Fixes:

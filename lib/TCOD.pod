@@ -648,6 +648,57 @@ values between them, the lowest.
 
 =back
 
+=head1 SHARE DATA
+
+This distribution bundles some data to make development simpler.
+
+You can make use of this data with a distribution like L<File::Share>,
+like in this example:
+
+    use File::Share 'dist_file';
+    my $path = dist_file TCOD => 'fonts/dejavu10x10_gs_tc.png';
+
+The C<fonts> directory contains antialiased fonts that can be used with
+TCOD. The names of the font files are of the form:
+
+    <font_name><font_size>_<type>_<layout>.png
+
+    <type>   : aa 32 bits png with alpha channel
+               gs 24 bits or greyscale PNG
+
+    <layout> : as standard ASCII layout
+               ro standard ASCII layout in row
+               tc TCOD layout
+
+The C<terminal8x8> font is provided is every possible format as en example.
+
+The structure of shared files is reproduced below.
+
+    share
+    └── fonts
+        ├── dejavu10x10_gs_tc.png
+        ├── dejavu12x12_gs_tc.png
+        ├── dejavu16x16_gs_tc.png
+        ├── dejavu8x8_gs_tc.png
+        ├── dejavu_wide12x12_gs_tc.png
+        ├── dejavu_wide16x16_gs_tc.png
+        ├── terminal10x10_gs_tc.png
+        ├── terminal10x16_gs_ro.png
+        ├── terminal10x16_gs_tc.png
+        ├── terminal10x18_gs_ro.png
+        ├── terminal12x12_gs_ro.png
+        ├── terminal16x16_gs_ro.png
+        ├── terminal7x7_gs_tc.png
+        ├── terminal8x12_gs_ro.png
+        ├── terminal8x12_gs_tc.png
+        ├── terminal8x14_gs_ro.png
+        ├── terminal8x8_aa_ro.png
+        ├── terminal8x8_aa_tc.png
+        ├── terminal8x8_gs_ro.png
+        ├── terminal8x8_gs_tc.png
+        └── ucs-fonts
+            └── 4x6.bdf
+
 =head1 SEE ALSO
 
 =over

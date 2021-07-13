@@ -4,11 +4,14 @@ package TCOD;
 use strict;
 use warnings;
 
+use Encode ();
+use FFI::C;
 use FFI::CheckLib ();
 use FFI::Platypus 1.00;
 use FFI::Platypus::Buffer ();
-use FFI::C;
+use Ref::Util;
 use TCOD::SDL2;
+use TCOD::Event;
 
 sub import {
     use Import::Into;
@@ -16,6 +19,9 @@ sub import {
 }
 
 our $VERSION = '0.003';
+
+my $bundle = FFI::Platypus->new( api => 1 );
+$bundle->bundle('TCOD');
 
 my $ffi;
 BEGIN {
@@ -392,20 +398,23 @@ BEGIN {
 
 $ffi->type( int    => 'TCOD_renderer' );
 $ffi->type( int    => 'TCOD_keycode'  );
-$ffi->type( int    => 'TCOD_error'  );
+$ffi->type( int    => 'TCOD_error'    );
 $ffi->type( opaque => 'TCOD_event'    );
 $ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
 
-# Blessed opaque types
+# Custom blessed opaque types
 for my $name (qw( image console map path dijkstra random noise context )) {
-    $ffi->custom_type( "TCOD_$name" => {
+    my $type = {
         native_type    => 'opaque',
-        perl_to_native => sub { $_[0] ? ${ $_[0] } : undef    },
+        perl_to_native => sub { $_[0] ? ${ $_[0] } : undef },
         native_to_perl => sub {
             return unless $_[0];
             bless \$_[0], 'TCOD::' . ucfirst $name;
         },
-    });
+    };
+
+    $ffi->custom_type( "TCOD_$name" => $type );
+    $bundle->custom_type( "TCOD_$name" => $type );
 }
 
 package TCOD::Key {
@@ -495,7 +504,8 @@ package TCOD::Color {
 
     use FFI::Platypus::Record;
     record_layout_1( uint8 => 'r', uint8 => 'g', uint8 => 'b' );
-    $ffi->type( 'record(TCOD::Color)'  => 'TCOD_color'  );
+    $ffi->type(    'record(TCOD::Color)'  => 'TCOD_color'  );
+    $bundle->type( 'record(TCOD::Color)'  => 'TCOD_color'  );
 
     {
         # Give color a positional constructor
@@ -561,6 +571,7 @@ package TCOD::ColorRGBA {
     use FFI::Platypus::Record;
     record_layout_1( uint8 => 'r', uint8 => 'g', uint8 => 'b', uint8 => 'a' );
     $ffi->type( 'record(TCOD::ColorRGBA)'  => 'TCOD_colorRGBA'  );
+    $bundle->type( 'record(TCOD::ColorRGBA)'  => 'TCOD_colorRGBA'  );
 
     {
         # Give color a positional constructor
@@ -596,10 +607,10 @@ package TCOD::Map {
 }
 
 package TCOD::Console {
-    $ffi->mangler( sub { shift } );
-    $ffi->attach( [ TCOD_console_delete => 'DESTROY' ] => [qw( TCOD_console )] => 'void' );
+    $ffi->mangler(    sub { 'TCOD_console_' . shift } );
+    $bundle->mangler( sub { 'PERL_console_' . shift } );
 
-    $ffi->mangler( sub { 'TCOD_console_' . shift } );
+    $ffi->attach( [ delete => 'DESTROY' ] => [qw( TCOD_console )] => 'void' );
 
     # Constructors
     $ffi->attach( new       => [qw( int int )] => 'TCOD_console' => sub { $_[0]->( @_[ 2 .. $#_ ] ) } );
@@ -607,12 +618,165 @@ package TCOD::Console {
     $ffi->attach( load_asc  => [qw( string  )] => 'TCOD_console' => sub { $_[0]->( $_[ 2 ] ) } );
     $ffi->attach( load_apf  => [qw( string  )] => 'TCOD_console' => sub { $_[0]->( $_[ 2 ] ) } );
 
+    # Printing methods
+
+    my $blit_with_key_color = $ffi->function( blit_key_color => [qw(
+        TCOD_console int int int int
+        TCOD_console int int
+        float float
+        TCOD_color
+    )]);
+
+    $ffi->attach( blit => [qw(
+        TCOD_console int int int int
+        TCOD_console int int
+        float float
+    )] => void => sub {
+        my ( $xsub, $console, %args ) = @_;
+
+        my @args = (
+            $console,
+            $args{src_x}    // 0,
+            $args{src_y}    // 0,
+            $args{width}    // 0,
+            $args{height}   // 0,
+            $args{dest},
+            $args{dest_x}   // 0,
+            $args{dest_y}   // 0,
+            $args{fg_alpha} // $args{alpha} // 1,
+            $args{bg_alpha} // $args{alpha} // 1,
+        );
+
+        return $blit_with_key_color->( @args, $args{key_color} ) if $args{key_color};
+
+        $xsub->(@args);
+    });
+
+    $ffi->attach( [ printn => 'print' ] => [qw(
+        TCOD_console
+        int
+        int
+        size_t
+        string
+        TCOD_color*
+        TCOD_color*
+        int
+        int
+    )] => TCOD_error => sub {
+        my ( $xsub, $console, %args ) = ( shift, shift );
+
+        # Accommodate $con->print( $x, $y, $string, %rest );
+        %args = ( x => shift, y => shift, string => shift ) if @_ % 2;
+        %args = ( %args, @_ );
+
+        my $string = Encode::encode( 'UTF-8', $args{string}, Encode::FB_CROAK );
+
+        $xsub->(
+            $console,  @args{qw( x y )},
+            length($string), $string,
+            @args{qw( fg bg )},
+            $args{bg_blend}  // TCOD::BKGND_SET,
+            $args{alignment} // TCOD::LEFT,
+        );
+    });
+
+    $ffi->attach( [ printn_rect => 'print_box' ] => [qw(
+        TCOD_console
+        int
+        int
+        int
+        int
+        size_t
+        string
+        TCOD_color*
+        TCOD_color*
+        int
+        int
+    )] => TCOD_error => sub {
+        my ( $xsub, $console, %args ) = @_;
+        my $string = Encode::encode( 'UTF-8', $args{string}, Encode::FB_CROAK );
+
+        $xsub->(
+            $console, @args{qw( x y width height )},
+            length($string), $string,
+            @args{qw( fg bg )},
+            $args{bg_blend}  // TCOD::BKGND_SET,
+            $args{alignment} // TCOD::LEFT,
+        );
+    });
+
+    $ffi->attach( [ draw_frame_rgb => 'draw_frame' ] => [qw(
+        TCOD_console
+        int
+        int
+        int
+        int
+        int[]
+        TCOD_color*
+        TCOD_color*
+        int
+        bool
+    )] => TCOD_error => sub {
+        my ( $xsub, $console, %args ) = @_;
+
+        Carp::croak 'The title parameter is not supported' if exists $args{title};
+
+        my $decoration = $args{decoration} // [ '┌', '─', '┐', '│', ' ', '│', '└', '─', '┘' ];
+
+        $decoration = [ map ord, split //, $decoration ]
+            unless Ref::Util::is_arrayref $decoration;
+
+        Carp::croak 'Frame decoration must have a length of 9. It has a length of ' . @$decoration
+            if @$decoration != 9;
+
+        $xsub->(
+            $console, @args{qw( x y width height )},
+            $decoration,
+            @args{qw( fg bg )},
+            $args{bg_blend}  // TCOD::BKGND_SET,
+            $args{clear}     // 1,
+        );
+    });
+
+    $ffi->attach( [ draw_rect_rgb => 'draw_rect' ] => [qw(
+        TCOD_console
+        int
+        int
+        int
+        int
+        int
+        TCOD_color*
+        TCOD_color*
+        int
+        bool
+    )] => TCOD_error => sub {
+        my ( $xsub, $console, %args ) = @_;
+
+        $xsub->(
+            $console,
+            @args{qw( x y width height ch fg bg )},
+            $args{bg_blend}  // TCOD::BKGND_SET,
+        );
+    });
+
     # Methods
-    $ffi->attach( save_asc      => [qw( TCOD_console string                                           )] => 'bool' );
-    $ffi->attach( save_apf      => [qw( TCOD_console string                                           )] => 'bool' );
-    $ffi->attach( blit          => [qw( TCOD_console int int int int TCOD_console int int float float )] => 'void' );
-    $ffi->attach( set_key_color => [qw( TCOD_console TCOD_color                                       )] => 'void' );
-    $ffi->attach( clear         => [qw( TCOD_console                                                  )] => 'void' );
+
+    my $clear = $bundle->function( clear => [qw( TCOD_console TCOD_color* TCOD_color* int )] );
+    $ffi->attach( clear => [qw( TCOD_console )] => 'void' => sub {
+        my ( $xsub, $console, %args ) = @_;
+
+        return $xsub->($console) unless %args;
+
+        $clear->( $console, $args{fg}, $args{bg}, $args{ch} // TCOD::Event::K_SPACE );
+    });
+
+    $ffi->attach( save_asc                => [qw( TCOD_console string                            )] => 'bool'       );
+    $ffi->attach( save_apf                => [qw( TCOD_console string                            )] => 'bool'       );
+
+    $ffi->attach( set_char                => [qw( TCOD_console int int int                       )] => 'void'       );
+    $ffi->attach( get_char                => [qw( TCOD_console int int                           )] => 'int'        );
+    $ffi->attach( put_char                => [qw( TCOD_console int int int int                   )] => 'void'       );
+    $ffi->attach( put_char_ex             => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void'       );
 
     $ffi->attach( get_width               => [qw( TCOD_console                                   )] => 'int'        );
     $ffi->attach( get_height              => [qw( TCOD_console                                   )] => 'int'        );
@@ -634,34 +798,6 @@ package TCOD::Console {
 
     $ffi->attach( set_default_foreground  => [qw( TCOD_console TCOD_color                        )] => 'void'       );
     $ffi->attach( get_default_foreground  => [qw( TCOD_console                                   )] => 'TCOD_color' );
-
-  # $ffi->attach( get_foreground_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
-  # $ffi->attach( get_background_color_image => [qw( TCOD_console )] => 'TCOD_image'  );
-
-    $ffi->attach( set_char                => [qw( TCOD_console int int int                       )] => 'void'       );
-    $ffi->attach( get_char                => [qw( TCOD_console int int                           )] => 'int'        );
-    $ffi->attach( put_char                => [qw( TCOD_console int int int int                   )] => 'void'       );
-    $ffi->attach( put_char_ex             => [qw( TCOD_console int int int TCOD_color TCOD_color )] => 'void'       );
-
-    $ffi->attach( rect                    => [qw( TCOD_console int int int int bool int          )] => 'void'       );
-    $ffi->attach( hline                   => [qw( TCOD_console int int int          int          )] => 'void'       );
-    $ffi->attach( vline                   => [qw( TCOD_console int int int          int          )] => 'void'       );
-
-    # We support up to two controls per function for now
-    $ffi->attach( print               => [qw( TCOD_console int int                   string )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_ex            => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_rect          => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_rect_ex       => [qw( TCOD_console int int int int int  int  string )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_frame         => [qw( TCOD_console int int int int bool int  string )] => [qw( int int )] => 'void' );
-    $ffi->attach( get_height_rect     => [qw( TCOD_console int int int int           string )] => [qw( int int )] => 'int'  );
-
-    # UTF-8 variants
-    $ffi->attach( print_utf           => [qw( TCOD_console int int                  wstring )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_ex_utf        => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_rect_utf      => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'void' );
-    $ffi->attach( print_rect_ex_utf   => [qw( TCOD_console int int int int int int  wstring )] => [qw( int int )] => 'void' );
-  # $ffi->attach( print_frame_utf     => [qw( TCOD_console int int int int bool int wstring )] => [qw( int int )] => 'void' );
-    $ffi->attach( get_height_rect_utf => [qw( TCOD_console int int int int          wstring )] => [qw( int int )] => 'int'  );
 
     # Root console functions
     $ffi->attach( init_root               => [qw( int int string int bool )] => 'void' );

@@ -23,8 +23,8 @@ TCOD::Sys::wait_for_event( TCOD::EVENT_KEY_PRESS, $key, $mouse, 1 );
 exit if $key->vk == TCOD::K_ESCAPE;
 
 for ( 1 .. 255 ) {
-    $off1->blit( 0, 0, 10, 10, undef, 0, 0, 1,        1        );
-    $off2->blit( 0, 0, 10, 10, undef, 0, 0, $_ / 255, $_ / 255 );
+    $off1->blit( alpha => 1,       );
+    $off2->blit( alpha => $_ / 255 );
     TCOD::Console::flush;
     sleep 0.005;
 }

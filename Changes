@@ -16,6 +16,34 @@ Revision history for TCOD
     Changes:
         - Imported bundled fonts from python-tcod to replace the
           old ones with licensing issues.
+        - The TCOD::Console API has been updated to reflect
+          upstream deprecated methods.
+
+          The following methods were removed:
+          - hline
+          - print_ex
+          - print_ex_utf
+          - print_frame
+          - print_rect
+          - print_rect_ex
+          - print_rect_ex_utf
+          - print_rect_utf
+          - print_utf
+          - rect
+          - set_key_color
+          - vline
+
+          The following methods were changed:
+          - blit
+          - clear
+          - print
+
+          The following methods were added
+          - draw_frame
+          - draw_rect
+          - print_box
+
+          Please see the documentation for these methods for more details.
 
 0.002     2021-07-11 16:58:16+01:00 Europe/London
 

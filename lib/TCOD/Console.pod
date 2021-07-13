@@ -17,8 +17,8 @@ TCOD::Console - Terminal emulator for rendering game screens
     $end->print( 8, 8, 'X' );
 
     for ( 1 .. 255 ) {
-        $start->blit( 0, 0, 10, 10, undef, 0, 0, 1,        1        );
-        $end->blit(   0, 0, 10, 10, undef, 0, 0, $_ / 255, $_ / 255 );
+        $start->blit( alpha => 1,       );
+        $end->blit(   alpha => $_ / 255 );
         TCOD::Console::flush;
 
         TCOD::Sys::sleep_milli(5);
@@ -68,37 +68,187 @@ ASC function that works also with the root console!
 =head2 blit
 
     $console->blit(
-        $source_x,
-        $source_y,
-        $source_width,
-        $source_height,
-        $target,
-        $target_x,
-        $target_y,
-        $foreground_alpha,
-        $background_alpha,
+        src_x     => $source_x         // 0,
+        src_y     => $source_y         // 0,
+        width     => $source_width     // 0,
+        height    => $source_height    // 0,
+        dest      => $target,
+        dest_x    => $target_x         // 0,
+        dest_y    => $target_y         // 0,
+        fg_alpha  => $foreground_alpha // 1,
+        bg_alpha  => $background_alpha // 1,
+        alpha     => $default_alpha    // 1,
+        key_color => $key_color,
     );
 
 This function allows you to blit a rectangular area of the source console at
 a specific position on a destination console. It can also simulate alpha
 transparency with foreground and background alpha parameters.
 
-=head2 set_key_color
+By default, it will blit the entire source console onto the destination
+console at its origin, with full opacity.
 
-    $console->set_key_color( $color );
+The value in the C<alpha> parameter is there as a convenience, and only used
+to set the default value for C<fg_alpha> and C<bg_alpha> if these are not set.
+It is useful for when both values are the same.
 
-This function defines a transparent background color for this console. All
-cells with this background color are ignored when calling L<blit|/blit>.
-You can use it to blit only some parts of the console.
+If C<key_color> is set to a L<TCOD::Color> object, cells of this color in the
+source console will I<not> be printed on the target console. This can be used
+to blit only some parts of the console.
 
 =head2 clear
 
-    $console->clear;
+    $console->clear(
+        fg => $foreground_color,
+        bg => $background_color,
+        ch => $char_code,
+    );
 
-Reset all the cells in a console. After calling this method, all cells will
-have their foreground and background colors set to the console's current
-defaults (see L<set_default_foreground|/set_default_foreground> and friends),
-and their ASCII code set to 32 (a blank space).
+Reset all the cells in a console.
+
+After calling this method, the color in all cells will be set to the ones
+specified in C<fg> for the foreground, and C<bg> for the background, and their
+character to the one set in C<ch>.
+
+The C<fg> and C<bg> parameters will default to the console's foreground and
+background colors respectively. The C<ch> parameters will default to the ASCII
+code of a blank space (32).
+
+=head2 print
+
+    $console->print( $x, $y, $string, %rest );
+    $console->print(
+        x         => $x,
+        y         => $y,
+        string    => $string,
+        fg        => $fg_color,
+        bg        => $bg_color,
+        bg_blend  => $flag      // TCOD::BKGND_SET,
+        alignment => $alignment // TCOD::LEFT,
+    );
+
+Print a string on a console with manual line breaks.
+
+The C<x> and C<y> parameters specify, in tile coordinates, the position
+of the start of the string. The C<string> parameter will be internally
+encoded as UTF-8 before printing.
+
+The behaviour of the background can be controlled with the C<bg_blend>
+parameter, which must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
+
+The alignment of the text can be set with the C<alignment> parameter,
+which must be a value in the L<Alignment|TCOD/Alignment> enum.
+
+This function accepts named parameters, but the C<x>, C<y>, and C<string>
+parameters may also be passed as the first three positional parameters in
+that order.
+
+=head2 print_box
+
+    $height = $console->print_box(
+        x         => $x,
+        y         => $y,
+        width     => $width,
+        height    => $height,
+        string    => $string,
+        fg        => $fg_color,
+        bg        => $bg_color,
+        bg_blend  => $flag      // TCOD::BKGND_SET,
+        alignment => $alignment // TCOD::LEFT,
+    );
+
+Print a string constrained to a rectangle and return the height.
+
+The C<x> and C<y> determine the starting tile, with C<0, 0> as the
+upper-left corner of the console. The size of the frame is determined
+by the C<width> and C<height> parameters, in tiles. The C<string>
+parameter will be internally encoded as UTF-8 before printing.
+
+The foreground and background colors are set with C<fg> and C<bg>
+respectively. If set, they should be set to L<TCOD::Color> objects.
+If none are provided, the colors will remain unchanged.
+
+The behaviour of the background can be controlled with the C<bg_blend>
+parameter, which must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
+
+The alignment of the text can be set with the C<alignment> parameter,
+which must be a value in the L<Alignment|TCOD/Alignment> enum.
+
+Returns the actual height of the printed area.
+
+=head2 draw_frame
+
+    $console->draw_frame(
+        x          => $x,
+        y          => $y,
+        decoration => $decoration // ..., # See below
+        fg         => $fg_color,
+        bg         => $bg_color,
+        bg_blend   => $flag       // TCOD::BKGND_SET,
+        clear      => $clear      // 1,
+    );
+
+Draw a framed rectangle.
+
+The C<x> and C<y> determine the starting tile, with C<0, 0> as the
+upper-left corner of the console. The size of the frame is determined
+by the C<width> and C<height> parameters, in tiles.
+
+If C<clear> is set to a true value, the region inside the frame will be
+cleared. This is the default.
+
+The foreground and background colors are set with C<fg> and C<bg>
+respectively. If set, they should be set to L<TCOD::Color> objects.
+If none are provided, the colors will remain unchanged.
+
+The behaviour of the background can be controlled with the C<bg_blend>
+parameter, which must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
+
+The value in C<decoration> is a sequence of glyphs to use for rendering
+the borders. This can either be a string with 9 characters, or an array
+reference with 9 values, each of which should be a single character
+arranged in row-major order. If none is set, the default value will use
+the following glyphs:
+
+    ┌─┐│ │└─┘
+
+To print a title on the frame, call this function, and then use
+L<print_box|/print_box> to print your title on top, constrained to the
+right dimensions.
+
+=head2 draw_rect
+
+    $console->draw_rect(
+        x        => $x,
+        y        => $y,
+        width    => $width,
+        height   => $height,
+        ch       => $char_code,
+        fg       => $fg_color,
+        bg       => $bg_color,
+        bg_blend => $flag // TCOD::BKGND_SET,
+    );
+
+Draw characters and colors over a rectangular region.
+
+The C<x> and C<y> determine the starting tile, with C<0, 0> as the
+upper-left corner of the console. The size of the frame is determined
+by the C<width> and C<height> parameters, in tiles.
+
+If C<ch> is set to a non-zero integer value, the rectangle will be filled
+with the character that integer represents. Setting it to 0 will leave
+the characters as they were.
+
+The foreground and background colors are set with C<fg> and C<bg>
+respectively. If set, they should be set to L<TCOD::Color> objects.
+If none are provided, the colors will remain unchanged.
+
+The behaviour of the background can be controlled with the C<bg_blend>
+parameter, which must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
+enum.
 
 =head2 get_width
 
@@ -246,49 +396,6 @@ Draw a character on a console using the default colors.
 The character is passed as an integer code, like one returned by C<ord>
 or one of the values in the L<Char|TCOD/Char> enum.
 
-=head2 print
-
-    $console->print(             $x, $y,                        $str );
-    $console->print_ex(          $x, $y,         $flag, $align, $str );
-    $console->print_rect(        $x, $y, $w, $h,                $str );
-    $console->print_rect_ex(     $x, $y, $w, $h, $flag, $align, $str );
-
-    $console->print_utf(         $x, $y,                        $str );
-    $console->print_ex_utf(      $x, $y,         $flag, $align, $str );
-    $console->print_rect_utf(    $x, $y, $w, $h,                $str );
-    $console->print_rect_ex_utf( $x, $y, $w, $h, $flag, $align, $str );
-
-Print a string to the console. The different flavours of this function
-allow you to set the position of the text to print ( using the C<$x> and
-C<$y> coordinates), the dimensions of a box to print it in when it should
-wrap (with C<$w> and C<$h>), the background flag to determine the
-behaviour of the background (with C<$flag>, which must be a value in the
-L<BackgroundFlag|TCOD/BackgroundFlag> enum), the alignment of the text (with
-C<$align>, which must be a value in the L<Alignment|TCOD/Alignment> enum).
-
-In all cases, the final value is a string to print. To print UTF-8 strings,
-use L<Encode/decode> and use the functions ending in C<_utf>.
-
-The string can contain the C<%c> sequence to work as a control code
-placeholders, which will be replaced with any control codes passed in as
-additional arguments to these functions, in a manner similar to the C<printf>
-family of functions.
-
-Note that, for now, these Perl bindings allow only two such additional codes.
-
-See L<set_color_control|/set_color_control> for how to define the value of
-these codes.
-
-=head2 print_frame
-
-    $console->print_frame( $x, $y, $w, $h, $clear, $flag, $str );
-
-This function calls the L<rect|/rect> function using the supplied parameters,
-then draws a rectangle with the console's default foreground color.
-
-The value of C<$str> is printed on the top of the rectangle, using inverted
-colors.
-
 =head2 get_height_rect
 
     $height = $console->get_height_rect(     $x, $y, $w, $h, $string );
@@ -296,32 +403,6 @@ colors.
 
 Returns the expected height of an autowrapped string without actually printing
 the string with one of the L<print_rect> family of functions.
-
-=head2 rect
-
-    $console->rect( $x, $y, $w, $h, $clear, $flag );
-
-Fills a rectngle in the console with the specified position and dimensions.
-
-The background color for every cell inside the rectangle will be adjusted with
-the default background color of the console (the value in C<$flag> will
-determine what effect this wil have on the cell's color).
-
-If C<$clear> is set to a true value, their ASCII code will be set to 32 (space).
-
-=head2 hline
-
-    $console->hline( $x, $y, $length, $flag );
-
-Draws a horizontal line in the console, using ASCII code 196
-(C<TCOD::CHAR_HLINE>), and the console's default background/foreground colors.
-
-=head2 vline
-
-    $console->vline( $x, $y, $length, $flag );
-
-Draws an vertical line in the console, using ASCII code 179
-(C<TCOD::CHAR_VLINE>), and the console's default background/foreground colors.
 
 =head1 FUNCTIONS
 

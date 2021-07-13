@@ -3,7 +3,7 @@
    "author" : [
       "Jos\u00e9 Joaqu\u00edn Atria <jjatria@cpan.org>"
    ],
-   "dynamic_config" : 0,
+   "dynamic_config" : 1,
    "generated_by" : "Dist::Zilla version 6.020, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
@@ -27,6 +27,7 @@
       "configure" : {
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
+            "FFI::Build::MM" : "0.83",
             "File::ShareDir::Install" : "0.06",
             "perl" : "5.013002"
          }
@@ -42,9 +43,11 @@
       },
       "runtime" : {
          "requires" : {
+            "Encode" : "0",
             "FFI::C" : "0",
             "FFI::Platypus" : "0",
             "Import::Into" : "0",
+            "Ref::Util" : "0",
             "Role::Tiny" : "0",
             "Sub::Util" : "1.40",
             "perl" : "5.013002"
@@ -509,6 +512,11 @@
             "class" : "Dist::Zilla::Plugin::ExecDir",
             "name" : "@Starter::Git/ExecDir",
             "version" : "6.020"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FFI::Build",
+            "name" : "FFI::Build",
+            "version" : "1.04"
          },
          {
             "class" : "Dist::Zilla::Plugin::MinimumPerl",

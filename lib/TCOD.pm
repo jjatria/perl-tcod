@@ -1132,7 +1132,7 @@ package
 package TCOD::Context {
     $ffi->mangler( sub { 'TCOD_context_' . shift } );
 
-    $ffi->attach( new  => [qw( TCOD_context_params opaque* )] => 'TCOD_error' => sub {
+    $ffi->attach( new => [qw( TCOD_context_params opaque* )] => 'TCOD_error' => sub {
         my ( $xsub, undef, %args ) = @_;
 
         for (
@@ -1157,33 +1157,69 @@ package TCOD::Context {
         bless \$ctx, 'TCOD::Context';
     });
 
-    sub new_terminal {
-        my ( $class, $cols, $rows, %args ) = @_;
+    {
+        my $sub = $ffi->function( recommended_console_size => [qw( TCOD_context float int* int* )] => 'TCOD_error' => sub {
+            my ( $xsub, $self, $magnification, $min_cols, $min_rows ) = @_;
 
-        $class->new(
-            rows     => $rows,
-            columns  => $cols,
-            vsync    => $args{sync} // 1,
-            %args{qw( renderer tileset sdl_window_flags title )},
-        );
+            my $err = $xsub->( $self, $magnification, \my $w, \my $h );
+            Carp::croak TCOD::get_error() if $err < 0;
+
+            $w = $min_cols if $min_cols > $w;
+            $h = $min_rows if $min_rows > $h;
+
+            ( $w, $h );
+        });
+
+        sub recommended_console_size {
+            my ( $self, $min_cols, $min_rows ) = @_;
+            $sub->( $self, 1, $min_cols // 1, $min_rows // 1 );
+        }
+
+        sub new_console {
+            my ( $self, %args ) = ( shift );
+
+            # Accommodate $ctx->present( $cols, $rows, $magnification );
+            %args = ( min_columns => shift, min_rows => shift, magnification => shift ) if @_ % 2;
+            %args = ( %args, @_ );
+
+            $args{min_columns}   //= 1;
+            $args{min_rows}      //= 1;
+            $args{magnification} //= 1;
+
+            Carp::croak "Magnification must be greater than zero (got $args{magnification}"
+                if $args{magnification} < 0;
+
+            my ( $cols, $rows )
+                = $sub->( $self, $args{magnification}, @args{qw( min_columns min_rows )} );
+
+            my ( $width, $height ) = @args{qw( min_columns min_rows )};
+            $width  = $cols if $cols > $width;
+            $height = $rows if $rows > $height;
+
+            TCOD::Console->new( $width, $height );
+        }
     }
 
     $ffi->attach( present => [qw( TCOD_context TCOD_console TCOD_viewport_options )] => 'TCOD_error' => sub {
-        my ( $xsub, $self, $console, %args ) = @_;
+        my ( $xsub, $self, %args ) = ( shift, shift );
+
+        # Accommodate $ctx->present( $console, %rest );
+        %args = ( console => shift ) if @_ % 2;
+        %args = ( %args, @_ );
 
         @args{qw( align_x align_y )} = @{ delete $args{align} // [ 0.5, 0.5 ] };
 
         my $c = delete $args{clear_color} // TCOD::BLACK();
+
         $args{_clear_color} = $ffi->cast(
             TCOD_colorRGBA => opaque => TCOD::ColorRGBA->new( $c->r, $c->g, $c->b, 0xFF ),
         );
 
-        my $err = $xsub->( $self, $console, TCOD::ViewportOptions->new(\%args) );
+        my $err = $xsub->( $self, $args{console}, TCOD::ViewportOptions->new(\%args) );
         Carp::croak TCOD::get_error() if $err < 0;
 
         return;
     });
-
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_context_delete => 'DESTROY' ] => ['TCOD_context'] => 'void' );

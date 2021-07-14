@@ -2,6 +2,17 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    New:
+        - Added bindings for some additional TCOD::Context methods:
+          - new_console
+          - recommended_console_size
+    Fixes:
+        - Added missing documentation for TCOD::Context objects.
+    Changes:
+        - The new_terminal method for TCOD::Context objects has been
+          removed. This is a deprecated method that was implemented in
+          error. The candle that burns twice as fast burns twice as bright.
+
 0.003     2021-07-14 22:12:08+01:00 Europe/London
 
     New:

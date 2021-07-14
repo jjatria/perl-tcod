@@ -9,22 +9,31 @@ TCOD - FFI bindings for libtcod
     use TCOD;
     use File::Share 'dist_file';
 
-    TCOD::Console::set_custom_font(
-        dist_file( TCOD => 'arial10x10.png' ),
-        TCOD::FONT_TYPE_GREYSCALE | TCOD::FONT_LAYOUT_TCOD,
+    use constant {
+        WIDTH  => 80,
+        HEIGHT => 60,
+    };
+
+    my $tileset = TCOD::Tileset->load_tilesheet(
+        dist_file( TCOD => 'fonts/dejavu10x10_gs_tc.png' ),
+        32, 8, TCOD::CHARMAP_TCOD,
     );
 
-    TCOD::Console::init_root( 80, 40, 'TCOD in Perl', 0 );
+    my $console = TCOD::Console->new( WIDTH, HEIGHT );
 
-    until ( TCOD::Console::is_window_closed ) {
-        TCOD::Console::set_default_foreground( undef, TCOD::WHITE );
+    my $context = TCOD::Context->new_terminal(
+        WIDTH, HEIGHT, tileset => $tileset,
+    );
 
-        TCOD::Console::put_char( undef, 1, 1, ord('@'), TCOD::BKGND_NONE );
+    while (1) {
+        $console->clear;
+        $console->print( 0, 0, 'Hello World!' );
+        $context->present( $console );
 
-        TCOD::Console::flush;
-
-        my $key = TCOD::Console::check_for_keypress(TCOD::EVENT_ANY);
-        last if $key->vk == TCOD::K_ESCAPE;
+        my $iter = TCOD::Event::wait;
+        while ( my $event = $iter->() ) {
+            exit if $event->type eq 'QUIT';
+        }
     }
 
 =head1 DESCRIPTION

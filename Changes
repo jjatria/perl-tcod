@@ -1,6 +1,6 @@
 Revision history for TCOD
 
-{{$NEXT}}
+0.003     2021-07-14 22:12:08+01:00 Europe/London
 
     New:
         - Added TCOD::ColorRGBA used internally in some of the

@@ -7,11 +7,14 @@ Revision history for TCOD
           - new_console
           - recommended_console_size
     Fixes:
-        - Added missing documentation for TCOD::Context objects.
+        - Added missing documentation for TCOD::Context and TCOD::Tileset
+          objects.
     Changes:
         - The new_terminal method for TCOD::Context objects has been
           removed. This is a deprecated method that was implemented in
           error. The candle that burns twice as fast burns twice as bright.
+        - Some methods for TCOD::Tileset objects that have only been partially
+          implemented have been removed until they are ready for prime-time.
 
 0.003     2021-07-14 22:12:08+01:00 Europe/London
 

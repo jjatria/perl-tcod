@@ -1033,7 +1033,7 @@ package TCOD::Tileset {
 
     sub tile_shape {
         my $self = shift;
-        ( $self->tile_height, $self->tile_height );
+        ( $self->tile_width, $self->tile_height );
     }
 
     $ffi->attach( [ TCOD_load_bdf => 'load_bdf' ] => [qw( string )] => 'TCOD_tileset' => sub {

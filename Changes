@@ -1,6 +1,6 @@
 Revision history for TCOD
 
-{{$NEXT}}
+0.004     2021-07-15 00:00:49+01:00 Europe/London
 
     New:
         - Added bindings for some additional TCOD::Context methods:

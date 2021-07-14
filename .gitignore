@@ -2,3 +2,5 @@
 TCOD-*
 .build/
 .tmp/
+*.o
+*.so

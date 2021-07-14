@@ -69,71 +69,71 @@
    "provides" : {
       "TCOD" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Color" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::ColorRGBA" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Console" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Context" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Dijkstra" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Event" : {
          "file" : "lib/TCOD/Event.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Event::Dispatch" : {
          "file" : "lib/TCOD/Event.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Image" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Key" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Map" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Mouse" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Noise" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Path" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Random" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Sys" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       },
       "TCOD::Tileset" : {
          "file" : "lib/TCOD.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       }
    },
    "release_status" : "stable",
@@ -147,7 +147,7 @@
          "web" : "https://github.com/jjatria/perl-tcod"
       }
    },
-   "version" : "0.004",
+   "version" : "0.005",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.034000"
@@ -392,7 +392,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "0.004",
+                  "tag" : "0.005",
                   "tag_format" : "%v",
                   "tag_message" : ""
                },

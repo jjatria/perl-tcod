@@ -63,6 +63,14 @@ with the distance from that point to every other cell in the map.
 
 Reverses the origin and destination points for this path.
 
+=head2 is_empty
+
+    $bool = $path->is_empty;
+
+Returns true when the internal iterator has run out of steps in the path.
+
+See L<walk|/walk> for a way to move the internal iterator forward.
+
 =head2 size
 
     $steps = $path->size;
@@ -85,6 +93,14 @@ of the map, this method returns -1.
 
 Returns a list with the coordinates of the specified step. Together with
 L<size|/size>, this can be used to iterate through a path.
+
+=head2 walk
+
+    ( $x, $y ) = $path->walk;
+
+Returns a list with the coordinates of the current step of the internal
+iterator, and moves the iterator forward. The values returned by this method
+will be meaningful as long as L<is_empty|/is_empty> returns false.
 
 =head1 SEE ALSO
 

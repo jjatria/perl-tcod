@@ -2,6 +2,9 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    Fixes:
+        - Fixed the walk method for Path::Dijkstra objects. This
+          method, and the related is_empty, are now documented and tested.
     Changes:
         - Imported bundled fonts from python-tcod to replace the
           old ones with licensing issues.

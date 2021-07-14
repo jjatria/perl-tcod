@@ -686,11 +686,10 @@ package TCOD::Dijkstra {
         return ( $x, $y );
     });
 
-  # FIXME: Where did this function go?
-  # $ffi->attach( walk => [qw( TCOD_dijkstra int* int* )] => 'bool' => sub {
-  #     shift->( shift, \my $x, \my $y ) or return;
-  #     return ( $x, $y );
-  # });
+    $ffi->attach( [ path_walk => 'walk' ] => [qw( TCOD_dijkstra int* int* )] => 'bool' => sub {
+        $_[0]->( $_[1], \my $x, \my $y, $_[2] ) or return;
+        return ( $x, $y );
+    });
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_dijkstra_delete => 'DESTROY' ] => ['TCOD_dijkstra'] => 'void' );

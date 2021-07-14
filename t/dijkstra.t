@@ -32,6 +32,30 @@ subtest 'Dijkstra' => sub {
     ] => 'Got expected path';
 };
 
+subtest 'TCOD::Dijkstra->walk' => sub {
+    my $path = TCOD::Dijkstra->new( load_map(), 1.41 );
+
+    $path->compute( 20, 10 );
+    $path->path_set( 24, 1 );
+
+    is $path->is_empty, F, 'Path is not empty';
+
+    my @cells;
+    push @cells, [ $path->walk ] until $path->is_empty;
+
+    is \@cells => [
+        [ 20, 9 ],
+        [ 19, 8 ],
+        [ 19, 7 ],
+        [ 19, 6 ],
+        [ 20, 5 ],
+        [ 21, 4 ],
+        [ 22, 3 ],
+        [ 23, 2 ],
+        [ 24, 1 ],
+    ] => 'Got expected path';
+};
+
 subtest 'Dijkstra - no diagonals' => sub {
     my $path = TCOD::Dijkstra->new( load_map(), 0 );
 

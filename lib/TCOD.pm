@@ -1233,6 +1233,42 @@ package TCOD::Context {
         return;
     });
 
+    sub convert_event {
+        my ( $self, $event ) = @_;
+
+        if ( $event->isa('TCOD::Event::Mouse') && !$event->isa('TCOD::Event::MouseWheel') ) {
+            $event->{tilexy} = [ $self->pixel_to_tile( @{ $event->{xy} } ) ];
+        }
+
+        if ( $event->isa('TCOD::Event::MouseMotion') ) {
+            my ( $xx, $yy ) = $self->pixel_to_tile(
+                $event->{xy}[0] - $event->{dxy}[0],
+                $event->{xy}[1] - $event->{dxy}[1],
+            );
+
+            $event->{tiledxy} = [
+                $event->{tilexy}[0] - $xx,
+                $event->{tilexy}[1] - $yy,
+            ];
+        }
+    }
+
+    $ffi->attach( [ screen_pixel_to_tile_i => 'pixel_to_tile' ] => [qw( TCOD_context int* int* )] => 'TCOD_error' => sub {
+        my ( $xsub, $self, $x, $y ) = @_;
+        my ( $xx, $yy ) = ( $x, $y );
+        my $err = $xsub->( $self, \$xx, \$yy );
+        Carp::croak TCOD::get_error() if $err < 0;
+        ( $xx, $yy );
+    });
+
+    $ffi->attach( [ screen_pixel_to_tile_d => 'pixel_to_subtile' ] => [qw( TCOD_context double* double* )] => 'TCOD_error' => sub {
+        my ( $xsub, $self, $x, $y ) = @_;
+        my ( $xx, $yy ) = ( $x, $y );
+        my $err = $xsub->( $self, \$xx, \$yy );
+        Carp::croak TCOD::get_error() if $err < 0;
+        ( $xx, $yy );
+    });
+
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_context_delete => 'DESTROY' ] => ['TCOD_context'] => 'void' );
 }

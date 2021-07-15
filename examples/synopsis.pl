@@ -30,6 +30,7 @@ while (1) {
 
     my $iter = TCOD::Event::wait;
     while ( my $event = $iter->() ) {
+        $context->convert_event($event);
         print $event->as_string . "\n";
         exit if $event->type eq 'QUIT';
     }

@@ -155,6 +155,16 @@ Returns an array reference with the pixel coordinates of this mouse event.
 The individual components of this coordinate are also available through the
 C<x> and C<y> accessors.
 
+=item * tilexy
+
+If this event has been processed with
+L<TCOD::Context::convert_event|TCOD::Context/convert_event>, this will returns
+an array reference with the tile coordinates of this mouse event. Otherwise, this
+will return C<undef>.
+
+The individual components of this coordinate are also available through the
+C<tilex> and C<tiley> accessors.
+
 =item * state
 
 A bitfield with all the buttons that are currently being held. This can be checked
@@ -183,6 +193,16 @@ Returns an array reference with the pixel coordinates of this mouse event.
 The individual components of this coordinate are also available through the
 C<x> and C<y> accessors.
 
+=item * tilexy
+
+If this event has been processed with
+L<TCOD::Context::convert_event|TCOD::Context/convert_event>, this will returns
+an array reference with the tile coordinates of this mouse event. Otherwise, this
+will return C<undef>.
+
+The individual components of this coordinate are also available through the
+C<tilex> and C<tiley> accessors.
+
 =item * state
 
 A bitfield with all the buttons that are currently being held. This can be checked
@@ -210,6 +230,16 @@ Always returns C<MOUSEMOTION>.
 Returns an array reference with the pixel coordinates of this mouse event.
 The individual components of this coordinate are also available through the
 C<x> and C<y> accessors.
+
+=item * tilexy
+
+If this event has been processed with
+L<TCOD::Context::convert_event|TCOD::Context/convert_event>, this will returns
+an array reference with the tile coordinates of this mouse event. Otherwise, this
+will return C<undef>.
+
+The individual components of this coordinate are also available through the
+C<tilex> and C<tiley> accessors.
 
 =back
 

@@ -5,6 +5,8 @@ Revision history for TCOD
     New:
         - The TCOD::Tileset::load_tilesheet constructor now accepts named
           parameters.
+        - Added TCOD::Context::convert_event and related methods to add
+          tile coordinates to an event with pixel coordinates.
     Fixes:
         - Expanded TCOD::Event documentation to include information about
           the individual event types that are generated.

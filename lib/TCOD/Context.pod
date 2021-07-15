@@ -148,6 +148,30 @@ be returned.
 If the result is only used to create a new L<TCOD::Console> then you may want
 to call L<new_console|/new_console> instead.
 
+=head2 convert_event
+
+    $context->convert_event( $event );
+
+Add tile coordinates to a L<TCOD::Event|TCOD::Event/EVENT TYPES> that
+already has pixel coordinates. This applies only to some mouse events.
+
+=head2 pixel_to_tile
+
+    ( $tile_x, $tile_y ) = $ontext->pixel_to_tile( $pixel_x, $pixel_x );
+
+Convert from pixel coordinates to this context's tile coordinates. The
+components of the tile coordinates will be integers. See
+L<pixel_to_subtile|/pixel_to_subtile> for an alternative that returns
+floating point numbers.
+
+=head2 pixel_to_subtile
+
+    ( $tile_x, $tile_y ) = $ontext->pixel_to_subtile( $pixel_x, $pixel_x );
+
+Convert from pixel coordinates to this context's tile coordinates. The
+components of the tile coordinates will have sub-tile precision. If no such
+precision is needed, consider using L<pixel_to_tile|/pixel_to_tile> instead.
+
 =head1 SEE ALSO
 
 =over

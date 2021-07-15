@@ -1,5 +1,15 @@
 Revision history for TCOD
 
+{{$NEXT}}
+
+    Fixes:
+        - Expanded TCOD::Event documentation to include information about
+          the individual event types that are generated.
+    Changes:
+        - The event types returned by the TCOD::Event functions have been
+          modified for consistency. Please refer to their documentation
+          for their current behaviour.
+
 0.004     2021-07-15 00:00:49+01:00 Europe/London
 
     New:

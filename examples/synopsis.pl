@@ -28,6 +28,7 @@ while (1) {
 
     my $iter = TCOD::Event::wait;
     while ( my $event = $iter->() ) {
+        print $event->as_string . "\n";
         exit if $event->type eq 'QUIT';
     }
 }

@@ -385,6 +385,21 @@ BEGIN {
 
             NUM_SCANCODES=512
         )],
+        Keymod => {
+            KMOD_NONE     => 0x0000,
+            KMOD_LSHIFT   => 0x0001,
+            KMOD_RSHIFT   => 0x0002,
+            KMOD_LCTRL    => 0x0040,
+            KMOD_RCTRL    => 0x0080,
+            KMOD_LALT     => 0x0100,
+            KMOD_RALT     => 0x0200,
+            KMOD_LGUI     => 0x0400,
+            KMOD_RGUI     => 0x0800,
+            KMOD_NUM      => 0x1000,
+            KMOD_CAPS     => 0x2000,
+            KMOD_MODE     => 0x4000,
+            KMOD_RESERVED => 0x8000,
+        },
         WindowEventID => [qw(
             WINDOWEVENT_NONE
             WINDOWEVENT_SHOWN
@@ -404,11 +419,43 @@ BEGIN {
             WINDOWEVENT_TAKE_FOCUS
             WINDOWEVENT_HIT_TEST
         )],
+        WindowFlags => {
+            WINDOW_FULLSCREEN         => 0x00000001,
+            WINDOW_OPENGL             => 0x00000002,
+            WINDOW_SHOWN              => 0x00000004,
+            WINDOW_HIDDEN             => 0x00000008,
+            WINDOW_BORDERLESS         => 0x00000010,
+            WINDOW_RESIZABLE          => 0x00000020,
+            WINDOW_MINIMIZED          => 0x00000040,
+            WINDOW_MAXIMIZED          => 0x00000080,
+            WINDOW_MOUSE_GRABBED      => 0x00000100,
+            WINDOW_INPUT_FOCUS        => 0x00000200,
+            WINDOW_MOUSE_FOCUS        => 0x00000400,
+            WINDOW_FULLSCREEN_DESKTOP => 0x00001001,
+            WINDOW_FOREIGN            => 0x00000800,
+            WINDOW_ALLOW_HIGHDPI      => 0x00002000,
+            WINDOW_MOUSE_CAPTURE      => 0x00004000,
+            WINDOW_ALWAYS_ON_TOP      => 0x00008000,
+            WINDOW_SKIP_TASKBAR       => 0x00010000,
+            WINDOW_UTILITY            => 0x00020000,
+            WINDOW_TOOLTIP            => 0x00040000,
+            WINDOW_POPUP_MENU         => 0x00080000,
+            WINDOW_KEYBOARD_GRABBED   => 0x00100000,
+            WINDOW_VULKAN             => 0x10000000,
+            WINDOW_METAL              => 0x20000000,
+            WINDOW_INPUT_GRABBED      => 0x00000100,
+        },
     );
 }
 
 BEGIN {
     $enum->(
+        Keymod => {
+            KMOD_CTRL  => KMOD_LCTRL  | KMOD_RCTRL,
+            KMOD_SHIFT => KMOD_LSHIFT | KMOD_RSHIFT,
+            KMOD_ALT   => KMOD_LALT   | KMOD_RALT,
+            KMOD_GUI   => KMOD_LGUI   | KMOD_RGUI,
+        },
         Keycode => {
             K_UNKNOWN            => 0,
             K_RETURN             => ord "\r",

@@ -54,6 +54,465 @@ Events are processed as the iterator is consumed. Breaking out of, or
 discarding the iterator will leave the remaining events on the event
 queue.
 
+=head1 EVENT TYPES
+
+All these events have a C<type> method that returns a string identifying
+their type as a string, and wrap around an SDL2 event from which they get
+their data They also have a C<as_string> method that can be used to transform
+the event into a printable string, useful for logging and debugging.
+
+=head2 TCOD::Event::Quit
+
+An application quit request event. See
+L<the SDL2 documentation|https://wiki.libsdl.org/SDL_EventType#sdl_quit>
+for more info on when this event may be triggered.
+
+=over
+
+=item * type
+
+Always returns C<QUIT>.
+
+=back
+
+=head2 TCOD::Event::KeyDown
+
+Triggered when a keyboard key is pressed.
+
+=over
+
+=item * type
+
+Always returns C<KEYDOWN>.
+
+=item * sym
+
+Returns the C<sym> value of the SDL2 keyboard event. This is a value in
+this module's L<Keycode|/Keycode> enum.
+
+=item * scancode
+
+Returns the C<scancode> value of the SDL2 keyboard event. This is a value in
+this module's L<Scancode|/Scancode> enum.
+
+=item * mod
+
+Returns the C<mod> value of the SDL2 keyboard event. This is a value in
+this module's L<Keymod|/Keymod> enum.
+
+=item * repeat
+
+Returns a true value if this is a repeat event for this key (eg. this key is
+being held down).
+
+=back
+
+=head2 TCOD::Event::KeyUp
+
+Triggered when a keyboard key is released.
+
+=over
+
+=item * type
+
+Always returns C<KEYUP>.
+
+=item * sym
+
+Returns the C<sym> value of the SDL2 keyboard event. This is a value in
+this module's L<Keycode|/Keycode> enum.
+
+=item * scancode
+
+Returns the C<scancode> value of the SDL2 keyboard event. This is a value in
+this module's L<Scancode|/Scancode> enum.
+
+=item * mod
+
+Returns the C<mod> value of the SDL2 keyboard event. This is a value in
+this module's L<Keymod|/Keymod> enum.
+
+=item * repeat
+
+Returns a true value if this is a repeat event for this key (eg. this key is
+being held down).
+
+=back
+
+=head2 TCOD::Event::MouseButtonUp
+
+Triggered when a mouse button is released.
+
+=over
+
+=item * type
+
+Always returns C<MOUSEBUTTONUP>.
+
+=item * xy
+
+Returns an array reference with the pixel coordinates of this mouse event.
+The individual components of this coordinate are also available through the
+C<x> and C<y> accessors.
+
+=item * state
+
+A bitfield with all the buttons that are currently being held. This can be checked
+agains the values in this module's L<MouseButton|/MouseButton> enum.
+
+=item * button
+
+The button that triggered this mouse event. It will be one of the values in
+this module's L<MouseButton|/MouseButton> enum.
+
+=back
+
+=head2 TCOD::Event::MouseButtonDown
+
+Triggered when a mouse button is pressed.
+
+=over
+
+=item * type
+
+Always returns C<MOUSEBUTTONDOWN>.
+
+=item * xy
+
+Returns an array reference with the pixel coordinates of this mouse event.
+The individual components of this coordinate are also available through the
+C<x> and C<y> accessors.
+
+=item * state
+
+A bitfield with all the buttons that are currently being held. This can be checked
+agains the values in this module's L<MouseButton|/MouseButton> enum.
+
+=item * button
+
+The button that triggered this mouse event. It will be one of the values in
+this module's L<MouseButton|/MouseButton> enum.
+
+=back
+
+=head2 TCOD::Event::MouseMotion
+
+Triggered when the mouse is moved.
+
+=over
+
+=item * type
+
+Always returns C<MOUSEMOTION>.
+
+=item * xy
+
+Returns an array reference with the pixel coordinates of this mouse event.
+The individual components of this coordinate are also available through the
+C<x> and C<y> accessors.
+
+=back
+
+=head2 TCOD::Event::MouseWheel
+
+Triggered when the mouse wheel is rolled.
+
+=over
+
+=item * type
+
+Always returns C<MOUSEWHEEL>.
+
+=item * xy
+
+Returns an array reference with the amount that was scrolled, horizontally and
+vertically, in pixels. Negative values point left and up, while positive values
+point in the opposite direction.
+
+The individual components of this array reference are also available through
+the C<x> and C<y> accessors.
+
+=item * flipped
+
+Returns a true value if either the user or the operating system has set the
+mouse to be flipped.
+
+=back
+
+=head2 TCOD::Event::TextInput
+
+Triggered when the user has entered some text.
+
+=over
+
+=item * type
+
+Always returns C<TEXTINPUT>.
+
+=item * text
+
+The text that was input.
+
+=back
+
+=head2 TCOD::Event::WindowClose
+
+Triggered when the window manager has requested the window to be closed.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWCLOSE>.
+
+=back
+
+=head2 TCOD::Event::WindowEnter
+
+Triggered when the window has gained mouse focus.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWENTER>.
+
+=back
+
+=head2 TCOD::Event::WindowLeave
+
+Triggered when the window has lost mouse focus.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWLEAVE>.
+
+=back
+
+=head2 TCOD::Event::WindowRestored
+
+Triggered when the window has been restored to its normal size and position.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWRESTORED>.
+
+=back
+
+=head2 TCOD::Event::WindowMinimized
+
+Triggered when the window has been minimized.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWMINIMIZED>.
+
+=back
+
+=head2 TCOD::Event::WindowMaximized
+
+Triggered when the window has been maximized.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWMAXIMIZED>.
+
+=back
+
+=head2 TCOD::Event::WindowExposed
+
+Triggered when a part of the window that was hidden has been exposed. This
+normally means the window needs to be redrawn.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWEXPOSED>.
+
+=back
+
+=head2 TCOD::Event::WindowFocusGained
+
+Triggered when the window has gained keyboard focus.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWFOCUSGAINED>.
+
+=back
+
+=head2 TCOD::Event::WindowFocusLost
+
+Triggered when the window has lost keyboard focus.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWFOCUSLOST>.
+
+=back
+
+=head2 TCOD::Event::WindowTakeFocus
+
+Triggered when the window is being offered focus.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWTAKEFOCUS>.
+
+=back
+
+=head2 TCOD::Event::WindowShown
+
+Triggered when the window has been shown.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWSHOWN>.
+
+=back
+
+=head2 TCOD::Event::WindowHidden
+
+Triggered when the window has been hidden.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWHIDDEN>.
+
+=back
+
+=head2 TCOD::Event::WindowHitTest
+
+Triggered when the window has had a hit test.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWHITTEST>.
+
+=back
+
+=head2 TCOD::Event::WindowMoved
+
+Triggered when the window has been moved.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWMOVED>.
+
+=item * xy
+
+Returns an array reference with the screen coordinates the window has been
+moved to.
+
+The individual components of this coordinate are also available through the
+C<x> and C<y> accessors.
+
+=back
+
+=head2 TCOD::Event::WindowResized
+
+Triggered when the window has been resized.
+
+=over
+
+=item * type
+
+Always returns C<WINDOWRESIZED>.
+
+=item * width
+
+Returns the window's new width in pixels.
+
+=item * height
+
+Returns the window's new height in pixels.
+
+=back
+
+=head2 TCOD::Event::Undefined
+
+A default event generated when no mapping could be found.
+
+=over
+
+=item * type
+
+Always returns C<UNDEFINED>.
+
+=back
+
+package
+    TCOD::Event::WindowEvent {
+    our @ISA = 'TCOD::Event::Base';
+    sub init {
+        my $self = shift;
+
+        my ( $e, $k ) = @{ $self }{qw( sdl_event !key )};
+        my $w = $e->$k if $k;
+
+        $self->{type} = $TCOD::SDL2::WindowEventID{ $w->event }
+            // return TCOD::Event::Undefined->new($e)->init;
+
+        $self->{type} =~ s/WINDOWEVENT_/WINDOW_/;
+        $self->{type} =~ s/([A-Z])([A-Z]*)_/$1\L$2/g;
+
+        $self;
+    }
+}
+
+=head1 ENUMS
+
+The enums listed below are available as constants like the ones defined using
+L<constant>, which means the same caveats apply here.
+
+To provide introspection into the values of the enums, they are also made
+available as package variables with the names of each enum. This makes it
+possible to get the name of a value in a given enum with code like the
+following:
+
+    say $TCOD::Event::Keycode{ TCOD::Event::K_UP }; # Prints 'K_UP'
+
+=head2 Keycode
+
+A translation of the L<SDL_Keycode|https://wiki.libsdl.org/SDL_Keycode> enum
+in SDL2. Keys and values should be the same as those in SDL2, without the
+C<SDL_> prefix (so C<SDLK_UP> becomes C<TCOD::Event::K_UP>).
+
+=head2 Keymod
+
+A translation of the L<SDL_Keymod|https://wiki.libsdl.org/SDL_Keymod> enum
+in SDL2. Keys and values should be the same as those in SDL2 (eg.
+C<TCOD::Event::KMOD_SHIFT>).
+
+=head2 Scancode
+
+A translation of the L<SDL_Scancode|https://wiki.libsdl.org/SDL_Scancode> enum
+in SDL2. Keys and values should be the same as those in SDL2, without the
+C<SDL_SCANCODE_> prefix (so C<SDL_SCANCODE_UP> becomes C<TCOD::Event::UP>).
+
 =head1 SEE ALSO
 
 =over

@@ -1,6 +1,6 @@
 Revision history for TCOD
 
-{{$NEXT}}
+0.005     2021-07-15 22:38:06+01:00 Europe/London
 
     New:
         - The TCOD::Tileset::load_tilesheet constructor now accepts named

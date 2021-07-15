@@ -17,11 +17,13 @@ my $tileset = TCOD::Tileset->load_tilesheet(
     charmap => TCOD::CHARMAP_TCOD,
 );
 
-my $console = TCOD::Console->new( WIDTH, HEIGHT );
-
-my $context = TCOD::Context->new_terminal(
-    WIDTH, HEIGHT, tileset => $tileset,
+my $context = TCOD::Context->new(
+    columns => WIDTH,
+    rows    => HEIGHT,
+    tileset => $tileset,
 );
+
+my $console = $context->new_console;
 
 while (1) {
     $console->clear;

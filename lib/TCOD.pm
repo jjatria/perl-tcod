@@ -1227,7 +1227,7 @@ package TCOD::Context {
             TCOD_colorRGBA => opaque => TCOD::ColorRGBA->new( $c->r, $c->g, $c->b, 0xFF ),
         );
 
-        my $err = $xsub->( $self, $args{console}, TCOD::ViewportOptions->new(\%args) );
+        my $err = $xsub->( $self, delete $args{console}, TCOD::ViewportOptions->new(\%args) );
         Carp::croak TCOD::get_error() if $err < 0;
 
         return;

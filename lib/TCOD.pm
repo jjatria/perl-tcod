@@ -1161,6 +1161,8 @@ package TCOD::Context {
             $args{$out} = $ffi->cast( $cast => opaque => $args{$out} ) if $cast;
         }
 
+        $args{sdl_window_flags} //= TCOD::SDL2::WINDOW_RESIZABLE();
+
         my $err = $xsub->( TCOD::ContextParams->new(\%args), \my $ctx );
         Carp::croak TCOD::get_error() if $err < 0;
 

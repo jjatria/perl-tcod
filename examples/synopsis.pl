@@ -5,6 +5,18 @@ use warnings;
 use TCOD;
 use File::Share 'dist_file';
 
+# This example is a hello world script which handles font loading, fixed-sized
+# consoles, window contexts, and event handling. This example loads the
+# dejavu10x10_gs_tc.png font from the ones bundled with this distribution.
+#
+# By default this will create a window which can be resized and the fixed-size
+# console will be stretched to fit the window. You can add arguments to
+# TCOD::Context->present to fix the aspect ratio or only scale the console by
+# integer increments.
+#
+# This example is a port the one bundled with python-tcod, and available at
+# https://python-tcod.readthedocs.io/en/latest/tcod/getting-started.html#fixed-size-console
+
 use constant {
     WIDTH  => 80,
     HEIGHT => 60,

@@ -1046,12 +1046,22 @@ package TCOD::Tileset {
     });
 
     $ffi->attach( [ TCOD_tileset_load => 'load_tilesheet' ] => [qw( string int int int int[] )] => 'TCOD_tileset' => sub {
-        my ( $xsub, undef, $path, $cols, $rows, $charmap ) = @_;
+        my ( $xsub, undef, %args ) = ( shift, shift );
 
-        Carp::croak "Cannot load tilesheet from $path: no such file"
-            unless -f $path;
+        %args = @_ != 4 ? @_ : (
+            path     => shift,
+            columns  => shift,
+            rows     => shift,
+            charmarp => shift,
+        );
 
-        $xsub->( $path, $cols, $rows, scalar @{ $charmap }, $charmap );
+        Carp::croak "Cannot load tilesheet from $args{path}: no such file"
+            unless -f $args{path};
+
+        $xsub->(
+            @args{qw( path columns rows )},
+            scalar @{ $args{charmap} }, $args{charmap},
+        );
     });
 
     $ffi->attach( [ TCOD_tileset_get_tile_ => 'get_tile' ] => [qw( TCOD_tileset int )] => 'int' => sub {

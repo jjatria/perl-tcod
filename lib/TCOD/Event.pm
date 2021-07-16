@@ -19,6 +19,25 @@ BEGIN {
     our %Keymod   = %TCOD::SDL2::Keymod;
     our %Keycode  = %TCOD::SDL2::Keycode;
     our %Scancode = %TCOD::SDL2::Scancode;
+
+    our %MouseButton = (
+        BUTTON_LEFT   => 1,
+        BUTTON_MIDDLE => 2,
+        BUTTON_RIGHT  => 3,
+        BUTTON_X1     => 4,
+        BUTTON_X2     => 5,
+    );
+
+    our %MouseButtonMask = (
+        BUTTON_LMASK  => 1,
+        BUTTON_MMASK  => 2,
+        BUTTON_RMASK  => 4,
+        BUTTON_X1MASK => 8,
+        BUTTON_X2MASK => 16,
+    );
+
+    constant->import( \%MouseButton );
+    constant->import( \%MouseButtonMask );
 }
 
 package

@@ -241,6 +241,11 @@ will return C<undef>.
 The individual components of this coordinate are also available through the
 C<tilex> and C<tiley> accessors.
 
+=item * state
+
+A bitfield with all the buttons that are currently being held. This can be checked
+agains the values in this module's L<MouseButton|/MouseButton> enum.
+
 =back
 
 =head2 TCOD::Event::MouseWheel
@@ -542,6 +547,45 @@ C<TCOD::Event::KMOD_SHIFT>).
 A translation of the L<SDL_Scancode|https://wiki.libsdl.org/SDL_Scancode> enum
 in SDL2. Keys and values should be the same as those in SDL2, without the
 C<SDL_SCANCODE_> prefix (so C<SDL_SCANCODE_UP> becomes C<TCOD::Event::UP>).
+
+=head2 MouseButton
+
+Can be used to check the C<button> key of mouse button events for the button
+that triggered the event.
+
+=over
+
+=item * BUTTON_LEFT
+
+=item * BUTTON_MIDDLE
+
+=item * BUTTON_RIGHT
+
+=item * BUTTON_X1
+
+=item * BUTTON_X2
+
+=back
+
+=head2 MouseButtonMask
+
+Can be used to check the C<state> key of
+L<MouseMotion|/TCOD::Event::MouseMotion> events for the buttons that are
+currently being held.
+
+=over
+
+=item * BUTTON_LMASK
+
+=item * BUTTON_MMASK
+
+=item * BUTTON_RMASK
+
+=item * BUTTON_X1MASK
+
+=item * BUTTON_X2MASK
+
+=back
 
 =head1 SEE ALSO
 

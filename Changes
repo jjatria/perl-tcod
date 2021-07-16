@@ -7,6 +7,8 @@ Revision history for TCOD
           in the tcod.los module in python-tcod
         - Documented the `state` key in MouseMotion events, and added the
           enums needed to read its value.
+        - Added `examples/paint.pl` as an example of event dispatch and line
+          calculation
     Fixes:
         - The clear_color argument to TCOD::Context is now correctly handled.
         - Documentation tweaks

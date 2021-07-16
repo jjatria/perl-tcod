@@ -415,6 +415,7 @@ is [ sort keys %TCOD:: ], [qw(
     LIGHT_VIOLET
     LIGHT_YELLOW
     LIME
+    Line::
     MAGENTA
     Map::
     Mouse::

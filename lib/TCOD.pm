@@ -400,7 +400,8 @@ $ffi->type( int    => 'TCOD_renderer' );
 $ffi->type( int    => 'TCOD_keycode'  );
 $ffi->type( int    => 'TCOD_error'    );
 $ffi->type( opaque => 'TCOD_event'    );
-$ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func' );
+$ffi->type( '(int, int, int, int, opaque )->float' => 'TCOD_path_func'     );
+$ffi->type( '(int,int)->bool'                      => 'TCOD_line_listener' );
 
 # Custom blessed opaque types
 for my $name (qw( image console map path dijkstra random noise context )) {
@@ -1271,6 +1272,22 @@ package TCOD::Context {
 
     $ffi->mangler( sub { shift } );
     $ffi->attach( [ TCOD_context_delete => 'DESTROY' ] => ['TCOD_context'] => 'void' );
+}
+
+package TCOD::Line {
+    $ffi->mangler( sub { shift } );
+
+    $ffi->attach( [ TCOD_line => 'bresenham' ] => [qw( int int int int TCOD_line_listener )] => bool => sub {
+        my ( $xsub, $x1, $y1, $x2, $y2, $cb ) = @_;
+
+        my @out;
+        $cb //= sub { push @out, [ @_ ]; 1 };
+
+        my $closure = $ffi->closure( $cb );
+        $xsub->( $x1, $y1, $x2, $y2, $closure );
+
+        @out;
+    });
 }
 
 for (

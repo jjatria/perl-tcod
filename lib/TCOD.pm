@@ -1165,6 +1165,7 @@ package TCOD::Context {
             $args{$out} = $ffi->cast( $cast => opaque => $args{$out} ) if $cast;
         }
 
+        $args{vsync}            //= 1;
         $args{sdl_window_flags} //= TCOD::SDL2::WINDOW_RESIZABLE();
 
         my $err = $xsub->( TCOD::ContextParams->new(\%args), \my $ctx );

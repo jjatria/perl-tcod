@@ -34,7 +34,19 @@ This class represents a terminal emulator for rendering text-based games.
 
 =head2 new
 
-    $context = TCOD::Context->new( %options );
+    $context = TCOD::Context->new(
+        x                 => $screen_x,
+        y                 => $screen_y,
+        width             => $pixel_width,
+        height            => $pixel_height,
+        renderer          => $renderer_type,
+        title             => $window_title,
+        tileset           => $tileset, # TCOD::Tileset
+        columns           => $columns,
+        rows              => $rows,
+        vsync             => $bool,
+        sdl_window_flags  => $sdl_flags,
+    );
 
 Create a new TCOD::Context with the desired pixel size.
 

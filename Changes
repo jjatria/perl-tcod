@@ -2,6 +2,10 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    Fixes:
+        - Fixed an issue with the parsing of positional arguments to
+          TCOD::Tileset::load_tilesheet
+
 0.006     2021-07-16 19:33:07+01:00 Europe/London
 
     New:

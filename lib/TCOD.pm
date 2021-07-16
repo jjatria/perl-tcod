@@ -1050,10 +1050,10 @@ package TCOD::Tileset {
         my ( $xsub, undef, %args ) = ( shift, shift );
 
         %args = @_ != 4 ? @_ : (
-            path     => shift,
-            columns  => shift,
-            rows     => shift,
-            charmarp => shift,
+            path    => shift,
+            columns => shift,
+            rows    => shift,
+            charmap => shift,
         );
 
         Carp::croak "Cannot load tilesheet from $args{path}: no such file"

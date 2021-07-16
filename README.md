@@ -44,6 +44,12 @@ TCOD - FFI bindings for libtcod
 
 TCOD offers Perl bindings to libtcod, a library for developing roguelike games.
 
+If you're getting started, see [TCOD::Context](https://metacpan.org/pod/TCOD%3A%3AContext) to manage rendering contexts
+and [TCOD::Tileset](https://metacpan.org/pod/TCOD%3A%3ATileset) to load custom fonts to display. [TCOD::Event](https://metacpan.org/pod/TCOD%3A%3AEvent) can be
+used to interact with input and system events. If you want to calculate
+line-of-sight within a map you can use [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap), which can also be used
+by [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath) for pathfinding.
+
 ## On Stability
 
 This distribution is currently **experimental**, and as such, its API might
@@ -476,14 +482,12 @@ The structure of shared files is reproduced below.
 
 # SEE ALSO
 
-- [libtcod](https://github.com/libtcod/libtcod)
-- [rogueliketutorials.com](https://rogueliketutorials.com)
-- [/r/roguelikedev](https://www.reddit.com/r/roguelikedev)
-- [RogueBasin](http://roguebasin.com)
 - [TCOD::Color](https://metacpan.org/pod/TCOD%3A%3AColor)
 - [TCOD::ColorRGBA](https://metacpan.org/pod/TCOD%3A%3AColorRGBA)
 - [TCOD::Console](https://metacpan.org/pod/TCOD%3A%3AConsole)
+- [TCOD::Context](https://metacpan.org/pod/TCOD%3A%3AContext)
 - [TCOD::Dijkstra](https://metacpan.org/pod/TCOD%3A%3ADijkstra)
+- [TCOD::Event](https://metacpan.org/pod/TCOD%3A%3AEvent)
 - [TCOD::Image](https://metacpan.org/pod/TCOD%3A%3AImage)
 - [TCOD::Key](https://metacpan.org/pod/TCOD%3A%3AKey)
 - [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap)
@@ -492,6 +496,14 @@ The structure of shared files is reproduced below.
 - [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath)
 - [TCOD::Random](https://metacpan.org/pod/TCOD%3A%3ARandom)
 - [TCOD::Sys](https://metacpan.org/pod/TCOD%3A%3ASys)
+- [TCOD::Tileset](https://metacpan.org/pod/TCOD%3A%3ATileset)
+
+Also, these other external resources might be useful:
+
+- [libtcod](https://github.com/libtcod/libtcod)
+- [rogueliketutorials.com](https://rogueliketutorials.com)
+- [/r/roguelikedev](https://www.reddit.com/r/roguelikedev)
+- [RogueBasin](http://roguebasin.com)
 
 # COPYRIGHT AND LICENSE
 

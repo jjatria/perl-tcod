@@ -107,6 +107,10 @@
          "file" : "lib/TCOD.pm",
          "version" : "0.006"
       },
+      "TCOD::Line" : {
+         "file" : "lib/TCOD.pm",
+         "version" : "0.006"
+      },
       "TCOD::Map" : {
          "file" : "lib/TCOD.pm",
          "version" : "0.006"

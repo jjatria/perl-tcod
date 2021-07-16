@@ -1191,7 +1191,7 @@ package TCOD::Context {
         sub new_console {
             my ( $self, %args ) = ( shift );
 
-            # Accommodate $ctx->present( $cols, $rows, $magnification );
+            # Accommodate $ctx->new_console( $cols, $rows, $magnification );
             %args = ( min_columns => shift, min_rows => shift, magnification => shift ) if @_ % 2;
             %args = ( %args, @_ );
 

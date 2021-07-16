@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-TCOD::Context - ...
+TCOD::Context - A rendering context for TCOD
 
 =head1 SYNOPSIS
 

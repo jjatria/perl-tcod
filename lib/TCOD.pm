@@ -18,7 +18,7 @@ sub import {
     TCOD::Event->import::into( scalar caller );
 }
 
-our $VERSION = '0.006';
+our $VERSION = '0.007';
 
 my $bundle = FFI::Platypus->new( api => 1 );
 $bundle->bundle('TCOD');

@@ -571,8 +571,8 @@ package TCOD::Color {
 package TCOD::ColorRGBA {
     use FFI::Platypus::Record;
     record_layout_1( uint8 => 'r', uint8 => 'g', uint8 => 'b', uint8 => 'a' );
-    $ffi->type( 'record(TCOD::ColorRGBA)'  => 'TCOD_colorRGBA'  );
-    $bundle->type( 'record(TCOD::ColorRGBA)'  => 'TCOD_colorRGBA'  );
+       $ffi->type( 'record(TCOD::ColorRGBA)' => 'TCOD_colorRGBA' );
+    $bundle->type( 'record(TCOD::ColorRGBA)' => 'TCOD_colorRGBA' );
 
     {
         # Give color a positional constructor
@@ -1134,7 +1134,10 @@ package
         tcod_version      => 'int',
         keep_aspect       => 'bool',
         integer_scaling   => 'bool',
-        _clear_color      => 'opaque', # TCOD_ColorRGBA
+        _clear_color_r    => 'uint8',
+        _clear_color_g    => 'uint8',
+        _clear_color_b    => 'uint8',
+        _clear_color_a    => 'uint8',
         align_x           => 'float',
         align_y           => 'float',
     ]);
@@ -1224,9 +1227,10 @@ package TCOD::Context {
 
         my $c = delete $args{clear_color} // TCOD::BLACK();
 
-        $args{_clear_color} = $ffi->cast(
-            TCOD_colorRGBA => opaque => TCOD::ColorRGBA->new( $c->r, $c->g, $c->b, 0xFF ),
-        );
+        $args{_clear_color_r} = $c->r;
+        $args{_clear_color_g} = $c->g;
+        $args{_clear_color_b} = $c->b;
+        $args{_clear_color_a} = 0xFF;
 
         my $err = $xsub->( $self, delete $args{console}, TCOD::ViewportOptions->new(\%args) );
         Carp::croak TCOD::get_error() if $err < 0;

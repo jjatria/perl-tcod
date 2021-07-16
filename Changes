@@ -5,6 +5,8 @@ Revision history for TCOD
     New:
         - Added TCOD::Line to wrap line functions. This implements the code
           in the tcod.los module in python-tcod
+    Fixes:
+        - The clear_color argument to TCOD::Context is now correctly handled.
 
 0.005     2021-07-15 22:38:06+01:00 Europe/London
 

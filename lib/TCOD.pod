@@ -46,6 +46,12 @@ TCOD - FFI bindings for libtcod
 
 TCOD offers Perl bindings to libtcod, a library for developing roguelike games.
 
+If you're getting started, see L<TCOD::Context> to manage rendering contexts
+and L<TCOD::Tileset> to load custom fonts to display. L<TCOD::Event> can be
+used to interact with input and system events. If you want to calculate
+line-of-sight within a map you can use L<TCOD::Map>, which can also be used
+by L<TCOD::Path> for pathfinding.
+
 =head2 On Stability
 
 This distribution is currently B<experimental>, and as such, its API might
@@ -718,21 +724,17 @@ The structure of shared files is reproduced below.
 
 =over
 
-=item L<libtcod|https://github.com/libtcod/libtcod>
-
-=item L<rogueliketutorials.com|https://rogueliketutorials.com>
-
-=item L</r/roguelikedev|https://www.reddit.com/r/roguelikedev>
-
-=item L<RogueBasin|http://roguebasin.com>
-
 =item L<TCOD::Color>
 
 =item L<TCOD::ColorRGBA>
 
 =item L<TCOD::Console>
 
+=item L<TCOD::Context>
+
 =item L<TCOD::Dijkstra>
+
+=item L<TCOD::Event>
 
 =item L<TCOD::Image>
 
@@ -749,6 +751,22 @@ The structure of shared files is reproduced below.
 =item L<TCOD::Random>
 
 =item L<TCOD::Sys>
+
+=item L<TCOD::Tileset>
+
+=back
+
+Also, these other external resources might be useful:
+
+=over
+
+=item L<libtcod|https://github.com/libtcod/libtcod>
+
+=item L<rogueliketutorials.com|https://rogueliketutorials.com>
+
+=item L</r/roguelikedev|https://www.reddit.com/r/roguelikedev>
+
+=item L<RogueBasin|http://roguebasin.com>
 
 =back
 

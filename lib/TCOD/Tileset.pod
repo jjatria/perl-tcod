@@ -7,10 +7,13 @@ TCOD::Tileset - Font loading functions
 =head1 SYNOPSIS
 
     use TCOD;
+    use File::Share 'dist_file';
 
     my $tileset = TCOD::Tileset->load_tilesheet(
-        dist_file( TCOD => 'arial10x10.png' ),
-        32, 8, TCOD::CHARMAP_TCOD,
+        path    => dist_file( TCOD => 'arial10x10.png' ),
+        columns => 32,
+        rows    => 8,
+        charmap => TCOD::CHARMAP_TCOD,
     );
 
 =head1 DESCRIPTION
@@ -43,6 +46,8 @@ reference of codepoints which map the tiles like this:
     $charmap->[ $tile_index ] = $codepoint
 
 For common tilesets, C<charmap> should be the value in C<TCOD::CHARMAP_CP437>.
+If you're using tilesets using the standard TCOD layout, then you can set it
+to C<TCOD::CHARMAP_TCOD>.
 
 There is no default value. If no value is provided, no tiles will be mapped.
 In this case, you'll need to use L<remap|/remap> to assign codepoints to this
@@ -76,8 +81,9 @@ Reassign the Unicode codepoint specified in C<$codepoint> to the character
 in this tilesheet at the position specified by the C<$x> and C<$y> coordinates.
 
 This is the tile position itself, not the pixel position of the tile.
-Large values of C<$x> will wrap to the next row, so using C$x> by itself
-is equivalent to C<Tile Index> in the python-tcod L<Character Table Reference|https://python-tcod.readthedocs.io/en/latest/tcod/charmap-reference.html>.
+Large values of C<$x> will wrap to the next row, so using C<$x> by itself
+is equivalent to C<Tile Index> in the python-tcod
+L<Character Table Reference|https://python-tcod.readthedocs.io/en/latest/tcod/charmap-reference.html>.
 
 This is normally used on loaded tilesheets. Other methods of TCOD::Tileset
 creation won't have reliable tile indices.
@@ -88,7 +94,7 @@ creation won't have reliable tile indices.
 
 =item L<TCOD>
 
-=item L<TCOD::Console>
+=item L<TCOD::Context>
 
 =back
 

@@ -9,6 +9,7 @@ Revision history for TCOD
           enums needed to read its value.
     Fixes:
         - The clear_color argument to TCOD::Context is now correctly handled.
+        - Documentation tweaks
 
 0.005     2021-07-15 22:38:06+01:00 Europe/London
 

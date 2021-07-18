@@ -406,7 +406,9 @@ package TCOD::Event::Dispatch {
     use Role::Tiny;
 
     sub dispatch {
-        my ( $class, $event ) = @_;
+        my $class = shift;
+        my ( $event ) = @_;
+
         my $type = lc $event->type // '';
 
         unless ( defined $type ) {
@@ -417,7 +419,7 @@ package TCOD::Event::Dispatch {
         my $dispatch = $class->can("ev_$type")
             or Carp::croak 'No event handler for event of type ' . $type;
 
-        $dispatch->($event);
+        goto $dispatch;
     }
 
     sub ev_keydown           { }

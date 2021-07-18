@@ -99,6 +99,16 @@ following:
 
 =back
 
+=head2 Charmap
+
+=over
+
+=item * TCOD::CHARMAP_TCOD
+
+=item * TCOD::CHARMAP_CP437
+
+=back
+
 =head2 Renderer
 
 =over

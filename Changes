@@ -2,6 +2,9 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    New:
+        - TCOD::CHARMAP_TCOD and TCOD::CHARMAP_CP437 are now in the
+          TCOD::Charmap enum to allow for introspection
     Fixes:
         - Honor the documented default value for `vsync` in TCOD::Context
           constructor.

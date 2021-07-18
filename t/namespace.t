@@ -126,6 +126,7 @@ is [ sort keys %TCOD:: ], [qw(
     CRIMSON
     CYAN
     Char
+    Charmap
     Color::
     ColorControl
     ColorRGBA::

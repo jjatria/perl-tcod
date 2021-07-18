@@ -5,6 +5,10 @@ Revision history for TCOD
     Fixes:
         - Honor the documented default value for `vsync` in TCOD::Context
           constructor.
+        - Made tests pass in environments without video support
+    Changes:
+        - TCOD::Context construtor returns undefined on error. Use
+          TCOD::get_error to see what happened.
 
 0.007     2021-07-16 19:56:06+01:00 Europe/London
 

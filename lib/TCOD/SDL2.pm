@@ -58,6 +58,17 @@ use constant PIXELFORMAT_RGBA32 => ( BYTEORDER == BIG_ENDIAN )
 
 BEGIN {
     $enum->(
+        InitFlags => {
+            INIT_TIMER          => 0x000001,
+            INIT_AUDIO          => 0x000010,
+            INIT_VIDEO          => 0x000020,
+            INIT_JOYSTICK       => 0x000200,
+            INIT_HAPTIC         => 0x001000,
+            INIT_GAMECONTROLLER => 0x002000,
+            INIT_EVENTS         => 0x004000,
+            INIT_SENSOR         => 0x008000,
+            INIT_NOPARACHUTE    => 0x100000,
+        },
         EventType => [qw(
             FIRSTEVENT=0
 
@@ -1139,5 +1150,13 @@ $ffi->attach( CreateRGBSurfaceWithFormatFrom => [qw( opaque int int int int uint
 $ffi->attach( PollEvent              => [qw( SDL_Event                       )] => 'int'         );
 $ffi->attach( WaitEvent              => [qw( opaque                       )] => 'int'         );
 $ffi->attach( WaitEventTimeout       => [qw( opaque int                   )] => 'int'         );
+
+## Init
+
+$ffi->attach( Init          => ['uint32'] => 'int'  );
+$ffi->attach( InitSubSystem => ['uint32'] => 'int'  );
+$ffi->attach( Quit          => [        ] => 'void' );
+$ffi->attach( QuitSubSystem => ['uint32'] => 'void' );
+$ffi->attach( WasInit       => ['uint32'] => 'int'  );
 
 1;

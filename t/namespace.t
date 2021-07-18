@@ -464,6 +464,7 @@ is [ sort keys %TCOD:: ], [qw(
     __ANON__
     get_error
     import
+    set_error
 )] => 'No unexpected methods in TCOD namespace';
 
 done_testing;

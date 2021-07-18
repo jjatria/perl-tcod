@@ -32,7 +32,8 @@ BEGIN {
 
 $ffi->load_custom_type( '::WideString' => 'wstring', access => 'read' );
 
-$ffi->attach( [ TCOD_get_error => 'get_error' ] => [] => 'string' );
+$ffi->attach( [ TCOD_set_error => 'set_error' ] => ['string'] => 'int'    );
+$ffi->attach( [ TCOD_get_error => 'get_error' ] => [        ] => 'string' );
 
 sub enum {
     my %enums = @_;
@@ -1168,8 +1169,13 @@ package TCOD::Context {
         $args{vsync}            //= 1;
         $args{sdl_window_flags} //= TCOD::SDL2::WINDOW_RESIZABLE();
 
+        if ( TCOD::SDL2::InitSubSystem( TCOD::SDL2::INIT_VIDEO ) ) {
+            TCOD::set_error( TCOD::SDL2::GetError() );
+            return;
+        }
+
         my $err = $xsub->( TCOD::ContextParams->new(\%args), \my $ctx );
-        Carp::croak TCOD::get_error() if $err < 0;
+        return if $err < 0;
 
         bless \$ctx, 'TCOD::Context';
     });

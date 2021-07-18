@@ -85,6 +85,9 @@ When a window size is given instead of a console size you can use
 L<recommended_console_size|/recommended_console_size> to automatically
 find the size of the console which should be used.
 
+This function will return undefined on error. You can examine the error with
+L<TCOD::get_error|TCOD/get_error>.
+
 =head2 new_console
 
     $console = TCOD::Context->new_console( $cols, $rows, $magnification );

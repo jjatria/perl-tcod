@@ -57,6 +57,22 @@ still change without warning. Any change, breaking or not, will be noted in
 the change log, so if you wish to use it, please pin your dependencies and
 make sure to check the change log before upgrading.
 
+# FUNCTIONS
+
+## get\_error
+
+    $string = TCOD::get_error;
+
+Get the current error message, if any.
+
+Some functions (eg. [TCOD::Context::new](https://metacpan.org/pod/TCOD%3A%3AContext#new) will set this
+string on error. When an error is indicated, you can use this method to
+retrieve the error.
+
+The string returned by this function is only meaningful if an error has been
+indicated by some other function, and will only remain meningful until a new
+function that uses this mechanism is called.
+
 # ENUMS
 
 The enums listed below are available as constants like the ones defined using

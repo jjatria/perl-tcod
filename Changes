@@ -1,6 +1,6 @@
 Revision history for TCOD
 
-{{$NEXT}}
+0.008     2021-07-19 20:51:03+01:00 Europe/London
 
     New:
         - TCOD::CHARMAP_TCOD and TCOD::CHARMAP_CP437 are now in the

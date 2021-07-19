@@ -91,6 +91,11 @@ following:
 - TCOD::RIGHT
 - TCOD::CENTER
 
+## Charmap
+
+- TCOD::CHARMAP\_TCOD
+- TCOD::CHARMAP\_CP437
+
 ## Renderer
 
 - TCOD::RENDERER\_GLSL

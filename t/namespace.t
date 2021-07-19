@@ -269,6 +269,7 @@ is [ sort keys %TCOD:: ], [qw(
     FOV_PERMISSIVE_8
     FOV_RESTRICTIVE
     FOV_SHADOW
+    FOV_SYMMETRIC_SHADOWCAST
     FUCHSIA
     FontFlag
     GOLD

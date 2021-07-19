@@ -599,6 +599,8 @@ L<TCOD::Console::set_background_flag|TCOD::Console/set_background_flag>.
 
 =item * TCOD::FOV_RESTRICTIVE
 
+=item * TCOD::FOV_SYMMETRIC_SHADOWCAST
+
 =item * TCOD::NB_FOV_ALGORITHMS
 
 =back

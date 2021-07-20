@@ -12,13 +12,13 @@ Revision history for TCOD
         - TCOD::CHARMAP_TCOD and TCOD::CHARMAP_CP437 are now in the
           TCOD::Charmap enum to allow for introspection
         - Arguments to `dispatch` from TCOD::Event::Dispatch propagate to
-          any overriden event handlers
+          any overridden event handlers
     Fixes:
-        - Honor the documented default value for `vsync` in TCOD::Context
+        - Honour the documented default value for `vsync` in TCOD::Context
           constructor.
         - Made tests pass in environments without video support
     Changes:
-        - TCOD::Context construtor returns undefined on error. Use
+        - TCOD::Context constructor returns undefined on error. Use
           TCOD::get_error to see what happened.
 
 0.007     2021-07-16 19:56:06+01:00 Europe/London
@@ -81,7 +81,7 @@ Revision history for TCOD
         - Added TCOD::Event to wrap around SDL2 events. This uses
           an internal set of SDL2 bindings, while we wait for a
           stable release on CPAN
-        - Added TCOD::Context and TCOD::Tileset modeled after the
+        - Added TCOD::Context and TCOD::Tileset modelled after the
           recommended API in the upstream python-tcod
     Fixes:
         - Fixed the walk method for Path::Dijkstra objects. This

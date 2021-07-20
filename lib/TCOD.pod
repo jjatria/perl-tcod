@@ -50,7 +50,7 @@ If you're getting started, see L<TCOD::Context> to manage rendering contexts
 and L<TCOD::Tileset> to load custom fonts to display. L<TCOD::Event> can be
 used to interact with input and system events. If you want to calculate
 line-of-sight within a map you can use L<TCOD::Map>, which can also be used
-by L<TCOD::Path> for pathfinding.
+by L<TCOD::Path> for path-finding.
 
 =head2 On Stability
 
@@ -72,7 +72,7 @@ string on error. When an error is indicated, you can use this method to
 retrieve the error.
 
 The string returned by this function is only meaningful if an error has been
-indicated by some other function, and will only remain meningful until a new
+indicated by some other function, and will only remain meaningful until a new
 function that uses this mechanism is called.
 
 =head1 ENUMS
@@ -129,7 +129,7 @@ following:
 
 =head2 BackgroundFlag
 
-This flag is used by most functions that modify a cell background color. It
+This flag is used by most functions that modify a cell background colour. It
 defines how the console's current background color is used to modify the
 cell's existing background color.
 

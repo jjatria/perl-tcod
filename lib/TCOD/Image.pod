@@ -66,7 +66,7 @@ Change the color of the pixel specified by its coordinates.
 
     $image->scale( $width, $height );
 
-Resize an image scaling its contents. Supersampling is used for scaling down.
+Resize an image scaling its contents. Super-sampling is used for scaling down.
 Scaling up uses nearest neighbours.
 
 =head2 get_pixel
@@ -133,7 +133,7 @@ enum.
 The image can be scaled and rotated with the last three parameters. Of these,
 the first and second determine the horizontal and vertical scaling
 respectively. These must be values between 0 and 1. The last value determines
-the rotation ange in radians.
+the rotation angle in radians.
 
 =head2 blit_2x
 
@@ -147,7 +147,7 @@ the rotation ange in radians.
         $image_height,
     );
 
-Blit the image with subcell resolution.
+Blit the image with sub-cell resolution.
 
 The first two values determine the coordinate of the cell in the console where
 the upper-left corner of the blitted image will be.

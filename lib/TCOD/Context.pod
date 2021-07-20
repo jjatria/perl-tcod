@@ -16,7 +16,7 @@ TCOD::Context - A rendering context for TCOD
     );
 
     my $context = TCOD::Context->new_terminal(
-        $widht, $height,
+        $width, $height,
         tileset => $tileset,
         title   => 'My window title',
     );
@@ -147,7 +147,7 @@ affect the border/letterbox color.
 The value in C<align> is an array reference of the shape C<[ x, y ]>
 determining where the console will be placed when letter-boxing exists.
 Values of 0 will put the console at the upper-left corner. Values of
-0.5 will center the console.
+0.5 will centre the console.
 
 This function accepts named parameters, but the C<console> parameter may
 also be passed as the first positional parameter.
@@ -173,7 +173,7 @@ already has pixel coordinates. This applies only to some mouse events.
 
 =head2 pixel_to_tile
 
-    ( $tile_x, $tile_y ) = $ontext->pixel_to_tile( $pixel_x, $pixel_y );
+    ( $tile_x, $tile_y ) = $context->pixel_to_tile( $pixel_x, $pixel_y );
 
 Convert from pixel coordinates to this context's tile coordinates. The
 components of the tile coordinates will be integers. See

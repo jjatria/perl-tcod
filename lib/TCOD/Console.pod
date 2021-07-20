@@ -46,14 +46,14 @@ most console drawing functions.
 
     $console = TCOD::Console->from_file( $path );
 
-You can create an offscreen console from a C<.asc> or C<.apf> file created
-with Ascii Paint with this constructor
+You can create an off-screen console from a C<.asc> or C<.apf> file created
+with ASCII Paint with this constructor
 
 =head2 save_asc
 
     $bool = $console->save_asc( $path );
 
-You can save data from a console to Ascii Paint format with this function.
+You can save data from a console to ASCII Paint format with this function.
 The function returns false if it couldn't write the file. This is the only
 ASC function that works also with the root console!
 
@@ -61,7 +61,7 @@ ASC function that works also with the root console!
 
     $bool = $console->save_apf( $path );
 
-You can save data from a console to Ascii Paint format with this function.
+You can save data from a console to ASCII Paint format with this function.
 The function returns false if it couldn't write the file. This is the only
 ASC function that works also with the root console!
 
@@ -111,7 +111,7 @@ specified in C<fg> for the foreground, and C<bg> for the background, and their
 character to the one set in C<ch>.
 
 The C<fg> and C<bg> parameters will default to the console's foreground and
-background colors respectively. The C<ch> parameters will default to the ASCII
+background colours respectively. The C<ch> parameters will default to the ASCII
 code of a blank space (32).
 
 =head2 print
@@ -201,7 +201,7 @@ cleared. This is the default.
 
 The foreground and background colors are set with C<fg> and C<bg>
 respectively. If set, they should be set to L<TCOD::Color> objects.
-If none are provided, the colors will remain unchanged.
+If none are provided, the colours will remain unchanged.
 
 The behaviour of the background can be controlled with the C<bg_blend>
 parameter, which must be a value in the L<BackgroundFlag|TCOD/BackgroundFlag>
@@ -302,7 +302,7 @@ color is modified.
 
 =head2 get_char_background
 
-    $color = $cosole->get_char_background( $x, $y );
+    $color = $console->get_char_background( $x, $y );
 
 Get the background color of a cell.
 
@@ -401,7 +401,7 @@ or one of the values in the L<Char|TCOD/Char> enum.
     $height = $console->get_height_rect(     $x, $y, $w, $h, $string );
     $height = $console->get_height_rect_utf( $x, $y, $w, $h, $string );
 
-Returns the expected height of an autowrapped string without actually printing
+Returns the expected height of an auto-wrapped string without actually printing
 the string with one of the L<print_rect> family of functions.
 
 =head1 FUNCTIONS
@@ -462,7 +462,7 @@ it's not supported on the player's computer.
 This function allows you to use a bitmap font (PNG or BMP) with custom
 character size or layout.
 
-It should be called before initializing the root console with
+It should be called before initialising the root console with
 L<init_root|/init_root>.
 
 Once this function is called, you can define your own custom mappings using
@@ -572,7 +572,7 @@ the beginning before it's finished by calling this function.
 
     TCOD::Console::flush;
 
-Once the root console is initialized, you can use one of the printing
+Once the root console is initialised, you can use one of the printing
 functions to change the background colors, the foreground colors or the
 ASCII characters on the console.
 

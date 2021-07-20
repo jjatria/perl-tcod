@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-TCOD::Color - A representation of a color
+TCOD::Color - A representation of a colour
 
 =head1 SYNOPSIS
 
@@ -19,7 +19,7 @@ TCOD::Color - A representation of a color
 
 =head1 DESCRIPTION
 
-This represents a TCOD color.
+This represents a TCOD colour.
 
 =head1 METHODS
 
@@ -128,7 +128,7 @@ The values should be the same as those used for the setters described above.
 
     $bool = $color->equals( $other );
 
-Returns true if both colors are equivalent.
+Returns true if both colours are equivalent.
 
 =head2 add
 
@@ -148,14 +148,14 @@ components of the second color from the respective ones of the first.
 
     $new_color = $color->multiply( $other );
 
-Returns a new color, the result of multipliying the red, green, and blue
+Returns a new color, the result of multiplying the red, green, and blue
 components of the second color with the respective ones of the first.
 
 =head2 multiply_scalar
 
     $new_color = $color->multiply_scalar( $value );
 
-Returns a new color, the result of multipliying each of the red, green,
+Returns a new color, the result of multiplying each of the red, green,
 and blue components of the first color with the scalar value provided.
 
 =head1 FUNCTIONS

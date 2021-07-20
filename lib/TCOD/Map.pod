@@ -18,7 +18,7 @@ TCOD::Map - A grid of cells for field-of-view calculations
 
 =head1 DESCRIPTION
 
-A TCOD::Map represents a grid of cells that can be used for pathfinding and
+A TCOD::Map represents a grid of cells that can be used for path-finding and
 field-of-view calculations.
 
 =head1 METHODS

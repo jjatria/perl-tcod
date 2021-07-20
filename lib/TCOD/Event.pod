@@ -48,7 +48,7 @@ Returns the same iterator as a call L<get|/get>.
     $iterator = TCOD::Event::get;
 
 Return a coderef that can be used as an iterator for all pending events.
-Calling the coderef will return the next avaialble event.
+Calling the coderef will return the next available event.
 
 Events are processed as the iterator is consumed. Breaking out of, or
 discarding the iterator will leave the remaining events on the event
@@ -168,7 +168,7 @@ C<tilex> and C<tiley> accessors.
 =item * state
 
 A bitfield with all the buttons that are currently being held. This can be checked
-agains the values in this module's L<MouseButton|/MouseButton> enum.
+against the values in this module's L<MouseButton|/MouseButton> enum.
 
 =item * button
 
@@ -206,7 +206,7 @@ C<tilex> and C<tiley> accessors.
 =item * state
 
 A bitfield with all the buttons that are currently being held. This can be checked
-agains the values in this module's L<MouseButton|/MouseButton> enum.
+against the values in this module's L<MouseButton|/MouseButton> enum.
 
 =item * button
 
@@ -244,7 +244,7 @@ C<tilex> and C<tiley> accessors.
 =item * state
 
 A bitfield with all the buttons that are currently being held. This can be checked
-agains the values in this module's L<MouseButton|/MouseButton> enum.
+against the values in this module's L<MouseButton|/MouseButton> enum.
 
 =back
 
@@ -340,7 +340,7 @@ Always returns C<WINDOWRESTORED>.
 
 =head2 TCOD::Event::WindowMinimized
 
-Triggered when the window has been minimized.
+Triggered when the window has been minimised.
 
 =over
 
@@ -352,7 +352,7 @@ Always returns C<WINDOWMINIMIZED>.
 
 =head2 TCOD::Event::WindowMaximized
 
-Triggered when the window has been maximized.
+Triggered when the window has been maximised.
 
 =over
 

@@ -24,7 +24,7 @@ The C<set_fps> function allows you to limit the number of frames per second.
 If a frame is rendered faster than expected, the TCOD_console_flush function
 will wait so that the frame rate never exceed this value.
 
-You can call this function during your game initialization.
+You can call this function during your game initialisation.
 
 You can dynamically change the frame rate. Just call this function once again.
 
@@ -64,7 +64,7 @@ started.
 
 This function returns the number of seconds since the program has started.
 
-=head2 save_screnshot
+=head2 save_screenshot
 
     TCOD::Sys::save_screenshot( $path );
 
@@ -125,7 +125,7 @@ You can get the size in pixels of the characters in the font.
 You can get the current screen resolution with
 L<get_current_resolution|/get_current_resolution>.
 
-You can use it for example to get the desktop resolution before initializing
+You can use it for example to get the desktop resolution before initialising
 the root console.
 
 =head2 force_fullscreen_resolution

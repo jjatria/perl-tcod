@@ -48,7 +48,7 @@ If you're getting started, see [TCOD::Context](https://metacpan.org/pod/TCOD%3A%
 and [TCOD::Tileset](https://metacpan.org/pod/TCOD%3A%3ATileset) to load custom fonts to display. [TCOD::Event](https://metacpan.org/pod/TCOD%3A%3AEvent) can be
 used to interact with input and system events. If you want to calculate
 line-of-sight within a map you can use [TCOD::Map](https://metacpan.org/pod/TCOD%3A%3AMap), which can also be used
-by [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath) for pathfinding.
+by [TCOD::Path](https://metacpan.org/pod/TCOD%3A%3APath) for path-finding.
 
 ## On Stability
 
@@ -70,7 +70,7 @@ string on error. When an error is indicated, you can use this method to
 retrieve the error.
 
 The string returned by this function is only meaningful if an error has been
-indicated by some other function, and will only remain meningful until a new
+indicated by some other function, and will only remain meaningful until a new
 function that uses this mechanism is called.
 
 # ENUMS
@@ -107,7 +107,7 @@ following:
 
 ## BackgroundFlag
 
-This flag is used by most functions that modify a cell background color. It
+This flag is used by most functions that modify a cell background colour. It
 defines how the console's current background color is used to modify the
 cell's existing background color.
 
@@ -384,6 +384,7 @@ value for a color component (255).
 - TCOD::FOV\_PERMISSIVE\_7
 - TCOD::FOV\_PERMISSIVE\_8
 - TCOD::FOV\_RESTRICTIVE
+- TCOD::FOV\_SYMMETRIC\_SHADOWCAST
 - TCOD::NB\_FOV\_ALGORITHMS
 
 ## RandomAlgo

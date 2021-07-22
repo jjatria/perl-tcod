@@ -7,7 +7,7 @@ use feature 'state';
 use TCOD::SDL2;
 use Sub::Util ();
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 
 BEGIN {
     require constant;

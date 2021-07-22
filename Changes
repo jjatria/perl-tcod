@@ -2,6 +2,8 @@ Revision history for TCOD
 
 {{$NEXT}}
 
+    New:
+        - Add 'ev_undefined' handler to TCOD::Event::Dispatch
     Fixes:
         - Add missing FOV_SYMMETRIC_SHADOWCAST constant to list of FOV
           algorithms.

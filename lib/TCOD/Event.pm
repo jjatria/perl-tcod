@@ -430,6 +430,7 @@ package TCOD::Event::Dispatch {
     sub ev_mousewheel        { }
     sub ev_quit              { }
     sub ev_textinput         { }
+    sub ev_undefined         { }
     sub ev_windowclose       { }
     sub ev_windowenter       { }
     sub ev_windowexposed     { }
